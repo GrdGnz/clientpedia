@@ -1,0 +1,453 @@
+/* font */
+.marsman-txt {
+    font-family: 'Lato', sans-serif !important;
+}
+
+body {
+    font-family: 'Lato', sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, input, div {
+    font-family: 'Lato', sans-serif !important;
+}
+
+.nav-link {
+    font-family: 'Lato', sans-serif !important;
+    font-size: 12px !important;
+}
+
+.txt-1 {
+    font-family: 'Lato', sans-serif !important;
+    font-size: 12px !important;
+}
+
+.txt-2 {
+    font-family: 'Lato', sans-serif !important;
+    font-size: 14px !important;
+}
+
+.txt-3 {
+    font-family: 'Lato', sans-serif !important;
+    font-size: 16px !important; 
+}
+
+.txt-4 {
+    font-family: 'Lato', sans-serif !important;
+    font-size: 18px !important; 
+}
+
+.txt-5 {
+    font-family: 'Lato', sans-serif !important;
+    font-size: 20px !important; 
+}
+
+.txt-1 a {
+    text-decoration: none !important;
+}
+
+.txt-2 a {
+    text-decoration: none !important;
+}
+
+.txt-3 a {
+    text-decoration: none !important;
+}
+
+.txt-4 a {
+    text-decoration: none !important;
+}
+
+.txt-5 a {
+    text-decoration: none !important;
+}
+
+.txt-primary {
+    color: #002366 !important;
+}
+
+.txt-secondary {
+    color: #FFD700 !important;
+}
+
+.txt-dark {
+    color: #273546 !important;
+}
+
+.txt-semidark {
+    color: #2C3C50 !important;
+}
+
+/* background colors */
+.marsman-bg-color-primary {
+    background-color: #002366 !important;
+}
+
+.marsman-bg-color-secondary {
+    background-color: #FFD700 !important;
+}
+
+.marsman-bg-color-dark {
+    background-color: #273546 !important;
+}
+
+.marsman-bg-color-semidark {
+    background-color: #2C3C50 !important;
+}
+
+.marsman-bg-color-lightblue {
+    background-color: #BDCADA !important;
+}
+
+/* text and link colors */
+
+.marsman-text-light, .link-light a {
+    color: #FFFFFF !important;
+}
+
+.marsman-link-dark a {
+    color: #273546 !important;
+}
+
+.marsman-text-white-bg-semidark {
+    background-color: #2C3C50 !important;
+    color: #FFFFFF !important;
+}
+
+/* buttons */
+
+.marsman-btn-primary {
+    background-color: #002366 !important;
+    color: #FFFFFF !important;
+    padding: 10px !important;
+    border-radius: 20px !important;
+    border: 5px solid #0068a5 !important;
+}
+
+.marsman-btn-secondary {
+    background-color: #FFD700 !important;
+    color: #002366 !important;
+    border: 1px solid #FFFFFF !important;
+}
+
+.marsman-btn-dark {
+    background-color: #273546 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #2C3C50 !important;
+}
+
+/* border all sides */
+.marsman-border-primary-1 {
+    border: 1px solid #002366 !important;
+}
+
+.marsman-border-primary-2 {
+    border: 2px solid #002366 !important;
+}
+
+.marsman-border-primary-3 {
+    border: 3px solid #002366 !important;
+}
+
+.marsman-border-primary-4 {
+    border: 4px solid #002366 !important;
+}
+
+.marsman-border-primary-5 {
+    border: 5px solid #002366 !important;
+}
+
+.marsman-border-secondary-1 {
+    border: 1px solid #FFD700 !important;
+}
+
+.marsman-border-secondary-2 {
+    border: 2px solid #FFD700 !important;
+}
+
+.marsman-border-secondary-3 {
+    border: 3px solid #FFD700 !important;
+}
+
+.marsman-border-secondary-4 {
+    border: 4px solid #FFD700 !important;
+}
+
+.marsman-border-secondary-5 {
+    border: 5px solid #FFD700 !important;
+}
+
+.marsman-border-gray-1 {
+    border: 1px solid #cdcdcd !important;
+}
+
+.marsman-border-gray-2 {
+    border: 2px solid #cdcdcd !important;
+}
+
+.marsman-border-gray-3 {
+    border: 3px solid #cdcdcd !important;
+}
+
+.marsman-border-gray-4 {
+    border: 4px solid #cdcdcd !important;
+}
+
+.marsman-border-gray-5 {
+    border: 5px solid #cdcdcd !important;
+}
+
+/* border bottom */
+.marsman-border-b-primary-1 {
+    border-bottom: 1px solid #002366 !important;
+}
+
+.marsman-border-b-primary-2 {
+    border-bottom: 2px solid #002366 !important;
+}
+
+.marsman-border-b-primary-3 {
+    border-bottom: 3px solid #002366 !important;
+}
+
+.marsman-border-b-primary-4 {
+    border-bottom: 4px solid #002366 !important;
+}
+
+.marsman-border-b-primary-5 {
+    border-bottom: 5px solid #002366 !important;
+}
+
+.marsman-border-b-secondary-1 {
+    border-bottom: 1px solid #FFD700 !important;
+}
+
+.marsman-border-b-secondary-2 {
+    border-bottom: 2px solid #FFD700 !important;
+}
+
+.marsman-border-b-secondary-3 {
+    border-bottom: 3px solid #FFD700 !important;
+}
+
+.marsman-border-b-secondary-4 {
+    border-bottom: 4px solid #FFD700 !important;
+}
+
+.marsman-border-b-secondary-5 {
+    border-bottom: 5px solid #FFD700 !important;
+}
+
+/* border top */
+.marsman-border-t-primary-1 {
+    border-top: 1px solid #002366 !important;
+}
+
+.marsman-border-t-primary-2 {
+    border-top: 2px solid #002366 !important;
+}
+
+.marsman-border-t-primary-3 {
+    border-top: 3px solid #002366 !important;
+}
+
+.marsman-border-t-primary-4 {
+    border-top: 4px solid #002366 !important;
+}
+
+.marsman-border-t-primary-5 {
+    border-top: 5px solid #002366 !important;
+}
+
+.marsman-border-t-secondary-1 {
+    border-top: 1px solid #FFD700 !important;
+}
+
+.marsman-border-t-secondary-2 {
+    border-top: 2px solid #FFD700 !important;
+}
+
+.marsman-border-t-secondary-3 {
+    border-top: 3px solid #FFD700 !important;
+}
+
+.marsman-border-t-secondary-4 {
+    border-top: 4px solid #FFD700 !important;
+}
+
+.marsman-border-t-secondary-5 {
+    border-top: 5px solid #FFD700 !important;
+}
+
+/* border left */
+.marsman-border-l-primary-1 {
+    border-left: 1px solid #002366 !important;
+}
+
+.marsman-border-l-primary-2 {
+    border-left: 2px solid #002366 !important;
+}
+
+.marsman-border-l-primary-3 {
+    border-left: 3px solid #002366 !important;
+}
+
+.marsman-border-l-primary-4 {
+    border-left: 4px solid #002366 !important;
+}
+
+.marsman-border-l-primary-5 {
+    border-left: 5px solid #002366 !important;
+}
+
+.marsman-border-l-secondary-1 {
+    border-left: 1px solid #FFD700 !important;
+}
+
+.marsman-border-l-secondary-2 {
+    border-left: 2px solid #FFD700 !important;
+}
+
+.marsman-border-l-secondary-3 {
+    border-left: 3px solid #FFD700 !important;
+}
+
+.marsman-border-l-secondary-4 {
+    border-left: 4px solid #FFD700 !important;
+}
+
+.marsman-border-l-secondary-5 {
+    border-left: 5px solid #FFD700 !important;
+}
+
+/* border right */
+.marsman-border-r-primary-1 {
+    border-right: 1px solid #002366 !important;
+}
+
+.marsman-border-r-primary-2 {
+    border-right: 2px solid #002366 !important;
+}
+
+.marsman-border-r-primary-3 {
+    border-right: 3px solid #002366 !important;
+}
+
+.marsman-border-r-primary-4 {
+    border-right: 4px solid #002366 !important;
+}
+
+.marsman-border-r-primary-5 {
+    border-right: 5px solid #002366 !important;
+}
+
+.marsman-border-r-secondary-1 {
+    border-right: 1px solid #FFD700 !important;
+}
+
+.marsman-border-r-secondary-2 {
+    border-right: 2px solid #FFD700 !important;
+}
+
+.marsman-border-r-secondary-3 {
+    border-right: 3px solid #FFD700 !important;
+}
+
+.marsman-border-r-secondary-4 {
+    border-right: 4px solid #FFD700 !important;
+}
+
+.marsman-border-r-secondary-5 {
+    border-right: 5px solid #FFD700 !important;
+}
+
+/* rounded borders */
+.marsman-rounded-gray-1 {
+    border: 1px solid #cdcdcd !important;
+    border-radius: 7px !important;
+}
+
+.marsman-rounded-gray-2 {
+    border: 2px solid #cdcdcd !important;
+    border-radius: 7px !important;
+}
+
+.marsman-rounded-gray-3 {
+    border: 3px solid #cdcdcd !important;
+    border-radius: 7px !important;
+}
+
+.marsman-rounded-gray-4 {
+    border: 4px solid #cdcdcd !important;
+    border-radius: 7px !important;
+}
+
+.marsman-rounded-gray-5 {
+    border: 5px solid #cdcdcd !important;
+    border-radius: 7px !important;
+}
+
+.marsman-rounded-primary-1 {
+    border: 1px solid #002366 !important;
+    border-radius: 7px !important;
+}
+
+.marsman-rounded-primary-2 {
+    border: 2px solid #002366 !important;
+    border-radius: 7px !important;
+}
+
+.marsman-rounded-primary-3 {
+    border: 3px solid #002366 !important;
+    border-radius: 7px !important;
+}
+
+.marsman-rounded-primary-4 {
+    border: 4px solid #002366 !important;
+    border-radius: 7px !important;
+}
+
+.marsman-rounded-primary-5 {
+    border: 5px solid #002366 !important;
+    border-radius: 7px !important;
+}
+
+/* Nav */
+.nav-item .active {
+    background-color: #BDCADA !important;
+    color: #273546 !important;
+    font-weight: 400 !important;
+    border-bottom: 5px solid #2C3C50 !important;
+}
+
+.nav-item button {
+    color: #273546 !important;
+    border-bottom: 5px solid #273546 !important;
+}   
+
+.nav-item button:hover{
+    color: #ffffff !important;
+    background-color: #273546 !important;
+    border-bottom: 5px solid #2C3C50 !important;
+}   
+
+/* table style */
+.marsman-select-client {
+    background-color: #BDCADA;
+}
+
+.marsman-select-client:hover {
+    background-color: #2C3C50 !important;
+    cursor: pointer !important;
+    font-size: 18px !important;
+} 
+
+.marsman-select-client:hover a {
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    font-size: 18px !important;
+}
+
+/* Datatables */
+#clients-table_wrapper .dataTables_filter {
+    margin: 5px;
+}
