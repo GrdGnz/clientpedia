@@ -21,6 +21,7 @@
                     <tr>
                         <th>Route Name</th>
                         <th>Pricing Model Type</th>
+                        <th>Pricing Model</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,7 @@
                         <tr>
                             <td>{{ strtoupper($clientPricingModel->route->name) }}</td>
                             <td>{{ strtoupper($clientPricingModel->pricingModelType->name) }}</td>
+                            <td>{{ strtoupper($clientPricingModel->pricingModel->name) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -41,13 +43,13 @@
                 </div>
                 <div class="card-body marsman-bg-color-lightblue">
                     @if(session('success'))
-                        <div class="alert alert-success">
+                        <div class="alert alert-success txt-2">
                             {{ session('success') }}
                         </div>
                     @endif
 
                     @if(session('error'))
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger txt-2">
                             {{ session('error') }}
                         </div>
                     @endif
@@ -63,7 +65,7 @@
                                 @endforeach
                             </select>
                         </div>
-            
+
                         <div class="mb-3">
                             <label for="pricingmodel_type_id" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Select Pricing Model Type:</label>
                             <select name="pricingmodel_type_id" id="pricingmodel_type_id" class="form-control marsman-border-primary-1 bg-white txt-1">
@@ -72,7 +74,16 @@
                                 @endforeach
                             </select>
                         </div>
-            
+
+                        <div class="mb-3">
+                            <label for="pricingmodel" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Select Pricing Model:</label>
+                            <select name="pricingmodel" id="pricingmodel" class="form-control marsman-border-primary-1 bg-white txt-1">
+                                @foreach($pricingModels as $pricingModel)
+                                    <option value="{{ $pricingModel->id }}">{{ strtoupper($pricingModel->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <button type="submit" class="btn marsman-btn-primary m-2">Save</button>
                     </form>
                 </div>
