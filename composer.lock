@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c50653eb305c61fb7f2227192e3fb8d",
+    "content-hash": "5a6ab6ee0fa17406584e416ab44f6e2f",
     "packages": [
         {
             "name": "barryvdh/laravel-cors",

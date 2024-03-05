@@ -129,7 +129,11 @@
                         <tbody class="bg-white">
                           @foreach($clientFeesWithRouteAndSource as $clientFee)
                             <tr>
+<<<<<<< HEAD
                                 <td>{{ strtoupper($clientFee->category->name) }}</td>
+=======
+                                <td>{{ strtoupper($clientFee->category) }}</td>
+>>>>>>> main
                                 <td>{{ strtoupper($clientFee->route) }}</td>
                                 <td>{{ strtoupper($clientFee->description) }}</td>
                                 <td>{{ strtoupper($clientFee->source) }}</td>
