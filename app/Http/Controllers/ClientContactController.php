@@ -19,14 +19,12 @@ class ClientContactController extends Controller
         $validatedData = $request->validate([
             'client_id' => 'required',
             'name' => 'required|string|max:255',
-            'designation' => 'required|required|string|max:255',
-            'department' => 'required|required|string|max:255',
-            'contact_landline' => 'required|nullable|string|max:20',
-            'contact_mobile' => 'required|nullable|string|max:20',
-            'email' => 'required|nullable|email|max:255',
-            'birthday' => 'required|nullable|date',
+            'designation' => 'nullable|max:255',
+            'department' => 'nullable|max:255',
+            'contact_mobile' => 'nullable|max:20',
+            'email' => 'nullable|email|max:255',
+            'birthday' => 'nullable|date',
             'remarks' => 'nullable|string',
-            'status_id' => 'required', // Ensure the status_id is either 0 (Inactive) or 1 (Active)
         ]);
 
         // If the 'remarks' field is empty in the request, set it to null
@@ -52,14 +50,14 @@ class ClientContactController extends Controller
 
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
-                'designation' => 'required|string|max:255',
-                'department' => 'required|string|max:255',
-                'contact_landline' => 'required|nullable|max:20',
-                'contact_mobile' => 'required|nullable|max:20',
-                'email' => 'required|nullable|email|max:255',
-                'birthday' => 'required|nullable|date',
+                'designation' => 'nullable|max:255',
+                'department' => 'nullable|max:255',
+                'contact_landline' => 'nullable|max:20',
+                'contact_mobile' => 'nullable|max:20',
+                'email' => 'nullable|email|max:255',
+                'birthday' => 'nullable|date',
             ]);
-    
+
             $contactId = $request->input('contactId');
             $clientContact = ClientContact::findOrFail($contactId);
 
@@ -83,7 +81,7 @@ class ClientContactController extends Controller
     {
         try {
             $clientContact = ClientContact::findOrFail($contactId);
-    
+
             // Ensure that the clientContact record belongs to the specified client
             if ($clientContact->client_id == $clientId) {
                 $clientContact->delete();
@@ -92,14 +90,14 @@ class ClientContactController extends Controller
                 logUserActivity(auth()->user()->id, 'delete-client-contact', 'Deleted contact person \''.$clientContact->name.'\' of '. $clientContact->client->name);
 
 
-                return redirect()->back()->with('success', 'Client VIP deleted successfully!');
+                return redirect()->back()->with('success', 'Client contact deleted successfully!');
             } else {
                 // The clientContact record does not belong to the specified client
-                return redirect()->back()->with('error', 'Client VIP does not exist or does not belong to the client.');
+                return redirect()->back()->with('error', 'Client contact does not exist or does not belong to the client.');
             }
         } catch (\Exception $e) {
             // Handle exceptions (e.g., record not found)
-            return redirect()->back()->with('error', 'Error deleting client VIP.');
+            return redirect()->back()->with('error', 'Error deleting client Contact.');
         }
     }
 
@@ -109,9 +107,9 @@ class ClientContactController extends Controller
             $status = $request->input('status_radio_'.$contactId);
             // Validate the status value (optional)
             // ...
-    
+
             $clientContact = ClientContact::findOrFail($contactId);
-    
+
             // Ensure that the clientContact record belongs to the specified client
             if ($clientContact->client_id == $clientId) {
                 $clientContact->status_id = $status;
@@ -120,7 +118,7 @@ class ClientContactController extends Controller
                 //log activity
                 logUserActivity(auth()->user()->id, 'change-client-contact-status', 'Changed contact person \''.$clientContact->name.'\' of '. $clientContact->client->name.' status to '.$status);
 
-    
+
                 return redirect()->back()->with('success', 'Status updated successfully');
             } else {
                 // The clientContact record does not belong to the specified client
@@ -128,7 +126,7 @@ class ClientContactController extends Controller
             }
         } catch (\Exception $e) {
             // Handle exceptions (e.g., record not found)
-            return redirect()->back()->with('error', 'Error updating client VIP status');
+            return redirect()->back()->with('error', 'Error updating client contact status');
         }
     }
 }

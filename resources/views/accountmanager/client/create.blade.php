@@ -43,12 +43,12 @@
                             <label for="name" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Client Name:</label>
                             <input type="text" class="form-control marsman-border-primary-1 bg-white txt-1" name="name" id="name" required>
                         </div>
-                    
+
                         <div class="form-group mb-3">
                             <label for="code" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Client Code:</label>
                             <input type="text" class="form-control marsman-border-primary-1 bg-white txt-1" name="code" value="{{ old('code') }}" id="code" required>
                         </div>
-                    
+
                         <div class="form-group mb-3">
                             <label for="client_type_id" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Client Type:</label>
                             <select class="form-control marsman-border-primary-1 bg-white txt-1" name="client_type_id" id="client_type_id" required>
@@ -57,27 +57,27 @@
                                 <option value="3">Walk-in</option>
                             </select>
                         </div>
-                    
+
                         <div class="form-group mb-3">
                             <label for="global_customer_number" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Global Customer Number:</label>
-                            <input type="text" class="form-control marsman-border-primary-1 bg-white txt-1" name="global_customer_number" id="global_customer_number" required>
+                            <input type="text" class="form-control marsman-border-primary-1 bg-white txt-1" name="global_customer_number" id="global_customer_number">
                         </div>
-                    
+
                         <div class="form-group mb-3">
                             <label for="contract_start_date" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Contract Start Date:</label>
-                            <input type="text" class="form-control marsman-border-primary-1 bg-white datepicker txt-1" name="contract_start_date" id="contract_start_date" required>
+                            <input type="text" class="form-control marsman-border-primary-1 bg-white datepicker txt-1" name="contract_start_date" id="contract_start_date">
                         </div>
-                    
+
                         <div class="form-group mb-3">
                             <label for="contract_end_date" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Contract End Date:</label>
-                            <input type="text" class="form-control marsman-border-primary-1 bg-white datepicker txt-1" name="contract_end_date" id="contract_end_date" required>
+                            <input type="text" class="form-control marsman-border-primary-1 bg-white datepicker txt-1" name="contract_end_date" id="contract_end_date">
                         </div>
-                        
+
                         <div class="w-100 text-center">
                             <button type="submit" class="btn marsman-btn-primary">Save</button>
                         </div>
                     </form>
-                    
+
                     <script>
                         // Initialize Bootstrap Datepicker
                         $(document).ready(function() {

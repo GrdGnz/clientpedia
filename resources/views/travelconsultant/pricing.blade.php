@@ -36,12 +36,13 @@
             <div class="tab-content py-3 p-3 marsman-bg-color-lightblue" id="myTabContent">
               <div class="tab-pane fade show active" id="pricingmodel-tab-pane" role="tabpanel" aria-labelledby="pricingmodel-tab" tabindex="0">
                 <!-- First tab -->
-                
+
                 <table id="pricingModelTable" class="table table-bordered">
                   <thead class="marsman-bg-color-dark text-white">
                       <tr>
                           <th>Route Name</th>
                           <th>Pricing Model Type</th>
+                          <th>Pricing Model</th>
                       </tr>
                   </thead>
                   <tbody class="bg-white">
@@ -49,13 +50,14 @@
                           <tr>
                               <td>{{ strtoupper($clientPricingModel->route->name) }}</td>
                               <td>{{ strtoupper($clientPricingModel->pricingModelType->name) }}</td>
+                              <td>{{ strtoupper($clientPricingModel->pricingModel->name) }}</td>
                           </tr>
                       @endforeach
                   </tbody>
               </table>
 
                 <!-- First tab end -->
-                
+
               </div>
               <div class="tab-pane fade" id="farereference-tab-pane" role="tabpanel" aria-labelledby="farereference-tab" tabindex="0">
                 <!-- Second tab -->
@@ -80,10 +82,10 @@
                 </table>
 
                 <!-- Second tab end -->
-                
-              </div>
-              
-              <div class="tab-pane fade" id="arcillariesfee-tab-pane" role="tabpanel" aria-labelledby="arcillariesfee-tab" tabindex="0">
+
+            </div>
+
+            <div class="tab-pane fade" id="arcillariesfee-tab-pane" role="tabpanel" aria-labelledby="arcillariesfee-tab" tabindex="0">
                 <!-- Fourth tab -->
 
                 <table id="ancilliaryFeesTable" class="table table-bordered">
@@ -106,38 +108,42 @@
                 </table>
 
                 <!-- Fourth tab end -->
-                
-              </div>
-              <div class="tab-pane fade" id="fees-tab-pane" role="tabpanel" aria-labelledby="fees-tab" tabindex="0">
+
+            </div>
+            <div class="tab-pane fade" id="fees-tab-pane" role="tabpanel" aria-labelledby="fees-tab" tabindex="0">
                 <!-- Fifth tab -->
-                    
+
                 <div class="table-responsive">
-                  <table id="ancilliaryFeesTable" class="table table-bordered">
-                      <thead class="marsman-bg-color-dark text-white">
-                          <tr>
-                              <th>Category</th>
-                              <th>Route</th>
-                              <th>Description</th>
-                              <th>Source</th>
-                              <th>Amount</th>
-                          </tr>
-                      </thead>
-                      <tbody class="bg-white">
+                    <table id="ancilliaryFeesTable" class="table table-bordered">
+                        <thead class="marsman-bg-color-dark text-white">
+                            <tr>
+                                <th>Category</th>
+                                <th>Route</th>
+                                <th>Description</th>
+                                <th>Source</th>
+                                <th>Currency</th>
+                                <th>Amount</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
                           @foreach($clientFeesWithRouteAndSource as $clientFee)
-                              <tr>
-                                  <td>{{ strtoupper($clientFee->category) }}</td>
-                                  <td>{{ strtoupper($clientFee->route) }}</td>
-                                  <td>{{ strtoupper($clientFee->description) }}</td>
-                                  <td>{{ strtoupper($clientFee->source) }}</td>
-                                  <td>{{ number_format($clientFee->amount, 2, '.', ',') }}</td>
-                              </tr>
+                            <tr>
+                                <td>{{ strtoupper($clientFee->category) }}</td>
+                                <td>{{ strtoupper($clientFee->route) }}</td>
+                                <td>{{ strtoupper($clientFee->description) }}</td>
+                                <td>{{ strtoupper($clientFee->source) }}</td>
+                                <td>{{ strtoupper($clientFee->currency) }}</td>
+                                <td>{{ number_format($clientFee->amount, 2, '.', ',') }}</td>
+                                <td>{{ $clientFee->percentage }}</td>
+                            </tr>
                           @endforeach
-                      </tbody>
-                  </table>
+                        </tbody>
+                    </table>
                 </div>
 
                 <!-- Fifth tab end -->
-                
+
               </div>
               <div class="tab-pane fade" id="invoice-tab-pane" role="tabpanel" aria-labelledby="invoice-tab" tabindex="0">
                 <!-- Sixth tab -->
@@ -146,7 +152,7 @@
                   @foreach($clientInvoiceAttachments as $attachment)
                     <table class="table table-bordered">
                       <tbody class="bg-white">
-                          
+
                           <tr>
                               <td class="fw-bold" width="20%">Schedule: </td>
                               <td>{{ $attachment->schedule }}</td>
@@ -161,7 +167,7 @@
                               <td><a href="{{ asset('attachments/' . basename($attachment->description_path)) }}" target="_blank">Download file</a></td>
                           </tr>
                           @endif
-                          
+
                           @if ($attachment->email_approval_path != '')
                           <tr>
                               <td class="fw-bold">Email approval: </td>
@@ -175,7 +181,7 @@
                               <td><a href="{{ asset('attachments/' . basename($attachment->purchase_order_path)) }}" target="_blank">Download file</a></td>
                           </tr>
                           @endif
-                          
+
                           <tr>
                               <td class="fw-bold">Remarks:</td>
                               <td>{{ $attachment->remarks }}</td>
@@ -183,19 +189,18 @@
                           <tr>
                             <td colspan="2">
                           </tr>
-                          
+
                       </tbody>
                     </table>
                     <br />
                     <br />
                   @endforeach
                 @endif
-                
+
                 <!-- Sixth tab end -->
-                
+
               </div>
             </div>
         </main>
     </div>
 @endsection
-  

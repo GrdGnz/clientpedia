@@ -29,6 +29,11 @@ class ClientPricingModel extends Model
         return $this->belongsTo(PricingmodelType::class, 'pricingmodel_type_id');
     }
 
+    public function pricingModel()
+    {
+        return $this->belongsTo(Pricingmodel::class, 'pricingmodel_id');
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id');
