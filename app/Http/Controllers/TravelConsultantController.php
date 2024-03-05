@@ -34,7 +34,7 @@ class TravelConsultantController extends Controller
     }
 
     public function index()
-    { 
+    {
         $user = Auth::user();
         $clients = $user->clients->where('status_id', 1);
 
@@ -102,13 +102,13 @@ class TravelConsultantController extends Controller
 
         $clientInvoiceAttachments = $clientInvoiceAttachments ?? [];
 
-        return view('travelconsultant.pricing', 
-            compact('client', 
-                'lastLoginDate', 
-                'clientPricingModels', 
-                'clientFareReferences', 
-                'clientAncilliaryFees', 
-                'clientFeesWithRouteAndSource', 
+        return view('travelconsultant.pricing',
+            compact('client',
+                'lastLoginDate',
+                'clientPricingModels',
+                'clientFareReferences',
+                'clientAncilliaryFees',
+                'clientFeesWithRouteAndSource',
                 'clientInvoiceAttachments',
             )
         );
@@ -237,7 +237,7 @@ class TravelConsultantController extends Controller
             ->where('route_id', 1)
             ->where('category_id', 1)
             ->get();
-        
+
         // Domestic
         $bookingprocessDomestic = ClientBookingProcess::where('client_id', $clientId)
             ->where('route_id', 2)
@@ -265,9 +265,9 @@ class TravelConsultantController extends Controller
         // Authorize the user to view the client
         $this->authorize('view', $client);
 
-        return view('travelconsultant.air', 
+        return view('travelconsultant.air',
             compact('client',
-                'lastLoginDate', 
+                'lastLoginDate',
                 'bookingprocessInternational',
                 'bookingprocessDomestic',
                 'travelPolicy',
@@ -298,7 +298,7 @@ class TravelConsultantController extends Controller
             ->where('route_id', 1)
             ->where('category_id', 2)
             ->get();
-        
+
         // Domestic
         $bookingprocessDomestic = ClientBookingProcess::where('client_id', $clientId)
             ->where('route_id', 2)
@@ -307,7 +307,7 @@ class TravelConsultantController extends Controller
 
         $hotelCorporateCode = ClientHotelCorporateCode::where('client_id', $clientId)->get();
 
-        return view('travelconsultant.hotel', 
+        return view('travelconsultant.hotel',
             compact(
                 'client',
                 'lastLoginDate',
@@ -338,14 +338,14 @@ class TravelConsultantController extends Controller
             ->where('route_id', 1)
             ->where('category_id', 3)
             ->get();
-        
+
         // Domestic
         $bookingprocessDomestic = ClientBookingProcess::where('client_id', $clientId)
             ->where('route_id', 2)
             ->where('category_id', 3)
             ->get();
 
-        return view('travelconsultant.car', 
+        return view('travelconsultant.car',
             compact(
                 'client',
                 'lastLoginDate',
@@ -375,14 +375,14 @@ class TravelConsultantController extends Controller
             ->where('route_id', 1)
             ->where('category_id', 4)
             ->get();
-        
+
         // Domestic
         $bookingprocessDomestic = ClientBookingProcess::where('client_id', $clientId)
             ->where('route_id', 2)
             ->where('category_id', 4)
             ->get();
 
-        return view('travelconsultant.cartransfer', 
+        return view('travelconsultant.cartransfer',
             compact(
                 'client',
                 'lastLoginDate',
@@ -412,14 +412,14 @@ class TravelConsultantController extends Controller
             ->where('route_id', 1)
             ->where('category_id', 5)
             ->get();
-        
+
         // Domestic
         $bookingprocessDomestic = ClientBookingProcess::where('client_id', $clientId)
             ->where('route_id', 2)
             ->where('category_id', 5)
             ->get();
 
-        return view('travelconsultant.documentation', 
+        return view('travelconsultant.documentation',
             compact(
                 'client',
                 'lastLoginDate',
@@ -437,7 +437,7 @@ class TravelConsultantController extends Controller
         // Get user's last login date
         $userActivity = new UserActivity;
         $lastLoginDate = $user ? $userActivity->getLastLoginDate($user->id) : null;
-        
+
         $client = Client::find($clientId);
 
         $reportingElements = ClientReportingElement::where('client_id', $clientId)->get();
@@ -445,7 +445,7 @@ class TravelConsultantController extends Controller
         // Authorize the user to view the client
         $this->authorize('view', $client);
 
-        return view('travelconsultant.reportingelements', 
+        return view('travelconsultant.reportingelements',
             compact(
                 'client',
                 'lastLoginDate',
@@ -458,24 +458,23 @@ class TravelConsultantController extends Controller
     {
         // Retrieve the client by ID from your database
         $client = Client::find($id);
-    
+
         if (!$client) {
             // Handle the case where the client with the given ID doesn't exist
             abort(404);
         }
-    
+
         // Authorize the user to view the client
         $this->authorize('view', $client);
-    
+
         // Get the currently authenticated user (travel consultant)
         $user = Auth::user();
-    
+
         // Get user's last login date
         $userActivity = new UserActivity;
         $lastLoginDate = $user ? $userActivity->getLastLoginDate($user->id) : null;
-    
+
         // Load the client detail view and pass the client data to it
         return view('travelconsultant.dashboard', compact('client', 'user', 'lastLoginDate'));
     }
 }
-    

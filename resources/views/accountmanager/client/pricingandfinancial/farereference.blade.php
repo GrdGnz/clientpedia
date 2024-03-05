@@ -22,8 +22,8 @@
                         <th>Code</th>
                         <th>Description</th>
                         <th>Definition</th>
-                       
-                        <th>Action 2</th>
+
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@
                             <td>{{ strtoupper($clientFareReference->description) }}</td>
                             <td>{{ strtoupper($clientFareReference->definition) }}</td>
                             <!-- Inside the <td> of the "Actions" column in the table -->
-                           
+
                             <td>
                                 <form method="POST" action="{{ route('accountmanager.client.fare_reference.delete', $clientFareReference->id) }}">
                                     @csrf
@@ -70,7 +70,7 @@
                         @csrf
                         <input type="hidden" name="client_id" value="{{ $clientId }}">
                         <input type="hidden" name="fare_reference_id" id="fare_reference_id">
-                    
+
                         <div class="form-group mb-3">
                             <label for="code" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Code:</label>
                             <input type="text" name="code" id="code" class="form-control marsman-border-primary-1 bg-white" required>

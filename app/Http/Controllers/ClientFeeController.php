@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Database\QueryException; 
+use Illuminate\Database\QueryException;
 use App\Models\ClientFee;
 use App\Models\Client;
 
@@ -21,7 +21,9 @@ class ClientFeeController extends Controller
                 'route_id' => 'required|integer',
                 'description' => 'required|string',
                 'source_id' => 'required|integer',
-                'amount' => 'required|numeric',
+                'currency' => 'string',
+                'amount' => 'numeric',
+                'percentage' => 'numeric',
             ]);
 
             // Create a new ClientFee instance with the validated data
@@ -31,12 +33,14 @@ class ClientFeeController extends Controller
                 'route_id' => $validatedData['route_id'],
                 'description' => $validatedData['description'],
                 'source_id' => $validatedData['source_id'],
+                'currency' => $validatedData['currency'],
                 'amount' => $validatedData['amount'],
+                'percentage' => $validatedData['percentage'],
             ]);
 
             //log activity
-            logUserActivity(auth()->user()->id, 
-                'create-client-table-of-fees', 
+            logUserActivity(auth()->user()->id,
+                'create-client-table-of-fees',
                 'Added Table of Fee \''.$validatedData['description'].'\' on client: '.$client->name
             );
 
@@ -52,14 +56,16 @@ class ClientFeeController extends Controller
     public function update(Request $request)
     {
         try {
-            
+
             // Validate the request data
             $validatedData = $request->validate([
                 'category_id' => 'required|integer',
                 'route_id' => 'required|integer',
                 'description' => 'required|string',
                 'source_id' => 'required|integer',
-                'amount' => 'required|numeric',
+                'currency' => 'string',
+                'amount' => 'numeric',
+                'percentage' => 'numeric',
             ]);
 
             // Get record of selected fee
@@ -71,12 +77,14 @@ class ClientFeeController extends Controller
                 'route_id' => $validatedData['route_id'],
                 'description' => $validatedData['description'],
                 'source_id' => $validatedData['source_id'],
+                'currency' => $validatedData['currency'],
                 'amount' => $validatedData['amount'],
+                'percentage' => $validatedData['percentage'],
             ]);
 
             //log activity
-            logUserActivity(auth()->user()->id, 
-                'update-client-table-of-fees', 
+            logUserActivity(auth()->user()->id,
+                'update-client-table-of-fees',
                 'Updated Table of Fee \''.$validatedData['description'].'\' on client: '.$clientFee->client->name
             );
 
@@ -89,7 +97,7 @@ class ClientFeeController extends Controller
     public function destroy(Request $request)
     {
         try {
-            
+
             // Get record of selected fee
             $clientFee = ClientFee::find($request->input('fee_id'));
 
@@ -97,8 +105,8 @@ class ClientFeeController extends Controller
             $clientFee->delete();
 
             //log activity
-            logUserActivity(auth()->user()->id, 
-                'delete-client-table-of-fees', 
+            logUserActivity(auth()->user()->id,
+                'delete-client-table-of-fees',
                 'Deleted Table of Fee \''.$clientFee->description.'\' on client: '.$clientFee->client->name
             );
 

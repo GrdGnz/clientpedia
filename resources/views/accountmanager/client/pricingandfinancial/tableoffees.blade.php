@@ -12,18 +12,18 @@
             <div class="w-100 my-3">
                 <a class="btn marsman-btn-secondary marsman-border-primary-1 txt-1" href="{{ route('accountmanager.clients.index') }}">Back to Client List</a>
             </div>
-            
+
             <h3>TABLE OF FEES - {{ $client['name'] }}</h3>
             <hr class="w-100" />
 
             @if(session('success'))
-                <div class="alert alert-success">
+                <div class="alert alert-success txt-2">
                     {{ session('success') }}
                 </div>
             @endif
 
             @if(session('error'))
-                <div class="alert alert-danger">
+                <div class="alert alert-danger txt-2">
                     {{ session('error') }}
                 </div>
             @endif
@@ -35,7 +35,9 @@
                         <th width="10%">Route</th>
                         <th>Description</th>
                         <th width="10%">Source</th>
+                        <th width="10%">Currency</th>
                         <th width="10%">Amount</th>
+                        <th width="10%">Percentage</th>
                         <th width="10%">Amount (Display)</th>
                         <th width="10%">Action 1</th>
                         <th width="10%">Action 2</th>
@@ -51,9 +53,9 @@
                                 <td>{{ ucfirst($clientFee->category) }}<br />
                                     <select name="category_id" class="form-control txt-1">
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" 
-                                                @if($clientFee->category_id == $category->id)    
-                                                    selected="selectedf"
+                                            <option value="{{ $category->id }}"
+                                                @if($clientFee->category_id == $category->id)
+                                                    selected="selected"
                                                 @endif
                                             >{{ ucfirst($category->name) }}</option>
                                         @endforeach
@@ -62,11 +64,11 @@
                                 <td>{{ ucfirst($clientFee->route) }}<br />
                                     <select name="route_id" class="form-control txt-1">
                                         @foreach ($routes as $route)
-                                            <option value="{{ $route->id }}" 
+                                            <option value="{{ $route->id }}"
                                                 @if ($clientFee->route_id == $route->id)
                                                     selected="selected"
-                                                @endif    
-                                            >{{ ucfirst($route->name) }}</option>    
+                                                @endif
+                                            >{{ ucfirst($route->name) }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -85,8 +87,16 @@
                                     </select>
                                 </td>
                                 <td>
+                                    {{ $clientFee->currency }}<br />
+                                    <input type="text" name="currency" value="{{ $clientFee->currency }}" class="form-control txt-1" />
+                                </td>
+                                <td>
                                     {{ $clientFee->amount }}<br />
                                     <input type="text" name="amount" value="{{ $clientFee->amount }}" class="form-control txt-1" />
+                                </td>
+                                <td>
+                                    {{ $clientFee->percentage }}<br />
+                                    <input type="text" name="percentage" value="{{ $clientFee->percentage }}" class="form-control txt-1" />
                                 </td>
                                 <td>{{ number_format($clientFee->amount, 2, '.', ',') }}</td>
                                 <td class="text-center"><button type="submit" class="btn btn-primary txt-1">Update</button></td>
@@ -98,7 +108,7 @@
                                 <td class="text-center"><button type="submit" class="btn btn-danger txt-1">Delete</button></td>
                             </form>
                         </tr>
-                        
+
                     @endforeach
                 </tbody>
             </table>
@@ -115,13 +125,13 @@
                         @csrf
 
                         <input type="hidden" name="client_id" value="{{ $client->id }}">
-                        
+
                         <div class="form-group mb-3">
-                            <label for="category" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Category</label>
+                            <label for="category_id" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Category</label>
                             <select name="category_id" class="form-control marsman-border-primary-1 bg-white txt-1" id="category_id">
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
-                                @endforeach                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? "selected" : "" }}>{{ ucfirst($category->name) }}</option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -129,28 +139,41 @@
                             <label for="route_id" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Route</label>
                             <select name="route_id" class="form-control marsman-border-primary-1 bg-white txt-1" id="route_id">
                                 @foreach ($routes as $route)
-                                    <option value="{{ $route->id }}">{{ ucfirst($route->name) }}</option>
+                                    <option value="{{ $route->id }}" {{ old('route_id') == $route->id ? 'selected' : '' }}>{{ ucfirst($route->name) }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="description" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Description</label>
-                            <input type="text" name="description" class="form-control marsman-border-primary-1 bg-white txt-1" id="description">
+                            <input type="text" name="description" class="form-control marsman-border-primary-1 bg-white txt-1" id="description" value="{{ old('description') }}">
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="source_id" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Source</label>
                             <select name="source_id" class="form-control marsman-border-primary-1 bg-white txt-1" id="source_id">
                                 @foreach($sources as $source)
-                                    <option value="{{ $source->id }}">{{ ucfirst($source->name) }}</option>
+                                    <option value="{{ $source->id }}" {{ old('source_id') == $source->id ? 'selected' : '' }}>{{ ucfirst($source->name) }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group mb-3">
+                            <label for="currency" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Currency</label>
+                            <select name="currency" class="form-control marsman-border-primary-1 bg-white txt-1" id="currency">
+                                <option value="{{ __('PHP') }}" {{ old('currency') == __('PHP') ? 'selected' : '' }}>{{ __('PHP') }}</option>
+                                <option value="{{ __('USD') }}" {{ old('currency') == __('USD') ? 'selected' : '' }}>{{ __('USD') }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
                             <label for="amount" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Amount</label>
-                            <input type="number" step="0.01" name="amount" class="form-control marsman-border-primary-1 bg-white txt-1" id="amount">
+                            <input type="text" name="amount" class="form-control marsman-border-primary-1 bg-white txt-1" id="amount" value="0">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="percentage" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Percentage</label>
+                            <input type="text" name="percentage" class="form-control marsman-border-primary-1 bg-white txt-1" id="percentage" value="0">
                         </div>
 
                         <button type="submit" class="btn marsman-btn-primary m-2">Save</button>
@@ -163,7 +186,7 @@
 
 <!-- Include jQuery and DataTables -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#feesTable').DataTable({

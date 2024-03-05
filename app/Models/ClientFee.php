@@ -17,7 +17,9 @@ class ClientFee extends Model
         'route_id',
         'description',
         'source_id',
+        'currency',
         'amount',
+        'percentage',
     ];
 
     // Define the relationship with the 'client' model
