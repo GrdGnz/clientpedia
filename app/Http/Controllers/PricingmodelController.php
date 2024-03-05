@@ -24,23 +24,22 @@ class PricingmodelController extends Controller
 
             // Load Pricing Model Type model
             $pricingModelType = PricingmodelType::findOrFail($request->pricingmodel_type_id);
-
+            
             $clientPricingModel = ClientPricingModel::firstOrNew([
                 'client_id' => $clientId,
                 'route_id' => $request->route_id,
             ]);
-
+    
             $clientPricingModel->pricingmodel_type_id = $request->pricingmodel_type_id;
-            $clientPricingModel->pricingmodel_id = $request->pricingmodel;
             $clientPricingModel->save();
 
             //log activity
-            logUserActivity(auth()->user()->id, 'update-client-pricing-model',
+            logUserActivity(auth()->user()->id, 'update-client-pricing-model', 
                 'Set Pricing Model of client \''.$clientPricingModel->client->name.'\' into '
                 .strtoupper($route->name).' - '.strtoupper($pricingModelType->name)
             );
 
-
+    
             return redirect()->route('accountmanager.clients.pricingmodel', ['clientId' => $clientId])
                 ->with('success', 'Client pricing model updated successfully.');
         } catch (\Exception $e) {
@@ -48,5 +47,5 @@ class PricingmodelController extends Controller
                 ->with('error', 'An error occurred while updating the client pricing model: ' . $e->getMessage());
         }
     }
-
+    
 }

@@ -20,7 +20,6 @@ use App\Models\ClientTravelPolicy;
 use App\Models\ClientTravelSecurity;
 use App\Models\ClientVip;
 use App\Models\Hotel;
-use App\Models\Pricingmodel;
 use App\Models\PricingmodelType;
 use App\Models\Route;
 use App\Models\Source;
@@ -36,27 +35,27 @@ class AccountManagerController extends Controller
     {
         $this->middleware('auth');
     }
-
+    
     public function index()
-    {
+    {   
         $user = Auth::user();
 
         // Get user last login date
         $userActivity = new UserActivity;
         $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+        
         // Your Account Manager dashboard logic here
         return view('accountmanager.client.index', compact('lastLoginDate'));
     }
 
-    public function assignClient()
-    {
+    public function assignClient() 
+    {   
         $user = Auth::user();
 
         // Get user last login date
         $userActivity = new UserActivity;
         $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+        
         // Retrieve the selected user ID from the request
         $selectedUserId = request()->input('user_id');
 
@@ -78,12 +77,12 @@ class AccountManagerController extends Controller
         // Retrieve users with role_id of 2
         $travelConsultants = User::where('role_id', 2)->get();
 
-        return view('accountmanager.client.assign',
-            compact('user',
-                'lastLoginDate',
-                'travelConsultants',
-                'selectedUser',
-                'ownedClients',
+        return view('accountmanager.client.assign', 
+            compact('user', 
+                'lastLoginDate', 
+                'travelConsultants', 
+                'selectedUser', 
+                'ownedClients', 
                 'availableClients',
             )
         );
@@ -139,18 +138,18 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
-
+    
             // Retrieve VIP list
             $vips = ClientVip::where('client_id', $clientId)->get();
-
-            return view('accountmanager.client.vip.createvip',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'vips',
+    
+            return view('accountmanager.client.vip.createvip', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'vips', 
                     'clientId',
                 )
             );
@@ -168,18 +167,18 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
-
+    
             // Retrieve VIP list
             $contacts = ClientContact::where('client_id', $clientId)->get();
 
-            return view('accountmanager.client.contact.createcontact',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'contacts',
+            return view('accountmanager.client.contact.createcontact', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'contacts', 
                     'clientId',
                 )
             );
@@ -189,7 +188,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function createBooker($clientId)
+    public function createBooker($clientId) 
     {
         try {
             // Get last login date of user
@@ -198,7 +197,7 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
@@ -206,13 +205,13 @@ class AccountManagerController extends Controller
             $existingSteps = ClientBooker::where('client_id', $clientId)
                 ->orderBy('order_number', 'asc')
                 ->get();
-
-
-            return view('accountmanager.client.booker.createbooker',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
+    
+    
+            return view('accountmanager.client.booker.createbooker', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
                     'existingSteps',
                 )
             );
@@ -222,19 +221,18 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function pricingModel($clientId)
+    public function pricingModel($clientId) 
     {
         try {
             // Get last login date of user
             $user = Auth::user();
             $routes = Route::all();
             $pricingModelTypes = PricingmodelType::all();
-            $pricingModels = Pricingmodel::all();
 
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
@@ -242,15 +240,14 @@ class AccountManagerController extends Controller
             $clientPricingModels = ClientPricingModel::where('client_id', $clientId)
             ->with('route', 'pricingModelType')
             ->get();
-
-            return view('accountmanager.client.pricingandfinancial.pricingmodel',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
-                    'routes',
-                    'pricingModelTypes',
-                    'pricingModels',
+    
+            return view('accountmanager.client.pricingandfinancial.pricingmodel', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
+                    'routes', 
+                    'pricingModelTypes', 
                     'clientPricingModels'
                 )
             );
@@ -260,7 +257,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function fareReference($clientId)
+    public function fareReference($clientId) 
     {
         try {
             // Get last login date of user
@@ -269,18 +266,18 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
             // Get Fare Reference
             $clientFareReferences = ClientFareReference::where('client_id', $clientId)->get();
 
-            return view('accountmanager.client.pricingandfinancial.farereference',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
+            return view('accountmanager.client.pricingandfinancial.farereference', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
                     'clientFareReferences',
                 )
             );
@@ -290,7 +287,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function ancilliaryFees($clientId)
+    public function ancilliaryFees($clientId) 
     {
         try {
             // Get last login date of user
@@ -299,19 +296,19 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
             // Get Fare Reference
             $clientAncilliaryFees = ClientAncilliaryFee::where('client_id', $clientId)->get();
 
-            return view('accountmanager.client.pricingandfinancial.ancilliaryfees',
+            return view('accountmanager.client.pricingandfinancial.ancilliaryfees', 
                 compact(
-                    'user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
+                    'user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
                     'clientAncilliaryFees',
                 )
             );
@@ -321,7 +318,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function tableOfFees($clientId)
+    public function tableOfFees($clientId) 
     {
         try {
             // Get last login date of user
@@ -330,7 +327,7 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
@@ -366,14 +363,14 @@ class AccountManagerController extends Controller
                 $clientFeesWithRouteAndSource[] = $fee;
             }
 
-            return view('accountmanager.client.pricingandfinancial.tableoffees',
+            return view('accountmanager.client.pricingandfinancial.tableoffees', 
                 compact(
-                    'user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
-                    'clientFeesWithRouteAndSource',
-                    'sources',
+                    'user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
+                    'clientFeesWithRouteAndSource', 
+                    'sources', 
                     'routes',
                     'categories',
                 )
@@ -384,7 +381,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function invoiceAttachment($clientId)
+    public function invoiceAttachment($clientId) 
     {
         try {
             // Get last login date of user
@@ -393,18 +390,18 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
             // Get Client Attachments
             $clientInvoiceAttachments = ClientInvoiceAttachment::where('client_id', $clientId)->get();
 
-            return view('accountmanager.client.pricingandfinancial.invoiceattachment',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
+            return view('accountmanager.client.pricingandfinancial.invoiceattachment', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
                     'clientInvoiceAttachments'
                 )
             );
@@ -414,7 +411,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function bookingProcess($clientId, $categoryId)
+    public function bookingProcess($clientId, $categoryId) 
     {
         try {
             // Get last login date of user
@@ -423,7 +420,7 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
@@ -443,14 +440,14 @@ class AccountManagerController extends Controller
                 ->where('category_id', $categoryId)
                 ->orderBy('order_number', 'asc')
                 ->get();
-
-
-            return view('accountmanager.client.bookingprocess',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
+    
+    
+            return view('accountmanager.client.bookingprocess', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
                     'routes',
-                    'clientId',
+                    'clientId', 
                     'categoryId',
                     'existingStepsInternational',
                     'existingStepsDomestic',
@@ -462,7 +459,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function travelPolicy($clientId)
+    public function travelPolicy($clientId) 
     {
         try {
             // Get last login date of user
@@ -471,18 +468,18 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
             // Get client's travel policy
             $travelPolicy = ClientTravelPolicy::where('client_id', $clientId)->get();
 
-            return view('accountmanager.client.air.travelpolicy',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
+            return view('accountmanager.client.air.travelpolicy', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
                     'travelPolicy',
                 )
             );
@@ -492,7 +489,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function preferredAirlines($clientId)
+    public function preferredAirlines($clientId) 
     {
         try {
             // Get last login date of user
@@ -501,7 +498,7 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
@@ -518,11 +515,11 @@ class AccountManagerController extends Controller
                 ->where('route_id', 2)
                 ->get();
 
-            return view('accountmanager.client.air.airlines',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
+            return view('accountmanager.client.air.airlines', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
                     'airlines',
                     'internationalAirlines',
                     'domesticAirlines',
@@ -534,7 +531,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function travelSecurity($clientId)
+    public function travelSecurity($clientId) 
     {
         try {
             // Get last login date of user
@@ -543,18 +540,18 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
             // Get client's travel policy
             $travelSecurity = ClientTravelSecurity::where('client_id', $clientId)->get();
 
-            return view('accountmanager.client.air.travelsecurity',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
+            return view('accountmanager.client.air.travelsecurity', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
                     'travelSecurity',
                 )
             );
@@ -564,7 +561,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function hotelCorporateCode($clientId)
+    public function hotelCorporateCode($clientId) 
     {
         try {
             // Get last login date of user
@@ -573,7 +570,7 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
@@ -587,11 +584,11 @@ class AccountManagerController extends Controller
             $hotelCorporateCode = ClientHotelCorporateCode::where('client_id', $clientId)
                 ->get();
 
-            return view('accountmanager.client.hotel.hotelcorporatecode',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
+            return view('accountmanager.client.hotel.hotelcorporatecode', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
                     'routes',
                     'hotels',
                     'hotelCorporateCode',
@@ -603,7 +600,7 @@ class AccountManagerController extends Controller
         }
     }
 
-    public function reportingElements($clientId)
+    public function reportingElements($clientId) 
     {
         try {
             // Get last login date of user
@@ -612,18 +609,18 @@ class AccountManagerController extends Controller
             // Get user last login date
             $userActivity = new UserActivity;
             $lastLoginDate = $userActivity->getLastLoginDate($user->id);
-
+    
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
             // Retrieve Reporting Elements
             $elements = ClientReportingElement::where('client_id', $clientId)->get();
 
-            return view('accountmanager.client.reportingelements',
-                compact('user',
-                    'lastLoginDate',
-                    'client',
-                    'clientId',
+            return view('accountmanager.client.reportingelements', 
+                compact('user', 
+                    'lastLoginDate', 
+                    'client', 
+                    'clientId', 
                     'elements',
                 )
             );
