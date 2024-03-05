@@ -55,7 +55,7 @@
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}"
                                                 @if($clientFee->category_id == $category->id)
-                                                    selected="selectedf"
+                                                    selected="selected"
                                                 @endif
                                             >{{ ucfirst($category->name) }}</option>
                                         @endforeach
@@ -168,12 +168,12 @@
 
                         <div class="form-group mb-3">
                             <label for="amount" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Amount</label>
-                            <input type="text" name="amount" class="form-control marsman-border-primary-1 bg-white txt-1" id="amount" value="{{ old('amount') }}">
+                            <input type="text" name="amount" class="form-control marsman-border-primary-1 bg-white txt-1" id="amount" value="0">
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="percentage" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Percentage</label>
-                            <input type="text" name="percentage" class="form-control marsman-border-primary-1 bg-white txt-1" id="percentage" value="{{ old('percentage') }}">
+                            <input type="text" name="percentage" class="form-control marsman-border-primary-1 bg-white txt-1" id="percentage" value="0">
                         </div>
 
                         <button type="submit" class="btn marsman-btn-primary m-2">Save</button>
