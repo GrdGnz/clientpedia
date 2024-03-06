@@ -33,12 +33,14 @@
                     <tr>
                         <th width="10%">Category</th>
                         <th width="10%">Route</th>
+                        <th width="10%">Route Type</th>
                         <th>Description</th>
                         <th width="10%">Source</th>
                         <th width="10%">Currency</th>
                         <th width="10%">Amount</th>
                         <th width="10%">Percentage</th>
-                        <th width="10%">Amount (Display)</th>
+                        <th width="10%">VAT</th>
+                        <th width="10%">Unit</th>
                         <th width="10%">Action 1</th>
                         <th width="10%">Action 2</th>
                     </tr>
@@ -72,6 +74,17 @@
                                         @endforeach
                                     </select>
                                 </td>
+                                <td>{{ ucfirst($clientFee->routeType->name) }}<br />
+                                    <select name="route_type_id" class="form-control txt-1">
+                                        @foreach ($routeTypes as $routeType)
+                                            <option value="{{ $routeType->id }}"
+                                                @if ($clientFee->route_type_id == $routeType->id)
+                                                    selected="selected"
+                                                @endif
+                                            >{{ ucfirst($routeType->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
                                 <td>{{ ucfirst($clientFee->description) }}<br />
                                     <textarea name="description" class="form-control txt-1">{{ strtoupper($clientFee->description) }}</textarea>
                                 </td>
@@ -88,9 +101,25 @@
                                 </td>
                                 <td>
                                     {{ $clientFee->currency }}<br />
-                                    <input type="text" name="currency" value="{{ $clientFee->currency }}" class="form-control txt-1" />
+                                    <select name="currency" class="form-control txt-1">
+                                            <option value="{{ __('PHP') }}"
+                                                @if ($clientFee->currency == __('PHP'))
+                                                    selected="selected"
+                                                @endif
+                                            >{{ __('PHP') }}</option>
+                                            <option value="{{ __('USD') }}"
+                                                @if ($clientFee->currency == __('USD'))
+                                                    selected="selected"
+                                                @endif
+                                            >{{ __('USD') }}</option>
+                                    </select>
                                 </td>
                                 <td>
+                                    @if($clientFee->currency == 'PHP')
+                                        {{ __('₱') }}
+                                    @else
+                                        {{ __('$') }}
+                                    @endif
                                     {{ $clientFee->amount }}<br />
                                     <input type="text" name="amount" value="{{ $clientFee->amount }}" class="form-control txt-1" />
                                 </td>
@@ -98,7 +127,40 @@
                                     {{ $clientFee->percentage }}<br />
                                     <input type="text" name="percentage" value="{{ $clientFee->percentage }}" class="form-control txt-1" />
                                 </td>
-                                <td>{{ number_format($clientFee->amount, 2, '.', ',') }}</td>
+                                <td>
+                                    @if($clientFee->vat)
+                                        {{ __('YES') }}
+                                    @else
+                                        {{ __('NO') }}
+                                    @endif
+                                    <br />
+                                    <div class="d-flex">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="vat" id="nonVat" value="0" checked>
+                                            <label class="form-check-label" for="nonVat">
+                                                Non-VAT
+                                            </label>
+                                        </div>
+                                        <div class="form-check mx-3">
+                                            <input class="form-check-input" type="radio" name="vat" id="vat" value="1">
+                                            <label class="form-check-label" for="vat">
+                                                VAT
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ ucfirst($clientFee->unit->name) }}<br />
+                                    <select name="unit" class="form-control txt-1">
+                                        @foreach ($units as $unit)
+                                            <option value="{{ $unit->id }}"
+                                                @if ($clientFee->unit_id == $unit->id)
+                                                    selected="selected"
+                                                @endif
+                                            >{{ ucfirst($unit->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
                                 <td class="text-center"><button type="submit" class="btn btn-primary txt-1">Update</button></td>
                             </form>
                             <form method="post" action="{{ route('accountmanager.client.fee.destroy') }}">
@@ -145,6 +207,23 @@
                         </div>
 
                         <div class="form-group mb-3">
+                            <label for="route_type_id" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Route Type</label>
+                            <div class="d-flex p-2">
+                                @foreach($routeTypes as $routeType)
+                                    <div class="form-check mx-2">
+                                        <input class="form-check-input" type="radio" name="route_type_id" value="{{ $routeType->id }}" checked>
+                                        <label class="form-check-label" for="route_type_id">
+                                            {{ ucfirst($routeType->name) }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                                <div class="form-check mx-1">
+                                    <i class="far fa-question-circle" onclick="openLightbox()" style='font-size:18px; cursor: pointer'></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
                             <label for="description" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Description</label>
                             <input type="text" name="description" class="form-control marsman-border-primary-1 bg-white txt-1" id="description" value="{{ old('description') }}">
                         </div>
@@ -176,6 +255,32 @@
                             <input type="text" name="percentage" class="form-control marsman-border-primary-1 bg-white txt-1" id="percentage" value="0">
                         </div>
 
+                        <div class="form-group mb-3">
+                            <label for="vat" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">VAT</label>
+                            <div class="p-2 d-flex">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="vat" id="nonVat" value="0" checked>
+                                    <label class="form-check-label" for="nonVat">
+                                        Non-VAT
+                                    </label>
+                                </div>
+                                <div class="form-check mx-3">
+                                    <input class="form-check-input" type="radio" name="vat" id="vat" value="1">
+                                    <label class="form-check-label" for="vat">
+                                        VAT
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="unit" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Source</label>
+                            <select name="unit" class="form-control marsman-border-primary-1 bg-white txt-1" id="unit">
+                                @foreach($units as $unit)
+                                    <option value="{{ $unit->id }}" {{ old('unit_id') == $unit->id ? 'selected' : '' }}>{{ ucfirst($unit->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <button type="submit" class="btn marsman-btn-primary m-2">Save</button>
                     </form>
                 </div>
@@ -183,6 +288,49 @@
         </main>
     </div>
 </div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <h2>DEFINITION OF TERMS</h2>
+        <p>Transaction is defined as every ticket issued whether long or short haul; economy, business or first class; one-way or round-trip. A ticket once issued whether cancelled or rebooked will already be charged the corresponding transaction fee.</p>
+        <p>Short haul destinations cover the Southeast Asian Region including China, Hong Kong, Macau and Taiwan, Japan and South Korea.</p>
+        <p>Long haul destinations cover Europe, Middle East, Africa & India, North & South America, Australia & New Zealand, and all other destinations not included in the short haul definition.</p>
+        <p>Domestic travel is considered travel within the Philippines.</p>
+    </div>
+</div>
+
+<style>
+/* Lightbox styles */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.lightbox-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    text-align: left;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+</style>
 
 <!-- Include jQuery and DataTables -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -195,6 +343,22 @@
             "lengthMenu": [10, 20, 30, 40], // Dropdown for changing items per page
         });
     });
+
+    function openLightbox() {
+        document.getElementById('lightbox').style.display = 'block';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+
+    // Close the lightbox if the user clicks outside the content
+    window.onclick = function(event) {
+        var lightbox = document.getElementById('lightbox');
+        if (event.target == lightbox) {
+            lightbox.style.display = 'none';
+        }
+    };
 </script>
 
 @endsection

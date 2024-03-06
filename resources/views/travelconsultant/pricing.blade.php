@@ -47,14 +47,20 @@
                   </thead>
                   <tbody class="bg-white">
                       @foreach($clientPricingModels as $clientPricingModel)
-                          <tr>
-                              <td>{{ strtoupper($clientPricingModel->route->name) }}</td>
-                              <td>{{ strtoupper($clientPricingModel->pricingModelType->name) }}</td>
-                              <td>{{ strtoupper($clientPricingModel->pricingModel->name) }}</td>
-                          </tr>
+                        <tr>
+                            <td>{{ strtoupper($clientPricingModel->route->name) }}</td>
+                            <td>{{ strtoupper($clientPricingModel->pricingModelType->name) }}</td>
+                            <td>
+                            @if($clientPricingModel->pricingmodel_id == 0)
+                                {{ strtoupper(__('None')) }}
+                            @else
+                                {{ strtoupper($clientPricingModel->pricingModel->name) }}
+                            @endif
+                            </td>
+                        </tr>
                       @endforeach
                   </tbody>
-              </table>
+                </table>
 
                 <!-- First tab end -->
 
@@ -119,27 +125,42 @@
                             <tr>
                                 <th>Category</th>
                                 <th>Route</th>
+                                <th>Route Type</th>
                                 <th>Description</th>
                                 <th>Source</th>
                                 <th>Currency</th>
                                 <th>Amount</th>
                                 <th>Percentage</th>
+                                <th>VAT</th>
+                                <th>Unit</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
                           @foreach($clientFeesWithRouteAndSource as $clientFee)
                             <tr>
-<<<<<<< HEAD
                                 <td>{{ strtoupper($clientFee->category->name) }}</td>
-=======
-                                <td>{{ strtoupper($clientFee->category) }}</td>
->>>>>>> main
                                 <td>{{ strtoupper($clientFee->route) }}</td>
+                                <td>{{ strtoupper($clientFee->routeType->name) }}</td>
                                 <td>{{ strtoupper($clientFee->description) }}</td>
                                 <td>{{ strtoupper($clientFee->source) }}</td>
                                 <td>{{ strtoupper($clientFee->currency) }}</td>
-                                <td>{{ number_format($clientFee->amount, 2, '.', ',') }}</td>
+                                <td>
+                                    @if($clientFee->currency == 'PHP')
+                                        {{ __('₱') }}
+                                    @else
+                                        {{ __('$') }}
+                                    @endif
+                                    {{ number_format($clientFee->amount, 2, '.', ',') }}
+                                </td>
                                 <td>{{ $clientFee->percentage }}</td>
+                                <td>
+                                    @if($clientFee->vat == 1)
+                                        {{ __('Yes') }}
+                                    @else
+                                        {{ __('No') }}
+                                    @endif
+                                </td>
+                                <td>{{ strtoupper($clientFee->unit->name) }}</td>
                             </tr>
                           @endforeach
                         </tbody>
@@ -155,46 +176,46 @@
                 @if(isset($clientInvoiceAttachments) && count($clientInvoiceAttachments) > 0)
                   @foreach($clientInvoiceAttachments as $attachment)
                     <table class="table table-bordered">
-                      <tbody class="bg-white">
+                        <tbody class="bg-white">
 
-                          <tr>
-                              <td class="fw-bold" width="20%">Schedule: </td>
-                              <td>{{ $attachment->schedule }}</td>
-                          </tr>
-                          <tr>
-                              <td colspan="2" class="fw-bold">Documents needed:</td>
-                          </tr>
+                            <tr>
+                                <td class="fw-bold" width="20%">Schedule: </td>
+                                <td>{{ $attachment->schedule }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="fw-bold">Documents needed:</td>
+                            </tr>
 
-                          @if ($attachment->description_path != '')
-                          <tr>
-                              <td class="fw-bold">Description: </td>
-                              <td><a href="{{ asset('attachments/' . basename($attachment->description_path)) }}" target="_blank">Download file</a></td>
-                          </tr>
-                          @endif
+                            @if ($attachment->description_path != '')
+                            <tr>
+                                <td class="fw-bold">Description: </td>
+                                <td><a href="{{ asset('attachments/' . basename($attachment->description_path)) }}" target="_blank">Download file</a></td>
+                            </tr>
+                            @endif
 
-                          @if ($attachment->email_approval_path != '')
-                          <tr>
-                              <td class="fw-bold">Email approval: </td>
-                              <td><a href="{{ asset('attachments/' . basename($attachment->email_approval_path)) }}" target="_blank">Download file</a></td>
-                          </tr>
-                          @endif
+                            @if ($attachment->email_approval_path != '')
+                            <tr>
+                                <td class="fw-bold">Email approval: </td>
+                                <td><a href="{{ asset('attachments/' . basename($attachment->email_approval_path)) }}" target="_blank">Download file</a></td>
+                            </tr>
+                            @endif
 
-                          @if ($attachment->purchase_order_path != '')
-                          <tr>
-                              <td class="fw-bold">Purchase order: </td>
-                              <td><a href="{{ asset('attachments/' . basename($attachment->purchase_order_path)) }}" target="_blank">Download file</a></td>
-                          </tr>
-                          @endif
+                            @if ($attachment->purchase_order_path != '')
+                            <tr>
+                                <td class="fw-bold">Purchase order: </td>
+                                <td><a href="{{ asset('attachments/' . basename($attachment->purchase_order_path)) }}" target="_blank">Download file</a></td>
+                            </tr>
+                            @endif
 
-                          <tr>
-                              <td class="fw-bold">Remarks:</td>
-                              <td>{{ $attachment->remarks }}</td>
-                          </tr>
-                          <tr>
-                            <td colspan="2">
-                          </tr>
+                            <tr>
+                                <td class="fw-bold">Remarks:</td>
+                                <td>{{ $attachment->remarks }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                            </tr>
 
-                      </tbody>
+                        </tbody>
                     </table>
                     <br />
                     <br />

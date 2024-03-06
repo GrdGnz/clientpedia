@@ -29,7 +29,13 @@
                         <tr>
                             <td>{{ strtoupper($clientPricingModel->route->name) }}</td>
                             <td>{{ strtoupper($clientPricingModel->pricingModelType->name) }}</td>
-                            <td>{{ strtoupper($clientPricingModel->pricingModel->name) }}</td>
+                            <td>
+                                @if($clientPricingModel->pricingmodel_id == 0)
+                                    {{ __('NONE') }}
+                                @else
+                                    {{ strtoupper($clientPricingModel->pricingModel->name) }}
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
