@@ -12,6 +12,7 @@ class ClientFeeController extends Controller
     public function store(Request $request)
     {
         try {
+
             // Get client
             $client = Client::find($request->input('client_id'));
 
@@ -24,6 +25,9 @@ class ClientFeeController extends Controller
                 'currency' => 'string',
                 'amount' => 'numeric',
                 'percentage' => 'numeric',
+                'vat' => 'string',
+                'unit' => 'integer',
+                'route_type_id' => 'integer',
             ]);
 
             // Create a new ClientFee instance with the validated data
@@ -36,6 +40,9 @@ class ClientFeeController extends Controller
                 'currency' => $validatedData['currency'],
                 'amount' => $validatedData['amount'],
                 'percentage' => $validatedData['percentage'],
+                'vat' => $validatedData['vat'],
+                'unit_id' => $validatedData['unit'],
+                'route_type_id' => $validatedData['route_type_id'],
             ]);
 
             //log activity
@@ -66,6 +73,9 @@ class ClientFeeController extends Controller
                 'currency' => 'string',
                 'amount' => 'numeric',
                 'percentage' => 'numeric',
+                'vat' => 'string',
+                'unit' => 'integer',
+                'route_type_id' => 'integer',
             ]);
 
             // Get record of selected fee
@@ -80,6 +90,9 @@ class ClientFeeController extends Controller
                 'currency' => $validatedData['currency'],
                 'amount' => $validatedData['amount'],
                 'percentage' => $validatedData['percentage'],
+                'vat' => $validatedData['vat'],
+                'unit_id' => $validatedData['unit'],
+                'route_type_id' => $validatedData['route_type_id'],
             ]);
 
             //log activity
@@ -88,7 +101,7 @@ class ClientFeeController extends Controller
                 'Updated Table of Fee \''.$validatedData['description'].'\' on client: '.$clientFee->client->name
             );
 
-            return redirect()->back()->with('success', 'Updated successful');
+            return redirect()->back()->with('success', 'Update successful');
         } catch(\Exception $e) {
             return redirect()->back()->with('error', 'Update failed. '. $e->getMessage());
         }

@@ -23,7 +23,9 @@ use App\Models\Hotel;
 use App\Models\Pricingmodel;
 use App\Models\PricingmodelType;
 use App\Models\Route;
+use App\Models\RouteType;
 use App\Models\Source;
+use App\Models\Unit;
 use App\Models\User;
 use App\Models\UserActivity;
 use App\Models\UserClient;
@@ -346,6 +348,12 @@ class AccountManagerController extends Controller
             // Get categories
             $categories = Category::all();
 
+            //Get units
+            $units = Unit::all();
+
+            //Get route types
+            $routeTypes = RouteType::all();
+
             // Loop through $clientFees and add "route" and "source" properties
             $clientFeesWithRouteAndSource = [];
             foreach ($clientFees as $fee) {
@@ -376,6 +384,8 @@ class AccountManagerController extends Controller
                     'sources',
                     'routes',
                     'categories',
+                    'units',
+                    'routeTypes',
                 )
             );
         } catch (\Exception $e) {

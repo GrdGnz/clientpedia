@@ -20,6 +20,9 @@ class ClientFee extends Model
         'currency',
         'amount',
         'percentage',
+        'vat',
+        'unit_id',
+        'route_type_id',
     ];
 
     // Define the relationship with the 'client' model
@@ -36,5 +39,15 @@ class ClientFee extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit_id');
+    }
+
+    public function routeType()
+    {
+        return $this->belongsTo(RouteType::class, 'route_type_id');
     }
 }
