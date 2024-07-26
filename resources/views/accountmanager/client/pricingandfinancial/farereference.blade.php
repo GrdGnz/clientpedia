@@ -66,6 +66,30 @@
                         </div>
                     @endif
 
+                    <div class="card bg-primary mb-3 text-white">
+                        <div class="card-header p-0 m-0">
+                            <p class="txt-2 mx-2 my-1 pt-1 pb-0">Sample Data</p>
+                        </div>
+                        <div class="card-body">
+                            <table class="table text-white table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Definition</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>HF</td>
+                                        <td>Hugh Fare</td>
+                                        <td>Preferred airline highest fare</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <form method="POST" action="{{ route('accountmanager.client.fare_reference.create') }}" id="fareReferenceForm">
                         @csrf
                         <input type="hidden" name="client_id" value="{{ $clientId }}">
