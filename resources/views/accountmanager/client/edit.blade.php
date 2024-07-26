@@ -12,7 +12,7 @@
             <div class="w-100 my-3">
                 <a class="btn marsman-btn-secondary marsman-border-primary-1 txt-1" href="{{ route('accountmanager.clients.index') }}">Back to Client List</a>
             </div>
-            
+
             <p class="h3">Edit - {{ $client->name }}</p>
             <hr class="w-100" />
 
@@ -51,6 +51,11 @@
                     <div class="form-group mb-3">
                         <label for="code" class="form-label marsman-bg-color-dark text-white rounded-top m-0 p-2">Code</label>
                         <input type="text" name="code" class="form-control txt-1 marsman-border-primary-1" value="{{ $client->code }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="sap_id" class="form-label marsman-bg-color-dark text-white rounded-top m-0 p-2">SAP ID</label>
+                        <input type="text" name="sap_id" class="form-control txt-1 marsman-border-primary-1" value="{{ $client->sap_id }}">
                     </div>
 
                     <div class="form-group mb-3 text-center">

@@ -25,7 +25,7 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    
+
                     <form method="post" action="{{ route('administrator.clients.store') }}">
                         @csrf
                             <div class="form-group mb-3">
@@ -35,6 +35,10 @@
                             <div class="form-group mb-3">
                                 <label for="code" class="marsman-bg-color-dark text-white p-2 rounded-top m-0">Client Code</label>
                                 <input type="text" name="code" id="code" class="form-control marsman-border-primary-1 txt-1 " required />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="sap_id" class="marsman-bg-color-dark text-white p-2 rounded-top m-0">SAP ID</label>
+                                <input type="text" name="sap_id" id="sap_id" class="form-control marsman-border-primary-1 txt-1 " />
                             </div>
                             <div class="form-group mb-3">
                                 <label for="client_type_id" class="marsman-bg-color-dark text-white p-2 rounded-top m-0">Client Type</label>
@@ -64,7 +68,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                    
+
                         <div class="mb-3 w-100 text-center">
                             <button type="submit" class="btn marsman-btn-primary">Save</button>
                         </div>

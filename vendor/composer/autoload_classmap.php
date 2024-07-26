@@ -84,6 +84,7 @@ return array(
     'App\\Models\\ProfilePhoto' => $baseDir . '/app/Models/ProfilePhoto.php',
     'App\\Models\\Role' => $baseDir . '/app/Models/Role.php',
     'App\\Models\\Route' => $baseDir . '/app/Models/Route.php',
+    'App\\Models\\RouteType' => $baseDir . '/app/Models/RouteType.php',
     'App\\Models\\Source' => $baseDir . '/app/Models/Source.php',
     'App\\Models\\Unit' => $baseDir . '/app/Models/Unit.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',

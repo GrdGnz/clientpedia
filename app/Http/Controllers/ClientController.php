@@ -11,6 +11,7 @@ use App\Models\UserClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class ClientController extends Controller
 {
@@ -62,6 +63,7 @@ class ClientController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'code' => 'required|string|unique:clients,code',
+                'sap_id' => 'required|string|unique:clients,sap_id',
                 'client_type_id' => 'required|integer',
                 'global_customer_number' => 'required|string|unique:client_info,global_customer_number',
                 'contract_start_date' => 'required|date',
@@ -81,6 +83,7 @@ class ClientController extends Controller
                 'accountmanager_user_id' => $accountManagerId,
                 'name' => $request->input('name'),
                 'code' => $request->input('code'),
+                'sap_id' => $request->input('sap_id'),
             ]);
 
             //log activity
@@ -132,6 +135,7 @@ class ClientController extends Controller
             $validatedData = $request->validate([
                 'name' => 'required|string',
                 'code' => 'required|string|unique:clients,code,' . $clientId,
+                'sap_id' => 'string',
             ]);
 
             // Check if the 'code' field is unchanged
@@ -147,10 +151,13 @@ class ClientController extends Controller
             //log activity
             logUserActivity(auth()->user()->id, 'update-client', 'Updated client ID '.$clientId.' - '.$validatedData['name']);
 
+            Log::info('Client update successful');
+
             return redirect()
                 ->back()
                 ->with('success', 'Client updated successfully');
         } catch(\Exception $e) {
+            Log::error('Client update error: '. $e->getMessage());
             return redirect()
                 ->back()
                 ->with('error', 'Failed updating client. '.$e->getMessage());

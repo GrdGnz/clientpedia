@@ -14,6 +14,7 @@ class Client extends Model
         'accountmanager_user_id',
         'name',
         'code',
+        'sap_id',
         'status_id'
     ];
 

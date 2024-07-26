@@ -50,6 +50,11 @@
                         </div>
 
                         <div class="form-group mb-3">
+                            <label for="sap_id" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">SAP ID:</label>
+                            <input type="text" class="form-control marsman-border-primary-1 bg-white txt-1" name="sap_id" value="{{ old('sap_id') }}" id="sap_id">
+                        </div>
+
+                        <div class="form-group mb-3">
                             <label for="client_type_id" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Client Type:</label>
                             <select class="form-control marsman-border-primary-1 bg-white txt-1" name="client_type_id" id="client_type_id" required>
                                 <option value="1">Corporate</option>

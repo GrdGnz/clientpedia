@@ -52,6 +52,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th class="marsman-bg-color-semidark text-white" width="150">SAP ID</th>
+                                <td class="bg-white border">
+                                    {{ $client->sap_id }}
+                                </td>
+                            </tr>
+                            <tr>
                                 <th class="marsman-bg-color-semidark text-white">Client Type</th>
                                 <td class="bg-white border">
                                     <select name="clientType" class="form-control txt-1">
