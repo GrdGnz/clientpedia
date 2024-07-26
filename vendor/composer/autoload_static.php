@@ -622,6 +622,7 @@ class ComposerStaticInitdd2e7b6c03897457ab1dfdce020ae3a0
         'App\\Models\\ProfilePhoto' => __DIR__ . '/../..' . '/app/Models/ProfilePhoto.php',
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
         'App\\Models\\Route' => __DIR__ . '/../..' . '/app/Models/Route.php',
+        'App\\Models\\RouteType' => __DIR__ . '/../..' . '/app/Models/RouteType.php',
         'App\\Models\\Source' => __DIR__ . '/../..' . '/app/Models/Source.php',
         'App\\Models\\Unit' => __DIR__ . '/../..' . '/app/Models/Unit.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
