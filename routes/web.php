@@ -144,7 +144,7 @@ Route::group(['middleware' => 'cors'], function () {
             Route::controller(ClientContactController::class)->group(function () {
                 Route::post('account-manager/clients/contact/store', 'store')->name('accountmanager.client.contact.create');
                 Route::get('account-manager/clients/contact/{clientVipId}/edit', 'edit')->name('accountmanager.client.contact.edit');
-                Route::put('account-manager/clients/contact/update', 'update')->name('accountmanager.client.contact.update');
+                Route::put('account-manager/clients/contact/update/{contactId}', 'update')->name('accountmanager.client.contact.update');
                 Route::delete('account-manager/clients/{clientId}/contacts/{contactId}', 'destroy')->name('accountmanager.client.contact.destroy');
                 Route::post('account-manager/clients/{clientId}/contacts/{contactId}/update-status', 'updateStatus')->name('accountmanager.client.contact.update_status');
             });
