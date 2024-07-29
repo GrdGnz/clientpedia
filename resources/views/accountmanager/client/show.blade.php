@@ -104,11 +104,11 @@
                                         <div class="bg-white p-2 rounded-bottom">
                                             <select type="text" id="creditTerm" name="creditTerm" class="form-control txt-1 d-flex">
                                                 <option value="" @if(isset($client->info->credit_term)) @if($client->info->credit_term == '') selected="selected" @endif @endif>-- please select --</option>
-                                                <option value="15" @if($client->info->credit_term == 15) selected="selected" @endif>15 Day/s</option>
-                                                <option value="30" @if($client->info->credit_term == 30) selected="selected" @endif>30 Day/s</option>
-                                                <option value="45" @if($client->info->credit_term == 45) selected="selected" @endif>45 Day/s</option>
-                                                <option value="60" @if($client->info->credit_term == 60) selected="selected" @endif>60 Day/s</option>
-                                                <option value="90" @if($client->info->credit_term == 90) selected="selected" @endif>90 Day/s</option>
+                                                <option value="15"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 15) selected="selected" @endif @endif>15 Day/s</option>
+                                                <option value="30"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 30) selected="selected" @endif @endif>30 Day/s</option>
+                                                <option value="45"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 45) selected="selected" @endif @endif>45 Day/s</option>
+                                                <option value="60"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 60) selected="selected" @endif @endif>60 Day/s</option>
+                                                <option value="90"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 90) selected="selected" @endif @endif>90 Day/s</option>
                                             </select>
                                         </div>
                                     </td>
