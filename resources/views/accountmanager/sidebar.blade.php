@@ -31,7 +31,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-phone-square"></i></div>
                     Contacts
                 </a>
-                
+
                 <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePricingAndFinancial" aria-expanded="false" aria-controls="collapsePricingAndFinancial">
                     <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                     Pricing And Financial
@@ -46,13 +46,13 @@
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.fare_reference', ['clientId' => $client['id']]) }}">
                             Fare Reference
                         </a>
-                        
+
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.ancilliary_fees', ['clientId' => $client['id']]) }}">
                             Ancilliary Fees
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.fees', ['clientId' => $client['id']]) }}">
-                            Table of Fees
+                            Summary of Fees
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.invoice_attachment', ['clientId' => $client['id']]) }}">
@@ -149,7 +149,7 @@
             @endif
         </div>
     </div>
-    
+
     <div class="sb-sidenav-footer marsman-border-t-secondary-3 marsman-bg-color-secondary">
         <div class="small txt-semidark">Logged in as:</div>
         <strong class="txt-dark">{{ Auth::user()->name }}</strong>

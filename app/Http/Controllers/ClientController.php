@@ -63,11 +63,11 @@ class ClientController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'code' => 'required|string|unique:clients,code',
-                'sap_id' => 'required|string|unique:clients,sap_id',
+                'sap_id' => 'nullable|string',
                 'client_type_id' => 'required|integer',
-                'global_customer_number' => 'required|string|unique:client_info,global_customer_number',
-                'contract_start_date' => 'required|date',
-                'contract_end_date' => 'required|date',
+                'global_customer_number' => 'nullable|string|unique:client_info,global_customer_number',
+                'contract_start_date' => 'nullable|date',
+                'contract_end_date' => 'nullable|date',
             ]);
 
             // Check if validation fails
@@ -82,8 +82,8 @@ class ClientController extends Controller
             $client = Client::create([
                 'accountmanager_user_id' => $accountManagerId,
                 'name' => $request->input('name'),
-                'code' => $request->input('code'),
-                'sap_id' => $request->input('sap_id'),
+                'code' => strtoupper($request->input('code')),
+                'sap_id' => strtoupper($request->input('sap_id')),
             ]);
 
             //log activity
@@ -135,8 +135,10 @@ class ClientController extends Controller
             $validatedData = $request->validate([
                 'name' => 'required|string',
                 'code' => 'required|string|unique:clients,code,' . $clientId,
-                'sap_id' => 'string',
+                'sap_id' => 'nullable|string',
             ]);
+
+            dd($validatedData);
 
             // Check if the 'code' field is unchanged
             if ($existingClient->code === $validatedData['code']) {

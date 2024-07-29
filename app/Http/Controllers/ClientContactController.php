@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\ClientContact;
+use Illuminate\Support\Facades\Log;
 
 class ClientContactController extends Controller
 {
@@ -17,63 +18,81 @@ class ClientContactController extends Controller
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
-            'client_id' => 'required',
+            'client_id' => 'required|exists:clients,id',  // Ensure client_id exists in the clients table
             'name' => 'required|string|max:255',
-            'designation' => 'nullable|max:255',
-            'department' => 'nullable|max:255',
-            'contact_mobile' => 'nullable|max:20',
+            'designation' => 'nullable|string|max:255',
+            'department' => 'nullable|string|max:255',
+            'contact_mobile' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
             'birthday' => 'nullable|date',
             'remarks' => 'nullable|string',
         ]);
 
-        // If the 'remarks' field is empty in the request, set it to null
+        // If 'remarks' is empty, set it to null
         $validatedData['remarks'] = $validatedData['remarks'] ?? null;
 
-        // Create a new clientContact instance with the validated data
-        $clientContact = new ClientContact($validatedData);
+        try {
+            // Create a new instance of ClientContact with the validated data
+            $clientContact = ClientContact::create($validatedData);
 
-        // Save the new clientContact record to the database
-        $clientContact->save();
+            // Log the creation of a new client contact
+            Log::info('New client contact created:', [
+                'contact_id' => $clientContact->id,
+                'client_id' => $clientContact->client_id,
+                'name' => $clientContact->name,
+            ]);
 
-        //log activity
-        logUserActivity(auth()->user()->id, 'create-client-contact', 'Added contact person \''.$validatedData['name'].'\' to '. $clientContact->client->name);
+            // Log user activity
+            logUserActivity(auth()->user()->id, 'create-client-contact', "Added contact person '{$validatedData['name']}' to client ID {$validatedData['client_id']}.");
 
+            // Redirect back with a success message
+            return redirect()->back()->with('success', 'Client Contact created successfully!');
 
-        // Redirect back to the form with a success message
-        return redirect()->back()->with('success', 'Client Contact created successfully!');
+        } catch (\Exception $e) {
+            // Log the exception
+            Log::error('Error creating client contact:', [
+                'error_message' => $e->getMessage(),
+                'stack_trace' => $e->getTraceAsString(),
+            ]);
+
+            // Redirect back with an error message
+            return redirect()->back()->with('error', 'There was an issue creating the client contact. Please try again.');
+        }
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $contactId)
     {
         try {
-
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
                 'designation' => 'nullable|max:255',
                 'department' => 'nullable|max:255',
-                'contact_landline' => 'nullable|max:20',
                 'contact_mobile' => 'nullable|max:20',
                 'email' => 'nullable|email|max:255',
                 'birthday' => 'nullable|date',
+                'remarks' => 'nullable|string|max:1000',
+                'status_id' => 'nullable|boolean',
             ]);
 
             $contactId = $request->input('contactId');
             $clientContact = ClientContact::findOrFail($contactId);
 
+            // If status_id is not present in the request, set it to 0
+            $validatedData['status_id'] = $request->input('status_id', 0);
+
             $clientContact->update($validatedData);
 
-            //log activity
-            logUserActivity(auth()->user()->id, 'update-client-contact', 'Updated contact person \''.$validatedData['name'].'\' of '. $clientContact->client->name);
+            // Log activity
+            logUserActivity(auth()->user()->id, 'update-client-contact', 'Updated contact person \'' . $validatedData['name'] . '\' of ' . $clientContact->client->name);
 
             return redirect()
                 ->back()
                 ->with('success', 'Record Updated Successfully');
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return redirect()
                 ->back()
-                ->with('error', 'Update failed - '. $e->getMessage());
+                ->with('error', 'Update failed - ' . $e->getMessage());
         }
     }
 

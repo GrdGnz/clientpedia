@@ -40,7 +40,7 @@
                     <form method="POST" action="{{ route('accountmanager.clients.store') }}">
                         @csrf
                         <div class="form-group mb-3">
-                            <label for="name" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Client Name:</label>
+                            <label for="name" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">* Client Name:</label>
                             <input type="text" class="form-control marsman-border-primary-1 bg-white txt-1" name="name" id="name" required>
                         </div>
 
