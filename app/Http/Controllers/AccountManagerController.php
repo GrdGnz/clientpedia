@@ -226,7 +226,6 @@ class AccountManagerController extends Controller
     public function createBooker($clientId)
     {
         try {
-            // Get last login date of user
             $user = Auth::user();
 
             // Get user last login date
@@ -236,23 +235,22 @@ class AccountManagerController extends Controller
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
-            // Retrive client booker steps
-            $existingSteps = ClientBooker::where('client_id', $clientId)
-                ->orderBy('order_number', 'asc')
-                ->get();
-
+            // Retrieve VIP list
+            $contacts = ClientContact::where('client_id', $clientId)->get();
+            $bookers = ClientBooker::where('client_id', $clientId)->get();
 
             return view('accountmanager.client.booker.createbooker',
                 compact('user',
                     'lastLoginDate',
                     'client',
+                    'contacts',
+                    'bookers',
                     'clientId',
-                    'existingSteps',
                 )
             );
         } catch (\Exception $e) {
             // Handle exceptions here (e.g., client not found, database error)
-            return view('errors.404'); // Redirect to a 404 error page or show an error message.
+            return redirect()->route('error.404'); // Redirect to a 404 error page or show an error message.
         }
     }
 

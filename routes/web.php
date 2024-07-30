@@ -155,12 +155,14 @@ Route::group(['middleware' => 'cors'], function () {
             Route::controller(ClientApproverController::class)->group(function () {
                 Route::post('account-manager/clients/approver/store', 'store')->name('accountmanager.client.approver.create');
                 Route::put('account-manager/clients/approver/update/{approverId}', 'update')->name('accountmanager.client.approver.update');
-                Route::delete('account-manager/clients/{clientId}/approver/{approverId}', 'destroy')->name('accountmanager.client.contact.destroy');
+                Route::delete('account-manager/clients/{clientId}/approver/{approverId}', 'destroy')->name('accountmanager.client.approver.destroy');
             });
 
             // Client Booker routes
             Route::controller(ClientBookerController::class)->group(function () {
-                Route::post('account-manager/client/booker/store', 'saveSteps')->name('accountmanager.client.booker.create');
+                Route::post('account-manager/clients/booker/store', 'store')->name('accountmanager.client.booker.create');
+                Route::put('account-manager/clients/booker/update/{bookerId}', 'update')->name('accountmanager.client.booker.update');
+                Route::delete('account-manager/clients/{clientId}/booker/{bookerId}', 'destroy')->name('accountmanager.client.booker.destroy');
             });
 
             // Assign Client routes

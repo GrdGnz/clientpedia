@@ -13,10 +13,15 @@ class ClientBooker extends Model
 
     protected $fillable = [
         'client_id',
-        'order_number',
-        'description',
+        'name',
+        'designation',
+        'department',
+        'contact_landline',
+        'contact_mobile',
+        'email',
+        'status_id',
     ];
-    
+
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id');
