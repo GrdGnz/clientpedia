@@ -22,4 +22,9 @@ class ClientApprover extends Model
         'approver_level',
         'status_id',
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
 }

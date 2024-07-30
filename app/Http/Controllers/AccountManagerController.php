@@ -6,6 +6,7 @@ use App\Models\Airlines;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\ClientAncilliaryFee;
+use App\Models\ClientApprover;
 use App\Models\ClientBooker;
 use App\Models\ClientBookingProcess;
 use App\Models\ClientContact;
@@ -182,6 +183,37 @@ class AccountManagerController extends Controller
                     'lastLoginDate',
                     'client',
                     'contacts',
+                    'clientId',
+                )
+            );
+        } catch (\Exception $e) {
+            // Handle exceptions here (e.g., client not found, database error)
+            return redirect()->route('error.404'); // Redirect to a 404 error page or show an error message.
+        }
+    }
+
+    public function createApprover($clientId)
+    {
+        try {
+            $user = Auth::user();
+
+            // Get user last login date
+            $userActivity = new UserActivity;
+            $lastLoginDate = $userActivity->getLastLoginDate($user->id);
+
+            // Retrieve the client data based on the ID from the URL
+            $client = Client::findOrFail($clientId);
+
+            // Retrieve VIP list
+            $contacts = ClientContact::where('client_id', $clientId)->get();
+            $approvers = ClientApprover::where('client_id', $clientId)->get();
+
+            return view('accountmanager.client.approver.createapprover',
+                compact('user',
+                    'lastLoginDate',
+                    'client',
+                    'contacts',
+                    'approvers',
                     'clientId',
                 )
             );
