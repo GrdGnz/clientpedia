@@ -6,48 +6,85 @@ use Illuminate\Http\Request;
 use App\Models\ClientBooker;
 use App\Models\User; // Import the User model if not already imported
 use App\Models\Client; // Import the Client model if not already imported
+use Illuminate\Support\Facades\Log;
 
 class ClientBookerController extends Controller
 {
     // ... other controller methods ...
 
-    public function saveSteps(Request $request)
+    public function store(Request $request)
     {
         // Validate the incoming request data
-        $request->validate([
-            'client_id' => 'required', // Add validation rules for other fields as needed
+        $validatedData = $request->validate([
+            'client_id' => 'required|exists:clients,id',  // Ensure client_id exists in the clients table
+            'name' => 'required|string|max:255',
+            'designation' => 'nullable|string|max:255',
+            'department' => 'nullable|string|max:255',
+            'contact_mobile' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'status_id' => 'nullable|boolean',
         ]);
-    
-        $clientId = $request->input('client_id');
-        $route_id = $request->input('route_id');
-        $category_id = $request->input('category_id');
-        $steps = $request->input('steps');
-    
-        // Delete existing data for the same client_id
-        ClientBooker::where('client_id', $clientId)->delete();
-    
-        $orderNumber = 1; // Initialize order_number to 1
-    
-        // Iterate through the steps and insert new rows with order_number in ascending order
-        foreach ($steps as $description) {
-            if ($description != '') {
-                $clientBooker = new ClientBooker([
-                    'accountmanager_user_id' => $request->input('accountmanager_user_id'),
-                    'client_id' => $clientId,
-                    'route_id' => $route_id,
-                    'category_id' => $category_id,
-                    'order_number' => $orderNumber,
-                    'description' => $description,
-                ]);
-        
-                $clientBooker->save();
-        
-                $orderNumber++; // Increment order_number for the next step
-            }
-        }
-    
-        // Optionally, you can return a response or redirect to a specific route.
-        return redirect()->back()->with('success', 'Steps saved successfully');
-    }    
 
+        try {
+            // Create a new instance of ClientContact with the validated data
+            $clientBooker = ClientBooker::create($validatedData);
+
+            // Log the creation of a new client contact
+            Log::info('New client booker created:', [
+                'contact_id' => $clientBooker->id,
+                'client_id' => $clientBooker->client_id,
+                'name' => $clientBooker->name,
+            ]);
+
+            // Log user activity
+            logUserActivity(auth()->user()->id, 'create-client-booker', "Added booker '{$validatedData['name']}' to client ID {$validatedData['client_id']}.");
+
+            // Redirect back with a success message
+            return redirect()->back()->with('success', 'Client Booker created successfully!');
+
+        } catch (\Exception $e) {
+            // Log the exception
+            Log::error('Error creating client booker:', [
+                'error_message' => $e->getMessage(),
+                'stack_trace' => $e->getTraceAsString(),
+            ]);
+
+            // Redirect back with an error message
+            return redirect()->back()->with('error', 'There was an issue creating the client booker. Please try again.');
+        }
+    }
+
+    public function update(Request $request, $bookerId)
+    {
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'designation' => 'nullable|max:255',
+                'department' => 'nullable|max:255',
+                'contact_mobile' => 'nullable|max:20',
+                'email' => 'nullable|email|max:255',
+                'status_id' => 'nullable|boolean',
+            ]);
+
+            $bookerId = $request->input('bookerId');
+            $clientBooker = ClientBooker::findOrFail($bookerId);
+
+            // If status_id is not present in the request, set it to 0
+            $validatedData['status_id'] = $request->input('status_id', 0);
+
+            $clientBooker->update($validatedData);
+
+            // Log activity
+            logUserActivity(auth()->user()->id, 'update-client-booker', 'Updated booker \'' . $validatedData['name'] . '\' of ' . $clientBooker->client->name);
+
+            return redirect()
+                ->back()
+                ->with('success', 'Record Updated Successfully');
+
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('error', 'Update failed - ' . $e->getMessage());
+        }
+    }
 }

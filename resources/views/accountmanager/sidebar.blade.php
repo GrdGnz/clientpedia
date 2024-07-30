@@ -37,6 +37,11 @@
                     Approvers
                 </a>
 
+                <a class="nav-link" href="{{ route('accountmanager.clients.booker.create', ['clientId' => $client['id']]) }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-phone-square"></i></div>
+                    Bookers
+                </a>
+
                 <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePricingAndFinancial" aria-expanded="false" aria-controls="collapsePricingAndFinancial">
                     <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                     Pricing And Financial
