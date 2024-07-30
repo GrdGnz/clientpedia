@@ -5,6 +5,7 @@ use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\AirlineController;
 use App\Http\Controllers\AncilliaryFeeController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ClientApproverController;
 use App\Http\Controllers\ClientBookerController;
 use App\Http\Controllers\ClientBookingProcessController;
 use App\Http\Controllers\ClientContactController;
@@ -27,8 +28,8 @@ use App\Http\Controllers\UserClientController;
 use App\Http\Controllers\UserController;
 use App\Models\ProfilePhoto;
 use App\Models\UserActivity;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'cors'], function () {
 
@@ -100,6 +101,7 @@ Route::group(['middleware' => 'cors'], function () {
             Route::post('account-manager/update-user-clients', 'updateUserClients')->name('accountmanager.update.userclients');
             Route::get('account-manager/clients/vip/{clientId}', 'createVip')->name('accountmanager.clients.vip.create');
             Route::get('account-manager/clients/contact/{clientId}', 'createContact')->name('accountmanager.clients.contact.create');
+            Route::get('account-manager/clients/approver/{clientId}', 'createApprover')->name('accountmanager.clients.approver.create');
             Route::get('account-manager/clients/booker/{clientId}', 'createBooker')->name('accountmanager.clients.booker.create');
             Route::get('account-manager/clients/pricingmodel/{clientId}', 'pricingModel')->name('accountmanager.clients.pricingmodel');
             Route::get('account-manager/clients/fare-reference/{clientId}', 'fareReference')->name('accountmanager.clients.fare_reference');
@@ -147,6 +149,13 @@ Route::group(['middleware' => 'cors'], function () {
                 Route::put('account-manager/clients/contact/update/{contactId}', 'update')->name('accountmanager.client.contact.update');
                 Route::delete('account-manager/clients/{clientId}/contacts/{contactId}', 'destroy')->name('accountmanager.client.contact.destroy');
                 Route::post('account-manager/clients/{clientId}/contacts/{contactId}/update-status', 'updateStatus')->name('accountmanager.client.contact.update_status');
+            });
+
+            // Client Approver routes
+            Route::controller(ClientApproverController::class)->group(function () {
+                Route::post('account-manager/clients/approver/store', 'store')->name('accountmanager.client.approver.create');
+                Route::put('account-manager/clients/approver/update/{approverId}', 'update')->name('accountmanager.client.approver.update');
+                Route::delete('account-manager/clients/{clientId}/approver/{approverId}', 'destroy')->name('accountmanager.client.contact.destroy');
             });
 
             // Client Booker routes

@@ -11,90 +11,79 @@ class ClientApproverController extends Controller
     // Store a new client approver
     public function store(Request $request)
     {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'client_id' => 'required|exists:clients,id',  // Ensure client_id exists in the clients table
+            'name' => 'required|string|max:255',
+            'designation' => 'nullable|string|max:255',
+            'department' => 'nullable|string|max:255',
+            'contact_mobile' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'approver_level' => 'nullable|string',
+            'status_id' => 'nullable|boolean',
+        ]);
+
         try {
-            // Validate the incoming request data
-            $validatedData = $request->validate([
-                'client_id' => 'required|exists:clients,id',
-                'approverName' => 'required|string|max:255',
-                'approverDesignation' => 'nullable|string|max:255',
-                'approverDepartment' => 'nullable|string|max:255',
-                'approverLandline' => 'nullable|string|max:20',
-                'approverMobile' => 'nullable|string|max:20',
-                'approverEmail' => 'nullable|email|max:255',
-                'approverLevel' => 'required|integer|min:1',
-                'approverStatus' => 'required|integer|exists:statuses,id', // assuming status_id refers to a valid status
+            // Create a new instance of ClientContact with the validated data
+            $clientApprover = ClientApprover::create($validatedData);
+
+            // Log the creation of a new client contact
+            Log::info('New client contact created:', [
+                'contact_id' => $clientApprover->id,
+                'client_id' => $clientApprover->client_id,
+                'name' => $clientApprover->name,
             ]);
 
-            // Create a new ClientApprover instance with the validated data
-            $clientApprover = new ClientApprover([
-                'client_id' => $validatedData['client_id'],
-                'name' => $validatedData['approverName'],
-                'designation' => $validatedData['approverDesignation'],
-                'department' => $validatedData['approverDepartment'],
-                'contact_landline' => $validatedData['approverLandline'],
-                'contact_mobile' => $validatedData['approverMobile'],
-                'email' => $validatedData['approverEmail'],
-                'approver_level' => $validatedData['approverLevel'],
-                'status_id' => $validatedData['approverStatus'],
-            ]);
+            // Log user activity
+            logUserActivity(auth()->user()->id, 'create-client-approver', "Added approver '{$validatedData['name']}' to client ID {$validatedData['client_id']}.");
 
-            // Save the new client approver record to the database
-            $clientApprover->save();
-
-            // Log success
-            Log::info('Client Approver created successfully.', ['client_approver' => $clientApprover]);
-
-            // Return a success response
+            // Redirect back with a success message
             return redirect()->back()->with('success', 'Client Approver created successfully!');
-        } catch (\Exception $e) {
-            // Log the error
-            Log::error('Error creating Client Approver: ' . $e->getMessage(), ['request' => $request->all()]);
 
-            // Return an error response
-            return redirect()->back()->with('error', 'Failed to create Client Approver.');
+        } catch (\Exception $e) {
+            // Log the exception
+            Log::error('Error creating client approver:', [
+                'error_message' => $e->getMessage(),
+                'stack_trace' => $e->getTraceAsString(),
+            ]);
+
+            // Redirect back with an error message
+            return redirect()->back()->with('error', 'There was an issue creating the client approver. Please try again.');
         }
     }
 
-    // Update an existing client approver
-    public function update(Request $request, $id)
+    public function update(Request $request, $approverId)
     {
         try {
-            // Validate the incoming request data
             $validatedData = $request->validate([
-                'approverName' => 'required|string|max:255',
-                'approverDesignation' => 'nullable|string|max:255',
-                'approverDepartment' => 'nullable|string|max:255',
-                'approverLandline' => 'nullable|string|max:20',
-                'approverMobile' => 'nullable|string|max:20',
-                'approverEmail' => 'nullable|email|max:255',
-                'approverLevel' => 'required|integer|min:1',
-                'approverStatus' => 'required|integer|exists:statuses,id',
+                'name' => 'required|string|max:255',
+                'designation' => 'nullable|max:255',
+                'department' => 'nullable|max:255',
+                'contact_mobile' => 'nullable|max:20',
+                'email' => 'nullable|email|max:255',
+                'approver_level' => 'nullable|integer',
+                'status_id' => 'nullable|boolean',
             ]);
 
-            // Find the client approver by ID and update its details
-            $clientApprover = ClientApprover::findOrFail($id);
-            $clientApprover->update([
-                'name' => $validatedData['approverName'],
-                'designation' => $validatedData['approverDesignation'],
-                'department' => $validatedData['approverDepartment'],
-                'contact_landline' => $validatedData['approverLandline'],
-                'contact_mobile' => $validatedData['approverMobile'],
-                'email' => $validatedData['approverEmail'],
-                'approver_level' => $validatedData['approverLevel'],
-                'status_id' => $validatedData['approverStatus'],
-            ]);
+            $approverId = $request->input('approverId');
+            $clientApprover = ClientApprover::findOrFail($approverId);
 
-            // Log success
-            Log::info('Client Approver updated successfully.', ['client_approver' => $clientApprover]);
+            // If status_id is not present in the request, set it to 0
+            $validatedData['status_id'] = $request->input('status_id', 0);
 
-            // Return a success response
-            return redirect()->back()->with('success', 'Client Approver updated successfully!');
+            $clientApprover->update($validatedData);
+
+            // Log activity
+            logUserActivity(auth()->user()->id, 'update-client-approver', 'Updated approver \'' . $validatedData['name'] . '\' of ' . $clientApprover->client->name);
+
+            return redirect()
+                ->back()
+                ->with('success', 'Record Updated Successfully');
+
         } catch (\Exception $e) {
-            // Log the error
-            Log::error('Error updating Client Approver: ' . $e->getMessage(), ['request' => $request->all(), 'id' => $id]);
-
-            // Return an error response
-            return redirect()->back()->with('error', 'Failed to update Client Approver.');
+            return redirect()
+                ->back()
+                ->with('error', 'Update failed - ' . $e->getMessage());
         }
     }
 }

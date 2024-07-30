@@ -32,6 +32,11 @@
                     Contacts
                 </a>
 
+                <a class="nav-link" href="{{ route('accountmanager.clients.approver.create', ['clientId' => $client['id']]) }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-phone-square"></i></div>
+                    Approvers
+                </a>
+
                 <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePricingAndFinancial" aria-expanded="false" aria-controls="collapsePricingAndFinancial">
                     <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                     Pricing And Financial
@@ -45,10 +50,6 @@
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.fare_reference', ['clientId' => $client['id']]) }}">
                             Fare Reference
-                        </a>
-
-                        <a class="nav-link collapsed" href="{{ route('accountmanager.clients.ancilliary_fees', ['clientId' => $client['id']]) }}">
-                            Ancilliary Fees
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.fees', ['clientId' => $client['id']]) }}">
