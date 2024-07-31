@@ -5,60 +5,44 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ClientFareReference;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class ClientFareReferenceController extends Controller
 {
     public function store(Request $request)
     {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'published_fares' => 'required|in:yes,no',
+            'private_fares' => 'required|in:yes,no',
+            'corporate_fares' => 'required|in:yes,no',
+        ]);
+
         try {
-            // Validate the form data
-            $validatedData = $request->validate([
-                'code' => 'required|string',
-                'description' => 'required|string',
-                'definition' => 'required|string',
-            ]);
-    
-            // Check if a record with the same 'code' already exists, excluding the current record being updated
-            $existingRecord = ClientFareReference::where('code', $validatedData['code'])
-                ->where('id', '!=', $request['fare_reference_id'])
-                ->where('client_id', $request['client_id'])
-                ->first();
-    
-            if ($existingRecord) {
-                // A record with the same 'code' already exists
-                return redirect()->back()->with('error', 'Code already exists.');
-            }
-    
-            if ($request->has('fare_reference_id') && $request['fare_reference_id'] != '') {
-                // Updating an existing record
-                $clientFareReference = ClientFareReference::findOrFail($request['fare_reference_id']);
+            // Check if the client_id already exists in the client_fare_reference table
+            $clientFareReference = ClientFareReference::where('client_id', $validatedData['client_id'])->first();
+
+            if ($clientFareReference) {
+                // If the client_id exists, update the existing record
+                $clientFareReference->update($validatedData);
             } else {
-                // Creating a new record
-                $clientFareReference = new ClientFareReference;
-                $clientFareReference->client_id = $request['client_id'];
+                // If the client_id does not exist, create a new record
+                ClientFareReference::create($validatedData);
             }
-    
-            $clientFareReference->code = $validatedData['code'];
-            $clientFareReference->description = $validatedData['description'];
-            $clientFareReference->definition = $validatedData['definition'];
-    
-            $clientFareReference->save();
 
-            //log activity
-            logUserActivity(auth()->user()->id, 'create-client-fare-reference', 
-                'Added Fare Reference to client \''.$clientFareReference->client->name.'\' with code '.$validatedData['code']
-            );
+            // Redirect back with a success message
+            return redirect()->back()->with('success', 'Client fare reference updated successfully.');
 
-    
-            // Redirect to a success page or show a success message
-            $message = $request->has('fare_reference_id') ? 'Client Fare Reference updated successfully' : 'Client Fare Reference created successfully';
-            return redirect()->back()->with('success', $message);
-        } catch (Exception $e) {
-            // Handle the exception, you can log it or redirect to an error page
-            return redirect()->back()->with('error', 'An error occurred while saving the Client Fare Reference. '. $e->getMessage());
+        } catch (\Exception $e) {
+            // Log the exception
+            Log::error('Error updating or creating ClientFareReference: ' . $e->getMessage());
+
+            // Redirect back with an error message
+            return redirect()->back()->with('error', 'There was an issue updating the client fare reference. Please try again.');
         }
     }
-    
+
     public function destroy($id)
     {
         try {
@@ -66,10 +50,10 @@ class ClientFareReferenceController extends Controller
             $clientFareReference->delete();
 
             //log activity
-            logUserActivity(auth()->user()->id, 'delete-client-fare-reference', 
+            logUserActivity(auth()->user()->id, 'delete-client-fare-reference',
                 'Deleted Fare Reference of client \''.$clientFareReference->client->name.'\' with code '.$clientFareReference->code
             );
-            
+
             return redirect()->back()->with('success', 'Client Fare Reference deleted successfully');
         } catch (Exception $e) {
             // Handle the exception, you can log it or redirect to an error page

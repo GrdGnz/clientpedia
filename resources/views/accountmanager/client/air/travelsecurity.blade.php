@@ -12,7 +12,7 @@
                 <div class="w-100 my-3">
                     <a class="btn marsman-btn-secondary marsman-border-primary-1 txt-1" href="{{ route('accountmanager.clients.index') }}">Back to Client List</a>
                 </div>
-                
+
                 <p class="h3">AIR TRAVEL SECURITY - {{ $client['name'] }}</p>
                 <hr class="w-100" />
 
@@ -35,7 +35,7 @@
                     <div class="card-body">
 
                         @if ($travelSecurity->count() > 0)
-                            
+
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -60,17 +60,17 @@
                             </table>
 
                         @else
-                        
+
                         <form method="POST" action="{{ route('accountmanager.client.travel_security.create') }}">
                             @csrf
                             <input type="hidden" name="client_id" value="{{ $client['id'] }}" class="form-control">
-                
+
                             <div class="form-group mb-3">
                                 <label for="description" class="p-2 marsman-bg-color-dark text-white rounded-top">Description</label>
                                 <trix-editor input="description" class="form-control marsman-border-primary-1 txt-1"></trix-editor>
                                 <input id="description" type="hidden" name="description">
                             </div>
-                            
+
                             <div class="text-center">
                                 <button type="submit" class="btn marsman-btn-primary">Save</button>
                             </div>
@@ -80,7 +80,7 @@
 
                     </div>
                 </div>
-                
+
             </main>
         </div>
     </div>

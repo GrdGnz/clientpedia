@@ -16,123 +16,89 @@
             <div class="h3">FARE REFERENCE - {{ $client['name'] }}</div>
             <hr class="w-100" />
 
-            <table id="fareReferenceTable" class="table table-striped table-bordered">
-                <thead class="marsman-bg-color-dark text-white">
-                    <tr>
-                        <th>Code</th>
-                        <th>Description</th>
-                        <th>Definition</th>
-
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($clientFareReferences as $clientFareReference)
-                        <tr>
-                            <td>{{ strtoupper($clientFareReference->code) }}</td>
-                            <td>{{ strtoupper($clientFareReference->description) }}</td>
-                            <td>{{ strtoupper($clientFareReference->definition) }}</td>
-                            <!-- Inside the <td> of the "Actions" column in the table -->
-
-                            <td>
-                                <form method="POST" action="{{ route('accountmanager.client.fare_reference.delete', $clientFareReference->id) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm rounded-pill">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
-            <hr class="w-100" />
-
-            <div class="card">
-
-                <div class="card-header marsman-bg-color-dark">
-                    <p class="h4 text-white py-2">Add Fare Reference</p>
+            @if (session('success'))
+                <div class="alert alert-success txt-2">
+                    {{ session('success') }}
                 </div>
-                <div class="card-body marsman-bg-color-lightblue">
-                    @if(session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+            @endif
 
-                    @if(session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-
-                    <div class="card bg-primary mb-3 text-white">
-                        <div class="card-header p-0 m-0">
-                            <p class="txt-2 mx-2 my-1 pt-1 pb-0">Sample Data</p>
-                        </div>
-                        <div class="card-body">
-                            <table class="table text-white table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Code</th>
-                                        <th>Description</th>
-                                        <th>Definition</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>HF</td>
-                                        <td>Hugh Fare</td>
-                                        <td>Preferred airline highest fare</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <form method="POST" action="{{ route('accountmanager.client.fare_reference.create') }}" id="fareReferenceForm">
-                        @csrf
-                        <input type="hidden" name="client_id" value="{{ $clientId }}">
-                        <input type="hidden" name="fare_reference_id" id="fare_reference_id">
-
-                        <div class="form-group mb-3">
-                            <label for="code" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Code:</label>
-                            <input type="text" name="code" id="code" class="form-control marsman-border-primary-1 bg-white" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="description" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Description:</label>
-                            <input type="text" name="description" id="description" class="form-control marsman-border-primary-1 bg-white" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="definition" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Definition:</label>
-                            <textarea name="definition" id="definition" class="form-control marsman-border-primary-1 bg-white" rows="4" required></textarea>
-                        </div>
-
-                        <div class="w-100 text-center">
-                            <button type="submit" id="saveOrUpdateBtn" class="btn marsman-btn-primary m-2">Save</button>
-                        </div>
-                    </form>
+            @if(session('error'))
+                <div class="alert alert-danger txt-2">
+                    {{ session('error') }}
                 </div>
-            </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger txt-2">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('accountmanager.client.fare_reference.create') }}" method="POST">
+                @csrf
+
+                <input type="hidden" name="client_id" value="{{ $client['id'] }}">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="marsman-bg-color-primary text-white">
+                            <tr>
+                                <th>References</th>
+                                <th>Description</th>
+                                <th>Yes / No</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ __('Published Fares') }}</td>
+                                <td>{{ __('Standard fares available to the general public.') }}</td>
+                                <td>
+                                    <div class="form-control">
+                                        <input type="radio" name="published_fares" value="yes" class="me-1"
+                                            @if($clientFareReferences && $clientFareReferences->published_fares === 'yes') checked @endif>Yes
+                                        <input type="radio" name="published_fares" value="no" class="ms-2 me-1"
+                                            @if($clientFareReferences && $clientFareReferences->published_fares === 'no') checked @endif>No
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ __('Private Fares') }}</td>
+                                <td>{{ __('Also known as negotiated fares or wholesale fares, these are special rates offered to specific travel agencies.') }}</td>
+                                <td>
+                                    <div class="form-control">
+                                        <input type="radio" name="private_fares" value="yes" class="me-1"
+                                            @if($clientFareReferences && $clientFareReferences->private_fares === 'yes') checked @endif>Yes
+                                        <input type="radio" name="private_fares" value="no" class="ms-2 me-1"
+                                            @if($clientFareReferences && $clientFareReferences->private_fares === 'no') checked @endif>No
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ __('Corporate Fares') }}</td>
+                                <td>{{ __('Discounted fares offered to companies that have a corporate agreement with an airline or travel provider.') }}</td>
+                                <td>
+                                    <div class="form-control">
+                                        <input type="radio" name="corporate_fares" value="yes" class="me-1"
+                                            @if($clientFareReferences && $clientFareReferences->corporate_fares === 'yes') checked @endif>Yes
+                                        <input type="radio" name="corporate_fares" value="no" class="ms-2 me-1"
+                                            @if($clientFareReferences && $clientFareReferences->corporate_fares === 'no') checked @endif>No
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-3">
+                    <button type="submit" class="btn marsman-btn-primary">Save</button>
+                </div>
+            </form>
         </main>
     </div>
 </div>
-
-<script>
-    // Edit button click event
-    $(".edit-btn").click(function() {
-        var id = $(this).data("id");
-        var code = $(this).data("code");
-        var description = $(this).data("description");
-        var definition = $(this).data("definition");
-
-        $("#fare_reference_id").val(id);
-        $("#code").val(code);
-        $("#description").val(description);
-        $("#definition").val(definition);
-
-        $("#saveOrUpdateBtn").text("Update");
-    });
-</script>
 
 @endsection

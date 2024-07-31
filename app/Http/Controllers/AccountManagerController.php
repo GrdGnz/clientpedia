@@ -306,7 +306,7 @@ class AccountManagerController extends Controller
             $client = Client::findOrFail($clientId);
 
             // Get Fare Reference
-            $clientFareReferences = ClientFareReference::where('client_id', $clientId)->get();
+            $clientFareReferences = ClientFareReference::where('client_id', $clientId)->first();
 
             return view('accountmanager.client.pricingandfinancial.farereference',
                 compact('user',
