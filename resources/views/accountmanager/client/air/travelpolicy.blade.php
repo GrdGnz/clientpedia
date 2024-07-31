@@ -13,7 +13,7 @@
         <div class="w-100 my-3">
             <a class="btn marsman-btn-secondary marsman-border-primary-1 txt-1" href="{{ route('accountmanager.clients.index') }}">Back to Client List</a>
         </div>
-        
+
         <div class="h3">AIR TRAVEL POLICY - {{ $client['name'] }}</div>
         <hr class="w-100" />
 
@@ -28,13 +28,13 @@
                 {{ session('error') }}
             </div>
         @endif
-        
+
         @foreach ($travelPolicy as $policy)
         <form method="POST" action="{{ route('accountmanager.client.travel_policy.update') }}">
             @csrf
-            <input type="hidden" name="client_id" value="{{ $clientId }}"> 
-            <input type="hidden" name="category_id" value="1"> 
-            
+            <input type="hidden" name="client_id" value="{{ $clientId }}">
+            <input type="hidden" name="category_id" value="1">
+
             <table class="table table-bordered">
                 <tbody>
                         <tr>
@@ -70,10 +70,10 @@
                             <td><textarea class="w-100" name="group_booking_policy" rows="3">{{ $policy->group_booking_policy }}</textarea></td>
                         </tr>
                         <tr>
-                            <td class="marsman-bg-color-dark text-white">Companion / HCP / Personal Travel</td>
+                            <td class="marsman-bg-color-dark text-white">Companion / Personal Travel</td>
                             <td><textarea class="w-100" name="companion_hcp_personaltravel" rows="3">{{ $policy->companion_hcp_personaltravel }}</textarea></td>
                         </tr>
-                    
+
                 </tbody>
             </table>
             <button type="submit" class="btn marsman-btn-primary">Update</button>
@@ -89,8 +89,8 @@
 
                 <form method="POST" action="{{ route('accountmanager.client.travel_policy.create') }}">
                 @csrf
-                <input type="hidden" name="client_id" value="{{ $clientId }}"> 
-                <input type="hidden" name="category_id" value="1"> 
+                <input type="hidden" name="client_id" value="{{ $clientId }}">
+                <input type="hidden" name="category_id" value="1">
 
                 <div class="form-group mb-3">
                     <label for="lla" class="form-label marsman-bg-color-dark text-white p-2 rounded">LLA:</label>
@@ -133,7 +133,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="companion_hcp_personaltravel" class="form-label marsman-bg-color-dark text-white p-2 rounded">Companion HCP Personal Travel:</label>
+                    <label for="companion_hcp_personaltravel" class="form-label marsman-bg-color-dark text-white p-2 rounded">Companion Personal Travel:</label>
                     <input type="text" name="companion_hcp_personaltravel" class="form-control marsman-border-primary-1 bg-white" required>
                 </div>
 
@@ -147,5 +147,5 @@
     </main>
   </div>
 </div>
-    
+
 @endsection

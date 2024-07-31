@@ -13,10 +13,9 @@ class ClientFareReference extends Model
 
     protected $fillable = [
         'client_id',
-        'code',
-        'description',
-        'definition',
-        'status',
+        'published_fares',
+        'private_fares',
+        'corporate_fares',
     ];
 
     // Define the relationship with the 'client' model
