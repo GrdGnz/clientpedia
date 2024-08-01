@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\ClientAncilliaryFee;
+use App\Models\ClientApprover;
 use App\Models\ClientBooker;
 use App\Models\ClientBookingProcess;
 use App\Models\ClientContact;
@@ -25,6 +26,7 @@ use App\Models\UserActivity;
 use App\Models\UserClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class TravelConsultantController extends Controller
 {
@@ -208,6 +210,12 @@ class TravelConsultantController extends Controller
             ->where('status_id', 1)
             ->get();
 
+        // Retrieve client approvers for the specified client_id
+        $clientApprovers = ClientApprover::where('client_id', $clientId)->get();
+
+        // Retrieve client bookers for the specified client_id
+        $clientBookers = ClientBooker::where('client_id', $clientId)->get();
+
         // Authorize the user to view the client
         $this->authorize('view', $client);
 
@@ -217,7 +225,15 @@ class TravelConsultantController extends Controller
         }
 
         // Pass the client data to the view
-        return view('travelconsultant.basicinfo', compact('client', 'lastLoginDate', 'clientContacts', 'clientInfo'));
+        return view('travelconsultant.basicinfo',
+            compact(
+                'client',
+                'lastLoginDate',
+                'clientContacts',
+                'clientInfo',
+                'clientApprovers',
+                'clientBookers',
+            ));
     }
 
     //air

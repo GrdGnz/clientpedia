@@ -105,6 +105,7 @@ Route::group(['middleware' => 'cors'], function () {
             Route::get('account-manager/clients/booker/{clientId}', 'createBooker')->name('accountmanager.clients.booker.create');
             Route::get('account-manager/clients/pricingmodel/{clientId}', 'pricingModel')->name('accountmanager.clients.pricingmodel');
             Route::get('account-manager/clients/fare-reference/{clientId}', 'fareReference')->name('accountmanager.clients.fare_reference');
+            Route::get('account-manager/clients/snap-code/{clientId}', 'snapCodes')->name('accountmanager.clients.snap_code');
             Route::get('account-manager/clients/ancilliary_fees/{clientId}', 'ancilliaryFees')->name('accountmanager.clients.ancilliary_fees');
             Route::get('account-manager/clients/fees/{clientId}', 'tableOfFees')->name('accountmanager.clients.fees');
             Route::get('account-manager/clients/invoice-attachment/{clientId}', 'invoiceAttachment')->name('accountmanager.clients.invoice_attachment');

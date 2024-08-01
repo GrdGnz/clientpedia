@@ -57,6 +57,10 @@
                             Fare Reference
                         </a>
 
+                        <a class="nav-link collapsed" href="{{ route('accountmanager.clients.snap_code', ['clientId' => $client['id']]) }}">
+                            Snap Code
+                        </a>
+
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.fees', ['clientId' => $client['id']]) }}">
                             Summary of Fees
                         </a>
