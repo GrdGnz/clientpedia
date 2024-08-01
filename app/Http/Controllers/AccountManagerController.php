@@ -322,6 +322,25 @@ class AccountManagerController extends Controller
         }
     }
 
+    public function snapCodes($clientId)
+    {
+        try {
+
+            // Retrieve the client data based on the ID from the URL
+            $client = Client::findOrFail($clientId);
+
+            return view('accountmanager.client.pricingandfinancial.snapcode',
+                compact([
+                    'clientId',
+                    'client',
+                ]));
+
+        } catch(\Exception $e) {
+            // Handle exceptions here (e.g., client not found, database error)
+            return view('errors.404'); // Redirect to a 404 error page or show an error message.
+        }
+    }
+
     public function ancilliaryFees($clientId)
     {
         try {

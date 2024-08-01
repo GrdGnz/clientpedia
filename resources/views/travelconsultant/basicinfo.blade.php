@@ -12,55 +12,80 @@
             <div class="w-100 my-3">
                 <a class="btn marsman-btn-secondary marsman-border-primary-1 txt-1" href="{{ route('travelconsultant.dashboard') }}">Back to Assigned Clients</a>
             </div>
-            
+
             <div class="container-fluid">
                 <h1 class="h3 mb-4">BASIC INFO - {{ $client['name'] }}</h1>
-                <div class="card marsman-bg-color-lightblue">
+                <div class="card">
                     <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="clientCode" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Client Code</label>
-                                <input type="text" value="{{ $client['code'] }}" class="form-control marsman-border-primary-1 bg-white txt-1" id="clientCode" disabled />
-                            </div>
 
-                            <div class="mb-3">
-                                <label for="clientName" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Client Name</label>
-                                <input type="text" value="{{ $client['name'] }}" class="form-control marsman-border-primary-1 bg-white txt-1" id="clientName" disabled />
-                            </div>
+                        <div class="col-md-12 d-flex">
+                            <div class="col-md-4">
+                                <!-- Code -->
+                                <p class="fs-6"><strong>Code:</strong> {{ $client['code'] }}</p>
 
-                            @if (isset($clientInfo))
-                                @foreach ($clientInfo as $info)
-                                    <div class="mb-3">
-                                        <label for="clientType" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Client Type</label>
-                                        @if ($info['client_type_id'] === 1)
-                                            <input type="text" value="Corporate" class="form-control marsman-border-primary-1 bg-white txt-1" id="clientType" disabled />
-                                        @elseif ($info['client_type_id' === 2])
-                                            <input type="text" value="Leisure" class="form-control marsman-border-primary-1 bg-white txt-1" id="clientType" disabled />
+                                <!-- Client Type -->
+                                @if (isset($clientInfo))
+                                    @foreach ($clientInfo as $info)
+                                        @if ($info->client_type_id === 1)
+                                            <p class="fs-6"><strong>Client Type:</strong> Corporate</p>
+                                        @elseif ($info->client_type_id === 2)
+                                            <p class="fs-6"><strong>Client Type:</strong> Leisure</p>
                                         @else
-                                            <input type="text" value="Walk-in" class="form-control marsman-border-primary-1 bg-white txt-1" id="clientType" disabled />
+                                            <p class="fs-6"><strong>Client Type:</strong> Walk-in</p>
                                         @endif
-                                    </div>
-                            
-                                    <div class="mb-3">
-                                        <label for="globalCustomerNo" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Global Customer No.</label>
-                                        <input type="text" value="{{ $info['global_customer_number'] }}" class="form-control marsman-border-primary-1 bg-white txt-1" id="globalCustomerNo" disabled />
-                                    </div>
+                                    @endforeach
+                                @endif
 
-                                    <div class="mb-3">
-                                        <label for="contractStartDate" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Contract Start Date</label>
-                                        <input type="text" value="{{ \Carbon\Carbon::parse($info['contract_start_date'])->format('F d, Y') }}" class="form-control marsman-border-primary-1 bg-white txt-1" id="contractStartDate" disabled />
-                                    </div>
+                                <!-- Global Customer Number -->
+                                <p class="fs-6"><strong>Global Customer Number:</strong> {{ $info->global_customer_number }}</p>
 
-                                    <div class="mb-3">
-                                        <label for="contractEndDate" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Contract End Date</label>
-                                        <input type="text" value="{{ \Carbon\Carbon::parse($info['contract_end_date'])->format('F d, Y') }}" class="form-control marsman-border-primary-1 bg-white txt-1" id="contractEndDate" disabled />
-                                    </div>
-                                @endforeach
-                            @endif
-                           
+                                <!-- Contract Start Date -->
+                                <p class="fs-6"><strong>Contract Start Date:</strong> {{ \Carbon\Carbon::parse($info->contract_start_date)->format('F d, Y') }}</p>
+
+                                <!-- Contract End Date -->
+                                <p class="fs-6"><strong>Contract End Date:</strong> {{ \Carbon\Carbon::parse($info->contract_end_date)->format('F d, Y') }}</p>
+                            </div>
+
+                            <div class="col-md-4">
+                                <!-- Credit Term -->
+                                <p class="fs-6"><strong>Credit Term:</strong> {{ $info->credit_term }}</p>
+
+                                <!-- Submitted Quotation -->
+                                <p class="fs-6"><strong>Number of Quotation to Provide:</strong> {{ $info->submitted_quotation }}</p>
+
+                                <!-- Credit Limit USD -->
+                                <p class="fs-6"><strong>Credit Limit USD:</strong> {{ number_format($info->credit_limit_usd) }}</p>
+
+                                <!-- Credit Limit PHP -->
+                                <p class="fs-6"><strong>Credit Limit PHP:</strong> {{ number_format($info->credit_limit_php) }}</p>
+
+                                <!-- SLA Response Time International -->
+                                <p class="fs-6"><strong>SLA Response Time International:</strong> {{ $info->sla_response_time_int }}</p>
+
+                                <!-- SLA Response Time Domestic -->
+                                <p class="fs-6"><strong>SLA Response Time Domestic:</strong> {{ $info->sla_response_time_dom }}</p>
+                            </div>
+
+                            <div class="col-md-4">
+                                <!-- Billing Currency -->
+                                <p class="fs-6"><strong>Billing Currency:</strong> {{ $info->billing_currency }}</p>
+
+                                <!-- Value Added Tax -->
+                                <p class="fs-6"><strong>Value Added Tax:</strong> {{ $info->value_added_tax }}</p>
+
+                                <!-- Transaction Fee -->
+                                <p class="fs-6"><strong>Transaction Fee:</strong> {{ $info->transaction_fee }}</p>
+
+                                <!-- Agent Commission -->
+                                <p class="fs-6"><strong>Agent Commission:</strong> {{ $info->agent_commission }}</p>
+                            </div>
+                        </div>
+
+
+                        <form>
 
                             <div class="mb-3">
-                                <label for="officialContactPersons" class="form-label">Official Contact Person(s)</label>
+                                <label for="officialContactPersons" class="form-label h5">Official Contact Person(s)</label>
                                 <div class="table-responsive">
                                     <table id="officialContactPersons" class="table table-bordered w-100">
                                         <thead class="marsman-bg-color-dark text-white">
@@ -68,22 +93,76 @@
                                                 <th>Name</th>
                                                 <th>Position</th>
                                                 <th>Department</th>
-                                                <th>Landline No.</th>
                                                 <th>Mobile No.</th>
                                                 <th>Email</th>
                                                 <th>Birthday</th>
                                             </tr>
-                                        </thead> 
+                                        </thead>
                                         <tbody class="bg-white">
                                             @foreach ($clientContacts as $contact)
                                                 <tr>
                                                     <td>{{ $contact->name }}</td>
                                                     <td>{{ $contact->designation }}</td>
                                                     <td>{{ $contact->department }}</td>
-                                                    <td>{{ $contact->contact_landline }}</td>
                                                     <td>{{ $contact->contact_mobile }}</td>
                                                     <td>{{ $contact->email }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($contact->birthday)->format('F d, Y') }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="clientApprovers" class="form-label h5">Official Approver(s)</label>
+                                <div class="table-responsive">
+                                    <table id="clientApprovers" class="table table-bordered w-100">
+                                        <thead class="marsman-bg-color-dark text-white">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Department</th>
+                                                <th>Mobile No.</th>
+                                                <th>Email</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white">
+                                            @foreach ($clientApprovers as $approvers)
+                                                <tr>
+                                                    <td>{{ $approvers->name }}</td>
+                                                    <td>{{ $approvers->designation }}</td>
+                                                    <td>{{ $approvers->department }}</td>
+                                                    <td>{{ $approvers->contact_mobile }}</td>
+                                                    <td>{{ $approvers->email }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="clientBookers" class="form-label h5">Official Booker(s)</label>
+                                <div class="table-responsive">
+                                    <table id="clientBookers" class="table table-bordered w-100">
+                                        <thead class="marsman-bg-color-dark text-white">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Department</th>
+                                                <th>Mobile No.</th>
+                                                <th>Email</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white">
+                                            @foreach ($clientBookers as $bookers)
+                                                <tr>
+                                                    <td>{{ $bookers->name }}</td>
+                                                    <td>{{ $bookers->designation }}</td>
+                                                    <td>{{ $bookers->department }}</td>
+                                                    <td>{{ $bookers->contact_mobile }}</td>
+                                                    <td>{{ $bookers->email }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
