@@ -73,11 +73,11 @@
                                 <!-- Value Added Tax -->
                                 <p class="fs-6"><strong>Value Added Tax:</strong> {{ $info->value_added_tax }}</p>
 
-                                <!-- Transaction Fee -->
-                                <p class="fs-6"><strong>Transaction Fee:</strong> {{ $info->transaction_fee }}</p>
+                                <!-- Form of Refund -->
+                                <p class="fs-6"><strong>Form of Refund:</strong> {{ $info->form_of_refund }}</p>
 
-                                <!-- Agent Commission -->
-                                <p class="fs-6"><strong>Agent Commission:</strong> {{ $info->agent_commission }}</p>
+                                <!-- Reports Deadline -->
+                                <p class="fs-6"><strong>Deadline of submission of reports:</strong> {{ $info->reports_deadline }}</p>
                             </div>
                         </div>
 

@@ -102,20 +102,22 @@
                                     <td>
                                         <label for="creditTerm" class="form-control txt-1 marsman-bg-color-semidark text-white">Credit Term</label>
                                         <div class="bg-white p-2 rounded-bottom">
-                                            <select type="text" id="creditTerm" name="creditTerm" class="form-control txt-1 d-flex">
+                                            <select id="creditTerm" name="creditTerm" class="form-control form-select txt-1 d-flex">
                                                 <option value="" @if(isset($client->info->credit_term)) @if($client->info->credit_term == '') selected="selected" @endif @endif>-- please select --</option>
-                                                <option value="15"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 15) selected="selected" @endif @endif>15 Day/s</option>
-                                                <option value="30"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 30) selected="selected" @endif @endif>30 Day/s</option>
-                                                <option value="45"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 45) selected="selected" @endif @endif>45 Day/s</option>
-                                                <option value="60"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 60) selected="selected" @endif @endif>60 Day/s</option>
-                                                <option value="90"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 90) selected="selected" @endif @endif>90 Day/s</option>
+                                                <option value="15"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == '15 Day/s') selected="selected" @endif @endif>15 Day/s</option>
+                                                <option value="30"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == '30 Day/s') selected="selected" @endif @endif>30 Day/s</option>
+                                                <option value="45"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == '45 Day/s') selected="selected" @endif @endif>45 Day/s</option>
+                                                <option value="60"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == '60 Days') selected="selected" @endif @endif>60 Day/s</option>
+                                                <option value="90"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == '90 Day/s') selected="selected" @endif @endif>90 Day/s</option>
+                                                <option value="COD"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 'COD') selected="selected" @endif @endif>COD</option>
+                                                <option value="Credit Card"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 'Credit Card') selected="selected" @endif @endif>Credit Card</option>
                                             </select>
                                         </div>
                                     </td>
                                     <td>
                                         <label for="submittedQuotation" class="form-control txt-1 marsman-bg-color-semidark text-white">Number of Quotation to Provide</label>
                                         <div class="bg-white p-2 rounded-bottom">
-                                            <select type="text" id="submittedQuotation" name="submittedQuotation" class="form-control form-select txt-1">
+                                            <select id="submittedQuotation" name="submittedQuotation" class="form-control form-select txt-1">
                                                 <option value=""  @if(isset($client->info->submitted_quotation)) @if($client->info->submitted_quotation == '') selected="selected" @endif @endif>-- please select --</option>
                                                 <option value="1" @if(isset($client->info->submitted_quotation)) @if($client->info->submitted_quotation == 1) selected="selected" @endif @endif>1</option>
                                                 <option value="2" @if(isset($client->info->submitted_quotation)) @if($client->info->submitted_quotation == 2) selected="selected" @endif @endif>2</option>
@@ -156,7 +158,7 @@
                                     <td>
                                         <label for="billingCurrency" class="form-control txt-1 marsman-bg-color-semidark text-white">Billing Currency</label>
                                         <div class="bg-white p-2 rounded-bottom">
-                                            <select type="text" id="billingCurrency" name="billingCurrency" class="form-control txt-1 d-flex">
+                                            <select id="billingCurrency" name="billingCurrency" class="form-control form-select txt-1 d-flex">
                                                 <option value="" @if(isset($client->info->billing_currency)) @if($client->info->billing_currency == '') selected="selected" @endif @endif>-- please select --</option>
                                                 <option value="PHP" @if(isset($client->info->billing_currency)) @if($client->info->billing_currency == 'PHP') selected="selected" @endif @endif>PHP</option>
                                                 <option value="USD" @if(isset($client->info->billing_currency)) @if($client->info->billing_currency == 'USD') selected="selected" @endif @endif>USD</option>
@@ -166,33 +168,30 @@
                                     <td>
                                         <label for="valueAddedTax" class="form-control txt-1 marsman-bg-color-semidark text-white">Value Added Tax</label>
                                         <div class="bg-white p-2 rounded-bottom">
-                                            <select type="text" id="valueAddedTax" name="valueAddedTax" class="form-control form-select txt-1">
+                                            <select id="valueAddedTax" name="valueAddedTax" class="form-control form-select txt-1">
                                                 <option value="" @if(isset($client->info->value_added_tax)) @if($client->info->value_added_tax == '') selected="selected" @endif @endif>-- please select --</option>
                                                 <option value="VAT" @if(isset($client->info->value_added_tax)) @if($client->info->value_added_tax == 'VAT') selected="selected" @endif @endif>VAT</option>
-                                                <option value="NON-VAT" @if(isset($client->info->value_added_tax)) @if($client->info->value_added_tax == 'NON-VAT') selected="selected" @endif @endif>NON-VAT</option>
+                                                <option value="VAT EXEMPT" @if(isset($client->info->value_added_tax)) @if($client->info->value_added_tax == 'VAT EXEMPT') selected="selected" @endif @endif>VAT EXEMPT</option>
+                                                <option value="ZERO RATE" @if(isset($client->info->value_added_tax)) @if($client->info->value_added_tax == 'ZERO RATE') selected="selected" @endif @endif>ZERO RATE</option>
                                             </select>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="transactionFee" class="form-control txt-1 marsman-bg-color-semidark text-white">Transaction Fee</label>
+                                        <label for="formOfRefund" class="form-control txt-1 marsman-bg-color-semidark text-white">Form of Refund</label>
                                         <div class="bg-white p-2 rounded-bottom">
-                                            <select type="text" id="transactionFee" name="transactionFee" class="form-control txt-1 d-flex">
-                                                <option value="" @if(isset($client->info->transaction_fee)) @if($client->info->transaction_fee == '') selected="selected" @endif @endif>-- please select --</option>
-                                                <option value="Built-in" @if(isset($client->info->transaction_fee)) @if($client->info->transaction_fee == 'Built-in') selected="selected" @endif @endif>Built-in</option>
-                                                <option value="Transparent" @if(isset($client->info->transaction_fee)) @if($client->info->transaction_fee == 'Transparent') selected="selected" @endif @endif>Transparent</option>
+                                            <select id="formOfRefund" name="formOfRefund" class="form-control form-select txt-1 d-flex">
+                                                <option value="" @if(isset($client->info->form_of_refund)) @if($client->info->form_of_refund == '') selected="selected" @endif @endif>-- please select --</option>
+                                                <option value="Credit Note" @if(isset($client->info->form_of_refund)) @if($client->info->form_of_refund == 'Credit Note') selected="selected" @endif @endif>Credit Note</option>
+                                                <option value="Check Payment" @if(isset($client->info->form_of_refund)) @if($client->info->form_of_refund == 'Check Payment') selected="selected" @endif @endif>Check Payment</option>
                                             </select>
                                         </div>
                                     </td>
                                     <td>
-                                        <label for="agentCommission" class="form-control txt-1 marsman-bg-color-semidark text-white">Agent Commission</label>
+                                        <label for="reportsDeadline" class="form-control txt-1 marsman-bg-color-semidark text-white">Reports Deadline</label>
                                         <div class="bg-white p-2 rounded-bottom">
-                                            <select type="text" id="agentCommission" name="agentCommission" class="form-control form-select txt-1">
-                                                <option value="" @if(isset($client->info->agent_commission)) @if($client->info->agent_commission == 'Yes') selected="selected" @endif @endif>-- please select --</option>
-                                                <option value="Yes" @if(isset($client->info->agent_commission)) @if($client->info->agent_commission == 'Yes') selected="selected" @endif @endif>Yes</option>
-                                                <option value="No" @if(isset($client->info->agent_commission)) @if($client->info->agent_commission == 'No') selected="selected" @endif @endif>No</option>
-                                            </select>
+                                            <input type="text" id="reportsDeadline" name="reportsDeadline" class="form-control txt-1" value="{{ isset($client->info->reports_deadline) ? $client->info->reports_deadline : '' }}">
                                         </div>
                                     </td>
                                 </tr>
