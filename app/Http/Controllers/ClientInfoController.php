@@ -19,7 +19,7 @@ class ClientInfoController extends Controller
                 'globalCustomerNumber' => 'nullable|string',
                 'contractStartDate' => 'nullable|date',
                 'contractEndDate' => 'nullable|date|after:contractStartDate',
-                'creditTerm' => 'nullable|integer',
+                'creditTerm' => 'nullable|string',
                 'creditLimitUSD' => 'nullable|integer',
                 'creditLimitPHP' => 'nullable|integer',
                 'submittedQuotation' => 'nullable|integer',
@@ -27,8 +27,9 @@ class ClientInfoController extends Controller
                 'slaResponseTimeDom' => 'nullable|integer',
                 'billingCurrency' => 'nullable|string',
                 'valueAddedTax' => 'nullable|string',
-                'transactionFee' => 'nullable|string',
+                'formOfRefund' => 'nullable|string',
                 'agentCommission' => 'nullable|string',
+                'reportsDeadline' => 'nullable|string',
             ]);
 
             // Assign input fields
@@ -46,8 +47,9 @@ class ClientInfoController extends Controller
                 'sla_response_time_dom' => $request->input('slaResponseTimeDom'),
                 'billing_currency' => $request->input('billingCurrency'),
                 'value_added_tax' => $request->input('valueAddedTax'),
-                'transaction_fee' => $request->input('transactionFee'),
+                'form_of_refund' => $request->input('formOfRefund'),
                 'agent_commission' => $request->input('agentCommission'),
+                'reports_deadline' => $request->input('reportsDeadline'),
             ];
 
             // Data for client

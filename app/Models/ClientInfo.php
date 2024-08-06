@@ -26,8 +26,9 @@ class ClientInfo extends Model
         'sla_response_time_dom',
         'billing_currency',
         'value_added_tax',
-        'transaction_fee',
+        'form_of_refund',
         'agent_commission',
+        'reports_deadline',
     ];
 
     public function clientType()

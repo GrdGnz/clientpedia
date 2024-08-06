@@ -28,17 +28,17 @@ h1, h2, h3, h4, h5, h6, p, a, input, div {
 
 .txt-3 {
     font-family: 'Lato', sans-serif !important;
-    font-size: 16px !important; 
+    font-size: 16px !important;
 }
 
 .txt-4 {
     font-family: 'Lato', sans-serif !important;
-    font-size: 18px !important; 
+    font-size: 18px !important;
 }
 
 .txt-5 {
     font-family: 'Lato', sans-serif !important;
-    font-size: 20px !important; 
+    font-size: 20px !important;
 }
 
 .txt-1 a {
@@ -96,6 +96,14 @@ h1, h2, h3, h4, h5, h6, p, a, input, div {
 
 .marsman-bg-color-lightblue {
     background-color: #BDCADA !important;
+}
+
+.marsman-bg-color-lightgray {
+    background-color: #EFEFEF !important;
+}
+
+.marsman-bg-color-darkgray {
+    background-color: #CACACA !important;
 }
 
 /* text and link colors */
@@ -422,13 +430,13 @@ h1, h2, h3, h4, h5, h6, p, a, input, div {
 .nav-item button {
     color: #273546 !important;
     border-bottom: 5px solid #273546 !important;
-}   
+}
 
 .nav-item button:hover{
     color: #ffffff !important;
     background-color: #273546 !important;
     border-bottom: 5px solid #2C3C50 !important;
-}   
+}
 
 /* table style */
 .marsman-select-client {
@@ -439,7 +447,7 @@ h1, h2, h3, h4, h5, h6, p, a, input, div {
     background-color: #2C3C50 !important;
     cursor: pointer !important;
     font-size: 18px !important;
-} 
+}
 
 .marsman-select-client:hover a {
     color: #FFFFFF !important;
