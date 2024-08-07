@@ -28,6 +28,7 @@
                         <th>After Office Hours</th>
                     </tr>
                 </thead>
+                <tbody>
                     <tr>
                         <td colspan="5" class="text-center marsman-bg-color-darkgray txt-2">STANDALONE TICKETING AND RELATED SERVICES</td>
                     </tr>
@@ -223,8 +224,6 @@
                         <td class="text-center">Separate Service Agreement <br>& Endorsed to respective department</td>
                         <td class="text-center">Separate Service Agreement <br>& Endorsed to respective department</td>
                     </tr>
-                <tbody>
-
                 </tbody>
             </table>
         </main>
