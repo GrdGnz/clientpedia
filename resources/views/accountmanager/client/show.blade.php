@@ -162,6 +162,7 @@
                                                 <option value="" @if(isset($client->info->billing_currency)) @if($client->info->billing_currency == '') selected="selected" @endif @endif>-- please select --</option>
                                                 <option value="PHP" @if(isset($client->info->billing_currency)) @if($client->info->billing_currency == 'PHP') selected="selected" @endif @endif>PHP</option>
                                                 <option value="USD" @if(isset($client->info->billing_currency)) @if($client->info->billing_currency == 'USD') selected="selected" @endif @endif>USD</option>
+                                                <option value="BOTH" @if(isset($client->info->billing_currency)) @if($client->info->billing_currency == 'BOTH') selected="selected" @endif @endif>BOTH</option>
                                             </select>
                                         </div>
                                     </td>

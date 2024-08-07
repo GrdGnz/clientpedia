@@ -13,7 +13,7 @@
                 <a class="btn marsman-btn-secondary marsman-border-primary-1 txt-1" href="{{ route('accountmanager.clients.index') }}">Back to Client List</a>
             </div>
 
-            <div class="h3">PRICING MODEL - {{ $client['name'] }}</div>
+            <div class="h3">SUMMARY OF FEES - {{ $client['name'] }}</div>
             <hr class="w-100" />
 
             <p class="h5">Standard Schedule of Fees</p>

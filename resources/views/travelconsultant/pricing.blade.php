@@ -18,16 +18,10 @@
 
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
-                <button class="nav-link txt-2 active" id="pricingmodel-tab" data-bs-toggle="tab" data-bs-target="#pricingmodel-tab-pane" type="button" role="tab" aria-controls="pricingmodel-tab-pane" aria-selected="true">Pricing Model</button>
+                <button class="nav-link txt-2 active" id="pricingmodel-tab" data-bs-toggle="tab" data-bs-target="#pricingmodel-tab-pane" type="button" role="tab" aria-controls="pricingmodel-tab-pane" aria-selected="true">Summary of Fees</button>
               </li>
               <li class="nav-item" role="presentation">
                 <button class="nav-link txt-2" id="farereference-tab" data-bs-toggle="tab" data-bs-target="#farereference-tab-pane" type="button" role="tab" aria-controls="farereference-tab-pane" aria-selected="false">Fare Reference</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link txt-2" id="arcillariesfee-tab" data-bs-toggle="tab" data-bs-target="#arcillariesfee-tab-pane" type="button" role="tab" aria-controls="arcillariesfee-tab-pane" aria-selected="false">Ancillary Fee</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link txt-2" id="fees-tab" data-bs-toggle="tab" data-bs-target="#fees-tab-pane" type="button" role="tab" aria-controls="fees-tab-pane" aria-selected="false">Table of Fees (Per Contract)</button>
               </li>
               <li class="nav-item" role="presentation">
                 <button class="nav-link txt-2" id="invoice-tab" data-bs-toggle="tab" data-bs-target="#invoice-tab-pane" type="button" role="tab" aria-controls="invoice-tab-pane" aria-selected="false">Invoice Attachment</button>

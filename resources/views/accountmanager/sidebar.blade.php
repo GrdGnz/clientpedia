@@ -50,19 +50,11 @@
                 <div class="collapse bg-secondary" id="collapsePricingAndFinancial" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.pricingmodel', ['clientId' => $client['id']]) }}">
-                            Pricing Model
+                            Summary of Fees
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.fare_reference', ['clientId' => $client['id']]) }}">
                             Fare Reference
-                        </a>
-
-                        <a class="nav-link collapsed" href="{{ route('accountmanager.clients.snap_code', ['clientId' => $client['id']]) }}">
-                            Snap Code
-                        </a>
-
-                        <a class="nav-link collapsed" href="{{ route('accountmanager.clients.fees', ['clientId' => $client['id']]) }}">
-                            Summary of Fees
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.invoice_attachment', ['clientId' => $client['id']]) }}">
