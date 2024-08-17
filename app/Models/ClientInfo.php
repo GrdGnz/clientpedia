@@ -29,6 +29,8 @@ class ClientInfo extends Model
         'form_of_refund',
         'agent_commission',
         'reports_deadline',
+        'report_frequency',
+        'submission_date',
     ];
 
     public function clientType()

@@ -1,5 +1,5 @@
 @php
-    $page = 'standardServices';
+    $page = 'onlineServices';
 @endphp
 
 @extends('layouts.app')
@@ -20,7 +20,7 @@
             <div class="h3">SUMMARY OF FEES - {{ $client['name'] }}</div>
             <hr class="w-100" />
 
-            <p class="h5">Standard Schedule of Fees</p>
+            <p class="h5">Online Schedule of Fees</p>
 
             <div class="w-100 d-flex justify-content-end p-2">
                 <!-- Button trigger modal -->

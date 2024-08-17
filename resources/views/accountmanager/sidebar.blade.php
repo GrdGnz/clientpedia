@@ -49,19 +49,46 @@
                 </a>
                 <div class="collapse bg-secondary" id="collapsePricingAndFinancial" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link collapsed" href="{{ route('accountmanager.clients.pricingmodel', ['clientId' => $client['id']]) }}">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSummaryOfFees" aria-expanded="false" aria-controls="collapseSummaryOfFees">
                             Summary of Fees
                         </a>
+                        <div class="collapse" id="collapseSummaryOfFees" aria-labelledby="headingSummaryOfFees" data-bs-parent="#sidenavAccordionPages">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{ route('accountmanager.clients.pricingmodel', ['clientId' => $client['id']]) }}">
+                                    @if(isset($page) && $page == 'standardServices')
+                                        <span class="text-white">Standard Services</span>
+                                    @else
+                                        Standard Services
+                                    @endif
+                                </a>
+                                <a class="nav-link" href="{{ route('accountmanager.clients.onlineservices', ['clientId' => $client['id']]) }}">
+                                    @if(isset($page) && $page == 'onlineServices')
+                                        <span class="text-white">Online Services</span>
+                                    @else
+                                        Online Services
+                                    @endif
+                                </a>
+                            </nav>
+                        </div>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.fare_reference', ['clientId' => $client['id']]) }}">
-                            Fare Reference
+                            @if(isset($page) && $page == 'fareReference')
+                                <span class="text-white">Fare Reference</span>
+                            @else
+                                Fare Reference
+                            @endif
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.invoice_attachment', ['clientId' => $client['id']]) }}">
-                            Invoice Attachment
+                            @if(isset($page) && $page == 'invoiceAttachment')
+                                <span class="text-white">Invoice Attachment</span>
+                            @else
+                                Invoice Attachment
+                            @endif
                         </a>
                     </nav>
                 </div>
+
                 <!-- AIR -->
                 <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAir" aria-expanded="false" aria-controls="collapseAir">
                     <div class="sb-nav-link-icon"><i class="fas fa-plane"></i></div>
@@ -163,6 +190,7 @@
 
 <script>
     $(document).ready(function(){
+
         // Function to scroll to the last visible item in the submenu
         function scrollToLastVisibleSubmenuItem(submenu) {
             var lastVisibleSubmenuItem = $(submenu).find('.nav-link:visible:last');
@@ -174,10 +202,24 @@
             }
         }
 
-        // Attach the scrollToLastVisibleSubmenuItem function to the shown.bs.collapse event of submenus
-        $('.collapse').on('shown.bs.collapse', function () {
-            scrollToLastVisibleSubmenuItem(this);
-        });
+        // Check the current page and adjust the collapse behavior
+        @if(isset($page))
+            var page = '{{ $page }}';
+            // If on "Standard Services" or "Online Services", expand the "Summary of Fees" submenu
+            if (['standardServices', 'onlineServices'].includes(page)) {
+                $('#collapsePricingAndFinancial').collapse('show');
+                $('#collapseSummaryOfFees').collapse('show');
+                scrollToLastVisibleSubmenuItem(this);
+            } else if (['fareReference', 'invoiceAttachment'].includes(page)) {
+                $('#collapsePricingAndFinancial').collapse('show');
+                scrollToLastVisibleSubmenuItem(this);
+            } else {
+                // Ensure that it is collapsed on other pages
+                $('#collapsePricingAndFinancial').collapse('hide');
+                $('#collapseSummaryOfFees').collapse('hide');
+            }
+        @endif
+
     });
 </script>
 

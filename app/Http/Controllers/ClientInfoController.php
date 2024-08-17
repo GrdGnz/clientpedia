@@ -5,20 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ClientInfo;
 use App\Models\Client;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class ClientInfoController extends Controller
 {
     public function update(Request $request)
     {
         try {
-            // Validate data with optional rules
+            // Validate incoming request data
             $validatedData = $request->validate([
-                'clientId'  =>  'required|integer',
+                'clientId' => 'required|integer',
                 'sap_id' => 'nullable|string',
                 'clientType' => 'nullable|integer',
                 'globalCustomerNumber' => 'nullable|string',
-                'contractStartDate' => 'nullable|date',
-                'contractEndDate' => 'nullable|date|after:contractStartDate',
+                'contractStartDate' => 'nullable|string', // Expecting dd/mm/yyyy
+                'contractEndDate' => 'nullable|string', // Expecting dd/mm/yyyy
                 'creditTerm' => 'nullable|string',
                 'creditLimitUSD' => 'nullable|integer',
                 'creditLimitPHP' => 'nullable|integer',
@@ -30,15 +32,18 @@ class ClientInfoController extends Controller
                 'formOfRefund' => 'nullable|string',
                 'agentCommission' => 'nullable|string',
                 'reportsDeadline' => 'nullable|string',
+                'reportFrequency' => 'nullable|string',
+                'submissionDate' => 'nullable|string', // Expecting dd/mm/yyyy
             ]);
 
+            // Convert date fields from dd/mm/yyyy to yyyy-mm-dd
+            $data = $this->convertDates($validatedData);
+
             // Assign input fields
-            $data = [
-                'client_id' =>  $request->input('clientId'),
+            $data = array_merge($data, [
+                'client_id' => $request->input('clientId'),
                 'client_type_id' => $request->input('clientType'),
                 'global_customer_number' => strtoupper($request->input('globalCustomerNumber')),
-                'contract_start_date' => $request->input('contractStartDate'),
-                'contract_end_date' => $request->input('contractEndDate'),
                 'credit_term' => $request->input('creditTerm'),
                 'credit_limit_usd' => $request->input('creditLimitUSD'),
                 'credit_limit_php' => $request->input('creditLimitPHP'),
@@ -50,11 +55,13 @@ class ClientInfoController extends Controller
                 'form_of_refund' => $request->input('formOfRefund'),
                 'agent_commission' => $request->input('agentCommission'),
                 'reports_deadline' => $request->input('reportsDeadline'),
-            ];
+                'report_frequency' => $request->input('reportFrequency'),
+                'submission_date' => $request->input('submissionDate'),
+            ]);
 
             // Data for client
             $data_client = [
-                'sap_id' =>  strtoupper($request->input('sap_id')),
+                'sap_id' => strtoupper($request->input('sap_id')),
             ];
 
             // Find or create record
@@ -83,6 +90,21 @@ class ClientInfoController extends Controller
             return redirect()->back()->with('error', 'Update failed. ' . $e->getMessage());
         }
     }
+
+    private function convertDates($data)
+    {
+        $dateFields = ['contractStartDate', 'contractEndDate']; // Add more date fields if necessary
+        foreach ($dateFields as $field) {
+            if (isset($data[$field]) && !empty($data[$field])) {
+                $date = \DateTime::createFromFormat('d/m/Y', $data[$field]);
+                if ($date) {
+                    $data[$field] = $date->format('Y-m-d');
+                }
+            }
+        }
+        return $data;
+    }
+
 }
 
 

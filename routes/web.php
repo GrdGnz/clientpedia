@@ -23,6 +23,7 @@ use App\Http\Controllers\ClientVipController;
 use App\Http\Controllers\PricingmodelController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\SourceController;
+use App\Http\Controllers\SummaryServiceController;
 use App\Http\Controllers\TravelConsultantController;
 use App\Http\Controllers\UserClientController;
 use App\Http\Controllers\UserController;
@@ -104,6 +105,8 @@ Route::group(['middleware' => 'cors'], function () {
             Route::get('account-manager/clients/approver/{clientId}', 'createApprover')->name('accountmanager.clients.approver.create');
             Route::get('account-manager/clients/booker/{clientId}', 'createBooker')->name('accountmanager.clients.booker.create');
             Route::get('account-manager/clients/pricingmodel/{clientId}', 'pricingModel')->name('accountmanager.clients.pricingmodel');
+            Route::get('account-manager/clients/onlineservices/{clientId}', 'onlineServices')->name('accountmanager.clients.onlineservices');
+            Route::get('account-manager/clients/services/subheaders/{headerId}', 'getSubheaders')->name('accountmanager.clients.services.getsubheaders');
             Route::get('account-manager/clients/fare-reference/{clientId}', 'fareReference')->name('accountmanager.clients.fare_reference');
             Route::get('account-manager/clients/snap-code/{clientId}', 'snapCodes')->name('accountmanager.clients.snap_code');
             Route::get('account-manager/clients/ancilliary_fees/{clientId}', 'ancilliaryFees')->name('accountmanager.clients.ancilliary_fees');
@@ -242,6 +245,13 @@ Route::group(['middleware' => 'cors'], function () {
                 Route::post('account-manager/client/reporting-elements/store', 'store')->name('accountmanager.client.reporting_elements.create');
                 Route::put('account-manager/client/reporting-elements/update', 'update')->name('accountmanager.client.reporting_elements.update');
                 Route::delete('account-manager/client/reporting-elements/destroy', 'destroy')->name('accountmanager.client.reporting_elements.destroy');
+            });
+
+            //Summary of Fees - Services
+            Route::controller(SummaryServiceController::class)->group(function () {
+                Route::post('account-manager/client/standard-service/store', 'store')->name('accountmanager.client.standard_service.create');
+                Route::put('account-manager/client/standard-service/update', 'update')->name('accountmanager.client.standard_service.update');
+                Route::delete('account-manager/client/standard-service/destroy/{id}', 'destroy')->name('accountmanager.client.standard_service.destroy');
             });
         });
     });
