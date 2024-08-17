@@ -76,8 +76,11 @@
                                 <!-- Form of Refund -->
                                 <p class="fs-6"><strong>Form of Refund:</strong> {{ $info->form_of_refund }}</p>
 
-                                <!-- Reports Deadline -->
-                                <p class="fs-6"><strong>Deadline of submission of reports:</strong> {{ $info->reports_deadline }}</p>
+                                <!-- Report Frequency -->
+                                <p class="fs-6"><strong>Frequency of Report:</strong> {{ $info->report_frequency }}</p>
+
+                                <!-- Submission Date -->
+                                <p class="fs-6"><strong>Date of Submission:</strong> {{ $info->submission_date }}</p>
                             </div>
                         </div>
 

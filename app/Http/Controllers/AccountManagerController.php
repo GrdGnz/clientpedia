@@ -26,6 +26,9 @@ use App\Models\PricingmodelType;
 use App\Models\Route;
 use App\Models\RouteType;
 use App\Models\Source;
+use App\Models\SummaryHeader;
+use App\Models\SummaryService;
+use App\Models\SummarySubheader;
 use App\Models\Unit;
 use App\Models\User;
 use App\Models\UserActivity;
@@ -254,14 +257,15 @@ class AccountManagerController extends Controller
         }
     }
 
+    // Summary of Fees - Standard Services
     public function pricingModel($clientId)
     {
         try {
             // Get last login date of user
             $user = Auth::user();
-            $routes = Route::all();
-            $pricingModelTypes = PricingmodelType::all();
-            $pricingModels = Pricingmodel::all();
+                $routes = Route::all();
+                $pricingModelTypes = PricingmodelType::all();
+                $pricingModels = Pricingmodel::all();
 
             // Get user last login date
             $userActivity = new UserActivity;
@@ -272,8 +276,12 @@ class AccountManagerController extends Controller
 
             // Fetch client pricing model data and replace IDs with names
             $clientPricingModels = ClientPricingModel::where('client_id', $clientId)
-            ->with('route', 'pricingModelType')
-            ->get();
+                ->with('route', 'pricingModelType')
+                ->get();
+
+            $headers = SummaryHeader::where('service_type', 'standard')->get();
+            $subheaders = SummarySubheader::all();
+            $services = SummaryService::where('client_id', $clientId)->get();
 
             return view('accountmanager.client.pricingandfinancial.pricingmodel',
                 compact('user',
@@ -283,13 +291,56 @@ class AccountManagerController extends Controller
                     'routes',
                     'pricingModelTypes',
                     'pricingModels',
-                    'clientPricingModels'
+                    'clientPricingModels',
+                    'headers',
+                    'subheaders',
+                    'services',
                 )
             );
         } catch (\Exception $e) {
             // Handle exceptions here (e.g., client not found, database error)
             return view('errors.404'); // Redirect to a 404 error page or show an error message.
         }
+    }
+
+    function onlineServices($clientId)
+    {
+        try {
+            // Get last login date of user
+            $user = Auth::user();
+
+            // Get user last login date
+            $userActivity = new UserActivity;
+            $lastLoginDate = $userActivity->getLastLoginDate($user->id);
+
+            // Retrieve the client data based on the ID from the URL
+            $client = Client::findOrFail($clientId);
+
+            $headers = SummaryHeader::where('service_type', 'online')->get();
+            $subheaders = SummarySubheader::all();
+            $services = SummaryService::where('client_id', $clientId)->get();
+
+            return view('accountmanager.client.pricingandfinancial.onlineservices',
+                compact('user',
+                    'lastLoginDate',
+                    'client',
+                    'clientId',
+                    'headers',
+                    'subheaders',
+                    'services',
+                )
+            );
+
+        } catch(\Exception $e) {
+
+        }
+    }
+
+    // Get subheaders of chosen header in Standard and Online Services
+    public function getSubheaders($headerId)
+    {
+        $subheaders = SummarySubheader::where('header_id', $headerId)->get();
+        return response()->json($subheaders);
     }
 
     public function fareReference($clientId)

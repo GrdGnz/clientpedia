@@ -1,3 +1,7 @@
+@php
+    $page = 'clientInfo';
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -88,13 +92,13 @@
                                     <td>
                                         <label for="contractStartDate" class="form-control txt-1 marsman-bg-color-semidark text-white">Contract Start Date</label>
                                         <div class="bg-white p-2 rounded-bottom">
-                                            <input type="text" id="contractStartDate" name="contractStartDate" class="form-control txt-1 datepicker p-2" value="{{ isset($client->info->contract_start_date) ? \Carbon\Carbon::parse($client->info->contract_start_date)->format('Y-m-d') : '' }}" />
+                                            <input type="text" id="contractStartDate" name="contractStartDate" class="form-control txt-1 datepicker p-2" value="{{ isset($client->info->contract_start_date) ? \Carbon\Carbon::parse($client->info->contract_start_date)->format('d/m/Y') : '' }}" />
                                         </div>
                                     </td>
                                     <td>
                                         <label for="contractEndDate" class="form-control txt-1 marsman-bg-color-semidark text-white">Contract End Date</label>
                                         <div class="bg-white p-2 rounded-bottom">
-                                            <input type="text" id="contractEndDate" name="contractEndDate" class="form-control txt-1 datepicker p-2" value="{{ isset($client->info->contract_end_date) ? \Carbon\Carbon::parse($client->info->contract_end_date)->format('Y-m-d') : '' }}" />
+                                            <input type="text" id="contractEndDate" name="contractEndDate" class="form-control txt-1 datepicker p-2" value="{{ isset($client->info->contract_end_date) ? \Carbon\Carbon::parse($client->info->contract_end_date)->format('d/m/Y') : '' }}" />
                                         </div>
                                     </td>
                                 </tr>
@@ -104,13 +108,13 @@
                                         <div class="bg-white p-2 rounded-bottom">
                                             <select id="creditTerm" name="creditTerm" class="form-control form-select txt-1 d-flex">
                                                 <option value="" @if(isset($client->info->credit_term)) @if($client->info->credit_term == '') selected="selected" @endif @endif>-- please select --</option>
+                                                <option value="COD"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 'COD') selected="selected" @endif @endif>COD</option>
+                                                <option value="Credit Card"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 'Credit Card') selected="selected" @endif @endif>Credit Card</option>
                                                 <option value="15"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == '15 Day/s') selected="selected" @endif @endif>15 Day/s</option>
                                                 <option value="30"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == '30 Day/s') selected="selected" @endif @endif>30 Day/s</option>
                                                 <option value="45"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == '45 Day/s') selected="selected" @endif @endif>45 Day/s</option>
                                                 <option value="60"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == '60 Days') selected="selected" @endif @endif>60 Day/s</option>
                                                 <option value="90"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == '90 Day/s') selected="selected" @endif @endif>90 Day/s</option>
-                                                <option value="COD"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 'COD') selected="selected" @endif @endif>COD</option>
-                                                <option value="Credit Card"  @if(isset($client->info->credit_term)) @if($client->info->credit_term == 'Credit Card') selected="selected" @endif @endif>Credit Card</option>
                                             </select>
                                         </div>
                                     </td>
@@ -190,9 +194,21 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <label for="reportsDeadline" class="form-control txt-1 marsman-bg-color-semidark text-white">Reports Deadline</label>
+                                        <label for="reportFrequency" class="form-control txt-1 marsman-bg-color-semidark text-white">Frequency of Report</label>
                                         <div class="bg-white p-2 rounded-bottom">
-                                            <input type="text" id="reportsDeadline" name="reportsDeadline" class="form-control txt-1" value="{{ isset($client->info->reports_deadline) ? $client->info->reports_deadline : '' }}">
+                                            <select id="reportFrequency" name="reportFrequency" class="form-control form-select txt-1">
+                                                <option value="monthly">Monthly</option>
+                                                <option value="Weekly">Weekly</option>
+                                                <option value="every">Every</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="submissionDate" class="form-control txt-1 marsman-bg-color-semidark text-white">Date of Submission</label>
+                                        <div class="bg-white p-2 rounded-bottom">
+                                            <input type="text" id="submissionDate" name="submissionDate" class="form-control txt-1" placeholder="mm/dd">
                                         </div>
                                     </td>
                                 </tr>
@@ -214,7 +230,7 @@
     // Initialize Bootstrap Datepicker
     $(document).ready(function() {
         $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd', // Adjust the format as needed
+            format: 'dd/mm/yyyy', // Adjust the format as needed
             autoclose: true
         });
     });

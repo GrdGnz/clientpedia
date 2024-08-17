@@ -1,3 +1,7 @@
+@php
+    $page = 'fareReference';
+@endphp
+
 @extends('layouts.app')
 
 @section('content')

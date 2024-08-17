@@ -1,3 +1,7 @@
+@php
+    $page = 'invoiceAttachment';
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -12,7 +16,7 @@
             <div class="w-100 my-3">
                 <a class="btn marsman-btn-secondary marsman-border-primary-1 txt-1" href="{{ route('accountmanager.clients.index') }}">Back to Client List</a>
             </div>
-            
+
             <div class="h3">INVOICE ATTACHMENT - {{ $client['name'] }}</div>
             <hr class="w-100" />
 
@@ -51,14 +55,14 @@
                                 <form action="{{ route('accountmanager.client.invoice_attachments.update_status', $attachment->id) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                    
+
                                     <div class="form-group mb-0">
                                         <select name="new_status" class="form-control marsman-border-primary-1 bg-white txt-1">
                                             <option value="0" {{ $attachment->status_id == 1 ? 'selected' : '' }}>Inactive</option>
                                             <option value="1" {{ $attachment->status_id == 2 ? 'selected' : '' }}>Active</option>
                                         </select>
                                     </div>
-                    
+
                                     <button type="submit" class="btn btn-sm btn-primary mt-2">Update Status</button>
                                 </form>
                             </td>
