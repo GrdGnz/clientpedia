@@ -16,6 +16,7 @@ use App\Http\Controllers\ClientHotelCorporateCodeController;
 use App\Http\Controllers\ClientInfoController;
 use App\Http\Controllers\ClientInvoiceAttachmentController;
 use App\Http\Controllers\ClientPreferredAirlinesController;
+use App\Http\Controllers\ClientPreferredAirlinesUploadController;
 use App\Http\Controllers\ClientReportingElementController;
 use App\Http\Controllers\ClientTravelPolicyController;
 use App\Http\Controllers\ClientTravelSecurityController;
@@ -225,6 +226,10 @@ Route::group(['middleware' => 'cors'], function () {
             // Client Preferred Airlines
             Route::controller(ClientPreferredAirlinesController::class)->group(function () {
                 Route::post('account-manager/client/preferred-airlines/store', 'store')->name('accountmanager.client.preferred_airlines.create');
+                Route::put('account-manager/client/preferred-airlines/{id}', 'update')->name('accountmanager.client.preferred_airlines.update');
+                Route::delete('accountmanager/client/preferred_airlines/{id}', 'destroy')->name('accountmanager.client.preferred_airlines.destroy');
+                Route::post('account-manager/client/{clientId}/preferred-airlines/upload', [ClientPreferredAirlinesUploadController::class, 'upload'])->name('accountmanager.client.preferred_airlines.upload');
+                Route::delete('account-manager/client/preferred-airlines/upload/{id}', [ClientPreferredAirlinesUploadController::class, 'destroy'])->name('client.preferred_airlines_upload.destroy');
             });
 
             // Client Travel Security

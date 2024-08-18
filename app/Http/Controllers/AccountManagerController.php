@@ -15,6 +15,7 @@ use App\Models\ClientFee;
 use App\Models\ClientHotelCorporateCode;
 use App\Models\ClientInvoiceAttachment;
 use App\Models\ClientPreferredAirline;
+use App\Models\ClientPreferredAirlinesUpload;
 use App\Models\ClientPricingModel;
 use App\Models\ClientReportingElement;
 use App\Models\ClientTravelPolicy;
@@ -618,24 +619,22 @@ class AccountManagerController extends Controller
             // Get airlines
             $airlines = Airlines::orderBy('name', 'asc')->get();
 
-            // Get client's existing international airlines
-            $internationalAirlines = ClientPreferredAirline::where('client_id', $clientId)
-                ->where('route_id', 1)
-                ->get();
+            // Preferred Airlines
+            $preferredAirlines = ClientPreferredAirline::where('client_id', $clientId)->get();
 
-            // Get client's existing domestic airlines
-            $domesticAirlines = ClientPreferredAirline::where('client_id', $clientId)
-                ->where('route_id', 2)
-                ->get();
+            $contacts = ClientContact::where('client_id', $clientId);
 
-            return view('accountmanager.client.air.airlines',
+            $uploads = ClientPreferredAirlinesUpload::where('client_id', $clientId)->get();
+
+            return view('accountmanager.client.air.preferredairlines',
                 compact('user',
                     'lastLoginDate',
                     'client',
                     'clientId',
                     'airlines',
-                    'internationalAirlines',
-                    'domesticAirlines',
+                    'preferredAirlines',
+                    'contacts',
+                    'uploads',
                 )
             );
         } catch (\Exception $e) {

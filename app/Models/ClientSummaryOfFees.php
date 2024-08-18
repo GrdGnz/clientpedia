@@ -12,13 +12,13 @@ class ClientSummaryOfFees extends Model
     protected $table = 'client_summary_of_fees';
 
     protected $fillable = [
-        `client_id`,
-        `category`,
-        `sub_category`,
-        `service`,
-        `measure`,
-        `currency`,
-        `standard_office_hours`,
-        `after_office_hours`,
+        'client_id',
+        'category',
+        'sub_category',
+        'service',
+        'measure',
+        'currency',
+        'standard_office_hours',
+        'after_office_hours',
     ];
 }
