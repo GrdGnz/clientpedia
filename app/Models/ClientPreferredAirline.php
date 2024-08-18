@@ -10,12 +10,14 @@ class ClientPreferredAirline extends Model
     use HasFactory;
 
     protected $table = 'client_preferred_airlines';
-    
+
     protected $fillable = [
         'client_id',
-        'route_id',
         'airline_code',
-        'status_id',
+        'snap_code',
+        'contact_person',
+        'contact_number',
+        'contact_email',
     ];
 
     // Define the relationship to retrieve the airline information
