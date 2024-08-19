@@ -15,7 +15,9 @@ use App\Models\ClientFee;
 use App\Models\ClientHotelCorporateCode;
 use App\Models\ClientInvoiceAttachment;
 use App\Models\ClientPreferredAirline;
+use App\Models\ClientPreferredHotel;
 use App\Models\ClientPreferredAirlinesUpload;
+use App\Models\ClientPreferredHotelsUpload;
 use App\Models\ClientPricingModel;
 use App\Models\ClientReportingElement;
 use App\Models\ClientTravelPolicy;
@@ -704,6 +706,52 @@ class AccountManagerController extends Controller
                     'routes',
                     'hotels',
                     'hotelCorporateCode',
+                )
+            );
+        } catch (\Exception $e) {
+            // Handle exceptions here (e.g., client not found, database error)
+            return view('errors.404'); // Redirect to a 404 error page or show an error message.
+        }
+    }
+
+    public function preferredHotels($clientId)
+    {
+        try {
+            // Get last login date of user
+            $user = Auth::user();
+
+            // Get user last login date
+            $userActivity = new UserActivity;
+            $lastLoginDate = $userActivity->getLastLoginDate($user->id);
+
+            // Retrieve the client data based on the ID from the URL
+            $client = Client::findOrFail($clientId);
+
+            // Get airlines
+            $airlines = Airlines::orderBy('name', 'asc')->get();
+
+            //Hotels
+            $hotels = Hotel::orderBy('name', 'asc')->get();
+
+            // Preferred Airlines
+            $preferredAirlines = ClientPreferredAirline::where('client_id', $clientId)->get();
+            $preferredHotels = ClientPreferredHotel::where('client_id', $clientId)->get();
+
+            $contacts = ClientContact::where('client_id', $clientId);
+
+            $uploads = ClientPreferredHotelsUpload::where('client_id', $clientId)->get();
+
+            return view('accountmanager.client.hotel.preferredhotels',
+                compact('user',
+                    'lastLoginDate',
+                    'client',
+                    'clientId',
+                    'airlines',
+                    'preferredAirlines',
+                    'preferredHotels',
+                    'contacts',
+                    'uploads',
+                    'hotels',
                 )
             );
         } catch (\Exception $e) {
