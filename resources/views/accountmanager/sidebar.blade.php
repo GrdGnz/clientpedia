@@ -126,6 +126,10 @@
                             Booking Process
                         </a>
 
+                        <a class="nav-link collapsed" href="{{ route('accountmanager.clients.preferred_hotels', ['clientId' => $client['id']]) }}">
+                            Preferred Hotels
+                        </a>
+
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.hotel_corporate_code', ['clientId' => $client['id']]) }}">
                             Hotel Corporate Code
                         </a>
