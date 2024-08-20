@@ -26,7 +26,6 @@
                     <thead class="marsman-bg-color-dark text-white">
                         <tr>
                             <th>ID</th>
-                            <th>Schedule</th>
                             <th>Description File</th>
                             <th>Email Approval File</th>
                             <th>Purchase Order File</th>
@@ -39,7 +38,6 @@
                         @foreach($clientInvoiceAttachments as $attachment)
                         <tr>
                             <td>{{ $attachment->id }}</td>
-                            <td>{{ $attachment->schedule }}</td>
                             <td><a href="{{ asset($attachment->description_path) }}" target="_blank">{{ basename($attachment->description_path) }}</a></td>
                             <td><a href="{{ asset($attachment->email_approval_path) }}" target="_blank">{{ basename($attachment->email_approval_path) }}</a></td>
                             <td><a href="{{ asset($attachment->purchase_order_path) }}" target="_blank">{{ basename($attachment->purchase_order_path) }}</a></td>
@@ -96,8 +94,8 @@
                             <input type="hidden" name="client_id" id="client_id" value="{{ $clientId }}" />
 
                             <div class="form-group mb-3">
-                                <label for="schedule" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Schedule</label>
-                                <input type="text" name="schedule" id="schedule" class="form-control marsman-border-primary-1 bg-white txt-1" required>
+                                <!--<label for="schedule" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Schedule</label>-->
+                                <input type="hidden" name="schedule" id="schedule" class="form-control marsman-border-primary-1 bg-white txt-1" value="10th">
                             </div>
 
                             <div class="form-group mb-3">

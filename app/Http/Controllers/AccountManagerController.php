@@ -38,6 +38,10 @@ use App\Models\UserActivity;
 use App\Models\UserClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ClientPreferredCar;
+use App\Models\ClientPreferredCarsUpload;
+use App\Models\Car;
+use Illuminate\Support\Facades\Log;
 
 class AccountManagerController extends Controller
 {
@@ -727,17 +731,11 @@ class AccountManagerController extends Controller
             // Retrieve the client data based on the ID from the URL
             $client = Client::findOrFail($clientId);
 
-            // Get airlines
-            $airlines = Airlines::orderBy('name', 'asc')->get();
-
             //Hotels
             $hotels = Hotel::orderBy('name', 'asc')->get();
 
             // Preferred Airlines
-            $preferredAirlines = ClientPreferredAirline::where('client_id', $clientId)->get();
             $preferredHotels = ClientPreferredHotel::where('client_id', $clientId)->get();
-
-            $contacts = ClientContact::where('client_id', $clientId);
 
             $uploads = ClientPreferredHotelsUpload::where('client_id', $clientId)->get();
 
@@ -746,10 +744,46 @@ class AccountManagerController extends Controller
                     'lastLoginDate',
                     'client',
                     'clientId',
-                    'airlines',
-                    'preferredAirlines',
                     'preferredHotels',
-                    'contacts',
+                    'uploads',
+                    'hotels',
+                )
+            );
+        } catch (\Exception $e) {
+            // Handle exceptions here (e.g., client not found, database error)
+            Log::error('Error: ',  ['error' => $e->getMessage()]);
+            return view('errors.404'); // Redirect to a 404 error page or show an error message.
+        }
+    }
+
+    public function preferredCars($clientId)
+    {
+        try {
+            // Get last login date of user
+            $user = Auth::user();
+
+            // Get user last login date
+            $userActivity = new UserActivity;
+            $lastLoginDate = $userActivity->getLastLoginDate($user->id);
+
+            // Retrieve the client data based on the ID from the URL
+            $client = Client::findOrFail($clientId);
+
+            //Hotels
+            $hotels = Hotel::orderBy('name', 'asc')->get();
+            $cars = Car::orderBy('name', 'asc')->get();
+
+            // Preferred Airlines
+            $preferredCars = ClientPreferredCar::where('client_id', $clientId)->get();
+
+            $uploads = ClientPreferredCarsUpload::where('client_id', $clientId)->get();
+
+            return view('accountmanager.client.car.preferredcars',
+                compact('user',
+                    'lastLoginDate',
+                    'client',
+                    'clientId',
+                    'preferredCars',
                     'uploads',
                     'hotels',
                 )

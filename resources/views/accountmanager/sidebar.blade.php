@@ -102,7 +102,11 @@
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.travel_policy', ['clientId' => $client['id']]) }}">
-                            Travel Policy
+                            @if(isset($page) && $page == 'travelPolicy')
+                                <span class="text-white">Travel Policy</span>
+                            @else
+                                <span>Travel Policy</span>
+                            @endif
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.preferred_airlines', ['clientId' => $client['id']]) }}">
@@ -123,11 +127,19 @@
                 <div class="collapse bg-secondary" id="collapseHotel" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.booking_process', ['clientId' => $client['id'], 'categoryId' => 2]) }}">
-                            Booking Process
+                            @if(isset($page) && $page == 'bookingProcessHotel')
+                                <span class="text-white">Hotel Booking Process</span>
+                            @else
+                                Hotel Booking Process
+                            @endif
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.preferred_hotels', ['clientId' => $client['id']]) }}">
-                            Preferred Hotels
+                            @if(isset($page) && $page == 'preferredHotels')
+                                <span class="text-white">Preferred Hotels</span>
+                            @else
+                                <span>Preferred Hotels</span>
+                            @endif
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.hotel_corporate_code', ['clientId' => $client['id']]) }}">
@@ -146,21 +158,17 @@
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.booking_process', ['clientId' => $client['id'], 'categoryId' => 3]) }}">
                             Booking Process
                         </a>
-                    </nav>
-                </div>
-                <!-- CAR TRANSFER -->
-                <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCarTransfer" aria-expanded="false" aria-controls="collapseCarTransfer">
-                    <div class="sb-nav-link-icon"><i class="fas fa-shuttle-van"></i></div>
-                    Car Transfer
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse bg-secondary" id="collapseCarTransfer" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link collapsed" href="{{ route('accountmanager.clients.booking_process', ['clientId' => $client['id'], 'categoryId' => 4]) }}">
-                            Booking Process
+
+                        <a class="nav-link collapsed" href="{{ route('accountmanager.clients.preferred_cars', ['clientId' => $client['id']]) }}">
+                            @if(isset($page) && $page == 'preferredCars')
+                                <span class="text-white">Preferred Cars</span>
+                            @else
+                                <span>Preferred Cars</span>
+                            @endif
                         </a>
                     </nav>
                 </div>
+
                 <!-- DOCUMENTATION -->
                 <a class="nav-link" href="#bottom" data-bs-toggle="collapse" data-bs-target="#collapseDocumentation" aria-expanded="false" aria-controls="collapseDocumentation">
                     <div class="sb-nav-link-icon"><i class="fas fa-passport"></i></div>
@@ -216,6 +224,18 @@
                 scrollToLastVisibleSubmenuItem(this);
             } else if (['fareReference', 'invoiceAttachment'].includes(page)) {
                 $('#collapsePricingAndFinancial').collapse('show');
+                scrollToLastVisibleSubmenuItem(this);
+            } else if (['preferredHotels'].includes(page)) {
+                $('#collapseHotel').collapse('show');
+                scrollToLastVisibleSubmenuItem(this);
+            } else if (['preferredCars'].includes(page)) {
+                $('#collapseCar').collapse('show');
+                scrollToLastVisibleSubmenuItem(this);
+            } else if (['bookingProcessAir', 'travelPolicy'].includes(page)) {
+                $('#collapseAir').collapse('show');
+                scrollToLastVisibleSubmenuItem(this);
+            } else if (['bookingProcessHotel'].includes(page)) {
+                $('#collapseHotel').collapse('show');
                 scrollToLastVisibleSubmenuItem(this);
             } else {
                 // Ensure that it is collapsed on other pages

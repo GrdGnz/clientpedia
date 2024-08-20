@@ -12,7 +12,6 @@ class ClientInvoiceAttachmentController extends Controller
         try {
             // Validate the incoming request data
             $request->validate([
-                'schedule' => 'required',
                 'description_path' => 'file|mimes:pdf,doc,docx|max:2048',
                 'email_approval_path' => 'file|mimes:pdf,doc,docx|max:2048',
                 'purchase_order_path' => 'file|mimes:pdf,doc,docx|max:2048',
@@ -53,8 +52,8 @@ class ClientInvoiceAttachmentController extends Controller
             $attachment->save();
 
             //log activity
-            logUserActivity(auth()->user()->id, 
-                'create-client-invoice-attachment', 
+            logUserActivity(auth()->user()->id,
+                'create-client-invoice-attachment',
                 'Added Invoice Attachment ID# \''.$attachment->id.'\' on client: '.$attachment->client->name
             );
 

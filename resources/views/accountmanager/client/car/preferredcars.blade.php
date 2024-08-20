@@ -1,5 +1,5 @@
 @php
-    $page = 'preferredHotels';
+    $page = 'preferredCars';
 @endphp
 
 @extends('layouts.app')
@@ -17,7 +17,7 @@
                 <a class="btn marsman-btn-secondary marsman-border-primary-1 txt-1" href="{{ route('accountmanager.clients.index') }}">Back to Client List</a>
             </div>
 
-            <div class="h3">PREFERRED HOTELS - {{ $client['name'] }}</div>
+            <div class="h3">PREFERRED CARS - {{ $client['name'] }}</div>
             <hr class="w-100" />
 
             @if (session('success'))
@@ -43,24 +43,24 @@
             @endif
 
             <!-- Modal -->
-            <div class="modal fade" id="editHotel" tabindex="-1" aria-labelledby="editHotelLabel" aria-hidden="true">
+            <div class="modal fade" id="editCar" tabindex="-1" aria-labelledby="editCarLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="editHotelLabel">Update Hotel</h1>
+                            <h1 class="modal-title fs-5" id="editCarLabel">Update Car</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="editPreferredHotel" method="POST" action="">
+                            <form id="editPreferredCar" method="POST" action="">
                                 @csrf
                                 @method('PUT')
 
-                                <input type="hidden" id="preferred_hotel_id" name="preferred_hotel_id" value="">
+                                <input type="hidden" id="preferred_car_id" name="preferred_car_id" value="">
                                 <input type="hidden" name="client_id" value="{{ $client['id'] }}">
 
                                 <div class="form-group p-2">
-                                    <label for="edit_hotel" class="marsman-bg-color-dark text-white rounded-top p-2 m-0">* Hotel:</label>
-                                    <input type="text" class="form-control marsman-border-primary-1 txt-1" id="edit_hotel" name="edit_hotel">
+                                    <label for="edit_car" class="marsman-bg-color-dark text-white rounded-top p-2 m-0">* Car:</label>
+                                    <input type="text" class="form-control marsman-border-primary-1 txt-1" id="edit_car" name="edit_car">
                                 </div>
 
                                 <div class="form-group p-2">
@@ -90,7 +90,7 @@
 
             <div class="col-md-12 d-flex">
                 <div class="col-md-4">
-                    <form action="{{ route('accountmanager.client.preferred_hotels.upload', $client->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('accountmanager.client.preferred_cars.upload', $client->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="marsman-border-primary-1 p-2">
                             <label for="file">Upload Excel File</label>
@@ -110,7 +110,7 @@
                                     {{ basename($upload->file_path) }}
                                 </a>
                                 <!-- Delete Form -->
-                                <form action="{{ route('client.preferred_hotels_upload.destroy', $upload->id) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('client.preferred_cars_upload.destroy', $upload->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger txt-1" onclick="return confirm('Are you sure you want to delete this file?');">Delete</button>
@@ -127,20 +127,20 @@
 
                 <div class="card col-md-6">
                     <div class="card-header marsman-bg-color-dark text-white">
-                        <span class="h5">Add Preferred Hotel</span>
+                        <span class="h5">Add Preferred Car</span>
                     </div>
                     <div class="card-body marsman-bg-color-lightblue p-2">
 
-                        <form method="POST" action="{{ route('accountmanager.client.preferred_hotels.create') }}">
+                        <form method="POST" action="{{ route('accountmanager.client.preferred_cars.create') }}">
                             @csrf
 
                             {{-- Client ID --}}
                             <input type="hidden" name="client_id" value="{{ $client['id'] }}">
 
-                            {{-- Hotel --}}
+                            {{-- Car --}}
                             <div class="form-group p-2">
-                                <label for="hotel" class="marsman-bg-color-dark text-white rounded-top p-2 m-0">* Hotel:</label>
-                                <input type="text" class="form-control marsman-border-primary-1 txt-1" id="hotel" name="hotel">
+                                <label for="car" class="marsman-bg-color-dark text-white rounded-top p-2 m-0">* Car:</label>
+                                <input type="text" class="form-control marsman-border-primary-1 txt-1" id="car" name="car">
                             </div>
 
                             {{-- Contact Person --}}
@@ -162,7 +162,7 @@
                             </div>
 
                             <div class="form-group w-100 text-center">
-                                <button type="submit" class="btn marsman-btn-primary m-2">Add Hotel</button>
+                                <button type="submit" class="btn marsman-btn-primary m-2">Add Car</button>
                             </div>
 
                         </form>
@@ -173,7 +173,7 @@
                     <table id="contactTable" class="table table-striped table-bordered">
                         <thead class="marsman-bg-color-dark text-white pt-3">
                             <tr>
-                                <th>HOTEL</th>
+                                <th>CAR</th>
                                 <th>CONTACT PERSON</th>
                                 <th>CONTACT NUMBER</th>
                                 <th>CONTACT EMAIL</th>
@@ -182,16 +182,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($preferredHotels as $preferred)
+                            @foreach ($preferredCars as $preferred)
                                 <tr>
-                                    <td>{{ $preferred->hotel_code }}</td>
+                                    <td>{{ $preferred->car_code }}</td>
                                     <td>{{ $preferred->contact_person }}</td>
                                     <td>{{ $preferred->contact_number }}</td>
                                     <td>{{ $preferred->contact_email }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary txt-1" data-bs-toggle="modal" data-bs-target="#editHotel"
+                                        <button type="button" class="btn btn-primary txt-1" data-bs-toggle="modal" data-bs-target="#editCar"
                                             data-id="{{ $preferred->id }}"
-                                            data-hotel_code="{{ $preferred->hotel_code }}"
+                                            data-car_code="{{ $preferred->car_code }}"
                                             data-contact_person="{{ $preferred->contact_person }}"
                                             data-contact_number="{{ $preferred->contact_number }}"
                                             data-contact_email="{{ $preferred->contact_email }}">
@@ -199,7 +199,7 @@
                                         </button>
                                     </td>
                                     <td>
-                                        <form method="POST" action="{{ route('accountmanager.client.preferred_hotels.destroy', $preferred->id) }}" onsubmit="return confirm('Are you sure you want to delete this preferred airline?');">
+                                        <form method="POST" action="{{ route('accountmanager.client.preferred_cars.destroy', $preferred->id) }}" onsubmit="return confirm('Are you sure you want to delete this preferred airline?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger txt-1">Delete</button>
@@ -233,19 +233,19 @@
     $(document).ready(function() {
         $('#contactTable').DataTable();
 
-        $('#editHotel').on('show.bs.modal', function (event) {
+        $('#editCar').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var modal = $(this);
 
             var id = button.data('id');
-            var hotel_code = button.data('hotel_code');
+            var car_code = button.data('car_code');
             var contact_person = button.data('contact_person');
             var contact_number = button.data('contact_number');
             var contact_email = button.data('contact_email');
 
-            modal.find('#editPreferredHotel').attr('action', '{{ url('account-manager/client/preferred-hotels') }}/' + id);
-            modal.find('#preferred_hotel_id').val(id);
-            modal.find('#edit_hotel').val(hotel_code);
+            modal.find('#editPreferredCar').attr('action', '{{ url('account-manager/client/preferred-cars') }}/' + id);
+            modal.find('#preferred_car_id').val(id);
+            modal.find('#edit_car').val(car_code);
             modal.find('#edit_contact_person').val(contact_person);
             modal.find('#edit_contact_number').val(contact_number);
             modal.find('#edit_contact_email').val(contact_email);

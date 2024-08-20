@@ -1,3 +1,14 @@
+@php
+    if($categoryId == 1)
+        $page = 'bookingProcessAir';
+    else if ($categoryId == 2)
+        $page = 'bookingProcessHotel';
+    else if ($categoryId == 3)
+        $page = 'bookingProcessCar';
+    else if ($categoryId == 5)
+        $page = 'bookingProcessDocumentation';
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -12,7 +23,7 @@
                 <div class="w-100 my-3">
                     <a class="btn marsman-btn-secondary marsman-border-primary-1 txt-1" href="{{ route('accountmanager.clients.index') }}">Back to Client List</a>
                 </div>
-                
+
                 <div class="container">
                     <p class="h3">
                         @if ($categoryId == 1)
@@ -112,13 +123,13 @@
                             @php
                                 $numSteps = 1;
                             @endphp
-                            
+
                             <form action="{{ route('accountmanager.client.booking_process.create') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="client_id" value="{{ $clientId }}">
                                 <input type="hidden" name="category_id" value="{{ $categoryId }}">
                                 <input type="hidden" name="numSteps" value="{{ $numSteps }}">
-                                
+
                                 <div class="form-group mb-3">
                                     <label for="route_id" class="form-label marsman-bg-color-dark text-white p-2 rounded-top m-0">Route</label>
                                     <select name="route_id" class="form-control marsman-border-primary-1 bg-white txt-1">
@@ -127,7 +138,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            
+
                                 <div id="stepsContainer">
                                     @for ($i = 1; $i <= $numSteps; $i++)
                                     <div class="row" id="step{{ $i }}Row">
@@ -142,18 +153,18 @@
                                     </div>
                                     @endfor
                                 </div>
-                            
+
                                 <button type="submit" class="btn marsman-btn-primary">Save</button>
                             </form>
                         </div>
                     </div>
-                    
+
                 </div>
 
                 <script>
                     var numSteps = {{ $numSteps }};
                     var stepsContainer = document.getElementById('stepsContainer');
-                
+
                     document.addEventListener('click', function (event) {
                         if (event.target.classList.contains('delete-step')) {
                             var stepNumber = event.target.getAttribute('data-step');
@@ -166,55 +177,55 @@
                             addStep();
                         }
                     });
-                
+
                     function addStep() {
                         numSteps++;
                         var newRow = document.createElement('div');
                         newRow.classList.add('row');
                         newRow.id = 'step' + numSteps + 'Row';
-                
+
                         var col = document.createElement('div');
                         col.classList.add('col-md-6');
-                
+
                         var inputGroup = document.createElement('div');
                         inputGroup.classList.add('input-group', 'mb-3');
-                
+
                         var span = document.createElement('span');
                         span.classList.add('input-group-text', 'txt-1');
                         span.textContent = 'Step ' + numSteps;
-                
+
                         var input = document.createElement('input');
                         input.setAttribute('type', 'text');
                         input.classList.add('form-control');
                         input.setAttribute('id', 'step' + numSteps);
                         input.setAttribute('name', 'steps[' + numSteps + ']');
-                
+
                         var deleteButton = document.createElement('button');
                         deleteButton.setAttribute('type', 'button');
                         deleteButton.classList.add('btn', 'btn-danger', 'delete-step');
                         deleteButton.setAttribute('data-step', numSteps);
                         deleteButton.textContent = 'Delete';
-                
+
                         var addButton = document.createElement('button');
                         addButton.setAttribute('type', 'button');
                         addButton.classList.add('btn', 'btn-primary', 'add-step');
                         addButton.textContent = 'Add Step';
-                
+
                         inputGroup.appendChild(span);
                         inputGroup.appendChild(input);
-                
+
                         // Check if it's the first step and hide the delete button
                         if (numSteps > 1) {
                             inputGroup.appendChild(deleteButton);
                         }
-                
+
                         col.appendChild(inputGroup);
                         newRow.appendChild(col);
-                
+
                         stepsContainer.appendChild(newRow);
                         renumberSteps();
                     }
-                
+
                     function renumberSteps() {
                         var rows = document.querySelectorAll('.row[id^="step"]');
                         for (var i = 0; i < rows.length; i++) {
@@ -222,10 +233,10 @@
                             var row = rows[i];
                             row.id = 'step' + stepNumber + 'Row';
                             row.querySelector('.input-group-text').textContent = 'Step ' + stepNumber;
-                
+
                             // Update the data-step attribute for delete button
                             row.querySelector('.delete-step').setAttribute('data-step', stepNumber);
-                
+
                             // Show or hide the delete button based on the step number
                             var deleteButton = row.querySelector('.delete-step');
                             if (stepNumber > 1) {
@@ -236,7 +247,7 @@
                         }
                     }
                 </script>
-                
+
             </main>
         </div>
     </div>

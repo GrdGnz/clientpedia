@@ -17,6 +17,8 @@ use App\Http\Controllers\ClientInfoController;
 use App\Http\Controllers\ClientInvoiceAttachmentController;
 use App\Http\Controllers\ClientPreferredAirlinesController;
 use App\Http\Controllers\ClientPreferredAirlinesUploadController;
+use App\Http\Controllers\ClientPreferredCarController;
+use App\Http\Controllers\ClientPreferredCarsUploadController;
 use App\Http\Controllers\ClientPreferredHotelController;
 use App\Http\Controllers\ClientPreferredHotelsUploadController;
 use App\Http\Controllers\ClientReportingElementController;
@@ -121,6 +123,7 @@ Route::group(['middleware' => 'cors'], function () {
             Route::get('account-manager/clients/travel-security/{clientId}', 'travelSecurity')->name('accountmanager.clients.travel_security');
             Route::get('account-manager/clients/hotel-corporate-code/{clientId}', 'hotelCorporateCode')->name('accountmanager.clients.hotel_corporate_code');
             Route::get('account-manager/clients/preferred-hotels/{clientId}', 'preferredHotels')->name('accountmanager.clients.preferred_hotels');
+            Route::get('account-manager/clients/preferred-cars/{clientId}', 'preferredCars')->name('accountmanager.clients.preferred_cars');
             Route::get('account-manager/clients/reporting-elements/{clientId}', 'reportingElements')->name('accountmanager.clients.reporting_elements');
 
             // Client creation routes
@@ -230,7 +233,7 @@ Route::group(['middleware' => 'cors'], function () {
             Route::controller(ClientPreferredAirlinesController::class)->group(function () {
                 Route::post('account-manager/client/preferred-airlines/store', 'store')->name('accountmanager.client.preferred_airlines.create');
                 Route::put('account-manager/client/preferred-airlines/{id}', 'update')->name('accountmanager.client.preferred_airlines.update');
-                Route::delete('accountmanager/client/preferred_airlines/{id}', 'destroy')->name('accountmanager.client.preferred_airlines.destroy');
+                Route::delete('accountmanager/client/preferred-airlines/{id}', 'destroy')->name('accountmanager.client.preferred_airlines.destroy');
                 Route::post('account-manager/client/{clientId}/preferred-airlines/upload', [ClientPreferredAirlinesUploadController::class, 'upload'])->name('accountmanager.client.preferred_airlines.upload');
                 Route::delete('account-manager/client/preferred-airlines/upload/{id}', [ClientPreferredAirlinesUploadController::class, 'destroy'])->name('client.preferred_airlines_upload.destroy');
             });
@@ -238,10 +241,19 @@ Route::group(['middleware' => 'cors'], function () {
             // Client Preferred Hotels
             Route::controller(ClientPreferredHotelController::class)->group(function () {
                 Route::post('account-manager/client/preferred-hotels/store', 'store')->name('accountmanager.client.preferred_hotels.create');
-                Route::put('account-manager/client/preferred-hotel/{id}', 'update')->name('accountmanager.client.preferred_hotel                                                                                            1.update');
-                Route::delete('accountmanager/client/preferred_hotel/{id}', 'destroy')->name('accountmanager.client.preferred_hotel.destroy');
+                Route::put('account-manager/client/preferred-hotels/{id}', 'update')->name('accountmanager.client.preferred_hotels.update');
+                Route::delete('accountmanager/client/preferred-hotels/{id}', 'destroy')->name('accountmanager.client.preferred_hotels.destroy');
                 Route::post('account-manager/client/{clientId}/preferred-hotels/upload', [ClientPreferredHotelsUploadController::class, 'upload'])->name('accountmanager.client.preferred_hotels.upload');
                 Route::delete('account-manager/client/preferred-hotels/upload/{id}', [ClientPreferredHotelsUploadController::class, 'destroy'])->name('client.preferred_hotels_upload.destroy');
+            });
+
+            // Client Preferred Cars
+            Route::controller(ClientPreferredCarController::class)->group(function () {
+                Route::post('account-manager/client/preferred-cars/store', 'store')->name('accountmanager.client.preferred_cars.create');
+                Route::put('account-manager/client/preferred-cars/{id}', 'update')->name('accountmanager.client.preferred_cars.update');
+                Route::delete('accountmanager/client/preferred-cars/{id}', 'destroy')->name('accountmanager.client.preferred_cars.destroy');
+                Route::post('account-manager/client/{clientId}/preferred-cars/upload', [ClientPreferredCarsUploadController::class, 'upload'])->name('accountmanager.client.preferred_cars.upload');
+                Route::delete('account-manager/client/preferred-cars/upload/{id}', [ClientPreferredCarsUploadController::class, 'destroy'])->name('client.preferred_cars_upload.destroy');
             });
 
             // Client Travel Security
