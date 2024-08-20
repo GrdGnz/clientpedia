@@ -1,3 +1,7 @@
+@php
+    $page = 'clientContacts'
+@endphp
+
 @extends('layouts.app')
 
 @section('content')

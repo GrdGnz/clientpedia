@@ -1,3 +1,7 @@
+@php
+    $page = 'bookers';
+@endphp
+
 @extends('layouts.app')
 
 @section('content')

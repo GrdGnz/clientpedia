@@ -1,3 +1,7 @@
+@php
+    $page = 'approvers';
+@endphp
+
 @extends('layouts.app')
 
 @section('content')

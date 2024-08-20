@@ -1,3 +1,7 @@
+@php
+    $page = 'travelSecurity'
+@endphp
+
 @extends('layouts.app')
 
 @section('content')

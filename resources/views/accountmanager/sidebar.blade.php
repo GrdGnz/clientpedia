@@ -24,22 +24,42 @@
 
                 <a class="nav-link" href="{{ route('accountmanager.clients.show', $client) }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-info-circle"></i></div>
-                    Info
+
+                    @if(isset($page) && $page == 'clientInfo')
+                        <span class="text-white">Info</span>
+                    @else
+                        Info
+                    @endif
                 </a>
 
                 <a class="nav-link" href="{{ route('accountmanager.clients.contact.create', ['clientId' => $client['id']]) }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-phone-square"></i></div>
-                    Contacts
+
+                    @if(isset($page) && $page == 'clientContacts')
+                        <span class="text-white">Contacts</span>
+                    @else
+                        Contacts
+                    @endif
                 </a>
 
                 <a class="nav-link" href="{{ route('accountmanager.clients.approver.create', ['clientId' => $client['id']]) }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-phone-square"></i></div>
-                    Approvers
+
+                    @if(isset($page) && $page == 'approvers')
+                        <span class="text-white">Approvers</span>
+                    @else
+                        <span>Approvers</span>
+                    @endif
                 </a>
 
                 <a class="nav-link" href="{{ route('accountmanager.clients.booker.create', ['clientId' => $client['id']]) }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-phone-square"></i></div>
-                    Bookers
+
+                    @if(isset($page) && $page == 'bookers')
+                        <span class="text-white">Bookers</span>
+                    @else
+                        <span>Bookers</span>
+                    @endif
                 </a>
 
                 <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePricingAndFinancial" aria-expanded="false" aria-controls="collapsePricingAndFinancial">
@@ -98,7 +118,12 @@
                 <div class="collapse bg-secondary" id="collapseAir" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.booking_process', ['clientId' => $client['id'], 'categoryId' => 1]) }}">
-                            Booking Process
+
+                            @if(isset($page) && $page == 'bookingProcessAir')
+                                <span class="text-white">Air Booking Process</span>
+                            @else
+                                Air Booking Process
+                            @endif
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.travel_policy', ['clientId' => $client['id']]) }}">
@@ -110,11 +135,19 @@
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.preferred_airlines', ['clientId' => $client['id']]) }}">
-                            Preferred Airlines
+                            @if(isset($page) && $page == 'preferredAirlines')
+                                <span class="text-white">Preferred Airlines</span>
+                            @else
+                                <span>Preferred Airlines</span>
+                            @endif
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.travel_security', ['clientId' => $client['id']]) }}">
-                            Travel Security
+                            @if(isset($page) && $page == 'travelSecurity')
+                                <span class="text-white">Travel Security</span>
+                            @else
+                                <span>Travel Security</span>
+                            @endif
                         </a>
                     </nav>
                 </div>
@@ -143,7 +176,11 @@
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.hotel_corporate_code', ['clientId' => $client['id']]) }}">
-                            Hotel Corporate Code
+                            @if(isset($page) && $page == 'hotelCorporateCode')
+                                <span class="text-white">Hotel Corporate Code</span>
+                            @else
+                                <span>Hotel Corporate Code</span>
+                            @endif
                         </a>
                     </nav>
                 </div>
@@ -156,7 +193,11 @@
                 <div class="collapse bg-secondary" id="collapseCar" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.booking_process', ['clientId' => $client['id'], 'categoryId' => 3]) }}">
-                            Booking Process
+                            @if(isset($page) && $page == 'bookingProcessCar')
+                                <span class="text-white">Car Booking Process</span>
+                            @else
+                                <span>Car Booking Process</span>
+                            @endif
                         </a>
 
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.preferred_cars', ['clientId' => $client['id']]) }}">
@@ -178,14 +219,22 @@
                 <div class="collapse bg-secondary" id="collapseDocumentation" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.booking_process', ['clientId' => $client['id'], 'categoryId' => 5]) }}">
-                            Booking Process
+                            @if(isset($page) && $page == 'bookingProcessDocumentation')
+                                <span class="text-white">Documentation Booking Process</span>
+                            @else
+                                <span>Documentation Booking Processs</span>
+                            @endif
                         </a>
                     </nav>
                 </div>
 
-                <a class="nav-link marsman-bg-color-semidark" href="{{ route('accountmanager.clients.reporting_elements', ['clientId' => $client['id']]) }}">
+                <a class="nav-link" href="{{ route('accountmanager.clients.reporting_elements', ['clientId' => $client['id']]) }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                    Reporting Elements
+                    @if(isset($page) && $page == 'reportingElements')
+                        <span class="text-white">Reporting Elements</span>
+                    @else
+                        <span>Reporting Elements</span>
+                    @endif
                 </a>
             @endif
         </div>
@@ -228,14 +277,19 @@
             } else if (['preferredHotels'].includes(page)) {
                 $('#collapseHotel').collapse('show');
                 scrollToLastVisibleSubmenuItem(this);
-            } else if (['preferredCars'].includes(page)) {
+            } else if (['preferredCars', 'bookingProcessCar'].includes(page)) {
                 $('#collapseCar').collapse('show');
                 scrollToLastVisibleSubmenuItem(this);
-            } else if (['bookingProcessAir', 'travelPolicy'].includes(page)) {
+            } else if (['bookingProcessAir', 'travelPolicy', 'travelSecurity','preferredAirlines'].includes(page)) {
                 $('#collapseAir').collapse('show');
                 scrollToLastVisibleSubmenuItem(this);
-            } else if (['bookingProcessHotel'].includes(page)) {
+            } else if (['bookingProcessHotel', 'hotelCorporateCode'].includes(page)) {
                 $('#collapseHotel').collapse('show');
+                scrollToLastVisibleSubmenuItem(this);
+            } else if (['bookingProcessDocumentation'].includes(page)) {
+                $('#collapseDocumentation').collapse('show');
+                scrollToLastVisibleSubmenuItem(this);
+            } else if (['reportingElements'].includes(page)) {
                 scrollToLastVisibleSubmenuItem(this);
             } else {
                 // Ensure that it is collapsed on other pages

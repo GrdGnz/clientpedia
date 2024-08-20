@@ -1,3 +1,7 @@
+@php
+    $page = 'preferredAirlines';
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
