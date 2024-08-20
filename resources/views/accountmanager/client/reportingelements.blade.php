@@ -1,3 +1,7 @@
+@php
+    $page = 'reportingElements';
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -12,7 +16,7 @@
                 <div class="w-100 my-3">
                     <a class="btn marsman-btn-secondary marsman-border-primary-1 txt-1" href="{{ route('accountmanager.clients.index') }}">Back to Client List</a>
                 </div>
-                
+
                 <p class="h3">REPORTING ELEMENTS - {{ $client['name'] }}</p>
                 <hr class="w-100" />
 
@@ -54,7 +58,7 @@
                                         <input type="hidden" name="elementId" value="{{ $element->id }}" />
                                         <input type="hidden" id="description_{{ $element->id }}" name="description" value="" />
                                         <input type="submit" class="btn btn-primary txt-1" value="Update" />
-                                    </form> 
+                                    </form>
                                 </td>
                                 <td>
                                     <form method="post" action="{{ route('accountmanager.client.reporting_elements.destroy') }}">
@@ -101,14 +105,14 @@
                         </form>
                     </div>
                 </div>
-                
+
             </main>
         </div>
     </div>
 
     <!-- Include jQuery and DataTables -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>   
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 <script>
     $(document).ready(function() {
