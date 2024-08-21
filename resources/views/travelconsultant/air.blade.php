@@ -60,7 +60,7 @@
               </div>
               <div class="tab-pane fade" id="nav-domestic" role="tabpanel" aria-labelledby="nav-domestic-tab" tabindex="0">
                 <!-- Domestic Booking Process -->
-                
+
                 @foreach ($bookingprocessDomestic as $domestic)
                 <div class="input-group mb-3">
                     <span class="input-group-text txt-1 marsman-bg-color-dark text-white" id="basic-addon1">Step {{ $domestic->order_number }}</span>
@@ -77,7 +77,7 @@
           <!-- Second tab -->
 
           @foreach ($travelPolicy as $policy)
-            
+
             <div class="mb-3">
               <label for="lla" class="form-label p-2 marsman-bg-color-dark text-white rounded">LLA</label>
               <textarea class="form-control marsman-border-primary-1 bg-white txt-1" id="lla" rows="2" disabled>{{ trim($policy->lla) }}
@@ -139,70 +139,58 @@
         <div class="tab-pane fade" id="preferred-tab-pane" role="tabpanel" aria-labelledby="preferred-tab" tabindex="0">
           <!-- Third tab -->
 
-          <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <button class="nav-link active" id="nav-internationalairline-tab" data-bs-toggle="tab" data-bs-target="#nav-internationalairline" type="button" role="tab" aria-controls="nav-internationalairline" aria-selected="true">
-                INTERNATIONAL
-              </button>
-              <button class="nav-link" id="nav-domesticairline-tab" data-bs-toggle="tab" data-bs-target="#nav-domesticairline" type="button" role="tab" aria-controls="nav-domesticairline" aria-selected="false">
-                DOMESTIC
-              </button>
-            </div>
-          </nav>
-          <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-internationalairline" role="tabpanel" aria-labelledby="nav-internationalairline-tab" tabindex="0">
-              <!-- International Airlines -->
-              @if (isset($internationalAirlines))
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped bg-white w-50">
-                    <thead class="marsman-bg-color-dark text-white">
-                      <tr>
-                        <th width="15%">Airline Code</th>
-                        <th>Airline Name</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($internationalAirlines as $international)
-                        <tr>
-                          <td>{{ $international->airline_code }}</td>
-                          <td>{{ $international->airline->name }}</td>
-                        </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-              @endif
+          <div class="col-md-6 m-3">
+            @if($uploads->isEmpty())
+                <p>No files uploaded for this client.</p>
+            @else
+                @foreach($uploads as $upload)
+                    <div class="file-item">
+                        <a href="{{ asset($upload->file_path) }}" target="_blank">
+                            {{ basename($upload->file_path) }}
+                        </a>
+                        <!-- Delete Form -->
+                        <form action="{{ route('client.preferred_airlines_upload.destroy', $upload->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger txt-1" onclick="return confirm('Are you sure you want to delete this file?');">Delete</button>
+                        </form>
+                    </div>
+                @endforeach
+            @endif
+        </div>
 
-            </div>
-            <div class="tab-pane fade" id="nav-domesticairline" role="tabpanel" aria-labelledby="nav-domesticairline-tab" tabindex="0">
-              <!-- Domestic Airlines -->
-              @if (isset($domesticAirlines))
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped bg-white w-50">
-                    <thead class="marsman-bg-color-dark text-white">
-                      <tr>
-                        <th width="15%">Airline Code</th>
-                        <th>Airline Name</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($domesticAirlines as $domestic)
-                        <tr>
-                          <td>{{ $domestic->airline_code }}</td>
-                          <td>{{ $domestic->airline->name }}</td>
-                        </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-              @endif
+        <hr class="w-100">
 
-            </div>
-          </div>
+        <div class="table-responsive">
+            <table id="contactTable" class="table table-striped table-bordered">
+                <thead class="marsman-bg-color-dark text-white pt-3">
+                    <tr>
+                        <th>AIRLINE</th>
+                        <th>AIRLINE CODE</th>
+                        <th>SNAP CODE</th>
+                        <th>CONTACT PERSON</th>
+                        <th>CONTACT NUMBER</th>
+                        <th>CONTACT EMAIL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($preferredAirlines as $preferred)
+                        <tr>
+                            <td>{{ $preferred->airline->name }}</td>
+                            <td>{{ $preferred->airline_code }}</td>
+                            <td>{{ $preferred->snap_code }}</td>
+                            <td>{{ $preferred->contact_person }}</td>
+                            <td>{{ $preferred->contact_number }}</td>
+                            <td>{{ $preferred->contact_email }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
           <!-- Third tab end -->
         </div>
-        
+
         <div class="tab-pane fade" id="security-tab-pane" role="tabpanel" aria-labelledby="security-tab" tabindex="0">
           <!-- Fourth tab -->
 
@@ -229,11 +217,10 @@
           <!-- Fourth tab end -->
         </div>
 
-      </div> 
+      </div>
 
     </main>
-  </div> 
+  </div>
 </div>
-    
+
 @endsection
-  

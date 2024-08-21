@@ -628,8 +628,7 @@ class AccountManagerController extends Controller
             // Preferred Airlines
             $preferredAirlines = ClientPreferredAirline::where('client_id', $clientId)->get();
 
-            $contacts = ClientContact::where('client_id', $clientId);
-
+            // Uploaded file of preffered airlines
             $uploads = ClientPreferredAirlinesUpload::where('client_id', $clientId)->get();
 
             return view('accountmanager.client.air.preferredairlines',
@@ -639,7 +638,6 @@ class AccountManagerController extends Controller
                     'clientId',
                     'airlines',
                     'preferredAirlines',
-                    'contacts',
                     'uploads',
                 )
             );
