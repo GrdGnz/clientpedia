@@ -64,6 +64,11 @@
                                 </div>
 
                                 <div class="form-group p-2">
+                                    <label for="edit_snapcode" class="marsman-bg-color-dark text-white rounded-top p-2 m-0">* Snap Code:</label>
+                                    <input type="text" class="form-control marsman-border-primary-1 txt-1" id="edit_snapcode" name="edit_snapcode">
+                                </div>
+
+                                <div class="form-group p-2">
                                     <label for="edit_contact_person" class="marsman-bg-color-dark text-white rounded-top p-2 m-0">Department:</label>
                                     <input type="text" class="form-control marsman-border-primary-1 txt-1 rounded-bottom" id="edit_contact_person" name="edit_contact_person" value="">
                                 </div>
@@ -143,6 +148,12 @@
                                 <input type="text" class="form-control marsman-border-primary-1 txt-1" id="hotel" name="hotel">
                             </div>
 
+                            {{-- Snap Code --}}
+                            <div class="form-group p-2">
+                                <label for="snapcode" class="marsman-bg-color-dark text-white rounded-top p-2 m-0">* Snap Code:</label>
+                                <input type="text" class="form-control marsman-border-primary-1 txt-1" id="snapcode" name="snapcode">
+                            </div>
+
                             {{-- Contact Person --}}
                             <div class="form-group p-2">
                                 <label for="contactPerson" class="marsman-bg-color-dark text-white rounded-top p-2 m-0">Contact Person:</label>
@@ -174,6 +185,7 @@
                         <thead class="marsman-bg-color-dark text-white pt-3">
                             <tr>
                                 <th>HOTEL</th>
+                                <th>SNAP CODE</th>
                                 <th>CONTACT PERSON</th>
                                 <th>CONTACT NUMBER</th>
                                 <th>CONTACT EMAIL</th>
@@ -185,6 +197,7 @@
                             @foreach ($preferredHotels as $preferred)
                                 <tr>
                                     <td>{{ $preferred->hotel_code }}</td>
+                                    <td>{{ $preferred->snap_code }}</td>
                                     <td>{{ $preferred->contact_person }}</td>
                                     <td>{{ $preferred->contact_number }}</td>
                                     <td>{{ $preferred->contact_email }}</td>
@@ -192,6 +205,7 @@
                                         <button type="button" class="btn btn-primary txt-1" data-bs-toggle="modal" data-bs-target="#editHotel"
                                             data-id="{{ $preferred->id }}"
                                             data-hotel_code="{{ $preferred->hotel_code }}"
+                                            data-snap_code="{{ $preferred->snap_code }}"
                                             data-contact_person="{{ $preferred->contact_person }}"
                                             data-contact_number="{{ $preferred->contact_number }}"
                                             data-contact_email="{{ $preferred->contact_email }}">
@@ -239,6 +253,7 @@
 
             var id = button.data('id');
             var hotel_code = button.data('hotel_code');
+            var snap_code = button.data('snap_code');
             var contact_person = button.data('contact_person');
             var contact_number = button.data('contact_number');
             var contact_email = button.data('contact_email');
@@ -246,6 +261,7 @@
             modal.find('#editPreferredHotel').attr('action', '{{ url('account-manager/client/preferred-hotels') }}/' + id);
             modal.find('#preferred_hotel_id').val(id);
             modal.find('#edit_hotel').val(hotel_code);
+            modal.find('#edit_snapcode').val(snap_code);
             modal.find('#edit_contact_person').val(contact_person);
             modal.find('#edit_contact_number').val(contact_number);
             modal.find('#edit_contact_email').val(contact_email);

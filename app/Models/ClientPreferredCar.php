@@ -14,6 +14,7 @@ class ClientPreferredCar extends Model
     protected $fillable = [
         'client_id',
         'car_code',
+        'snap_code',
         'contact_person',
         'contact_number',
         'contact_email',

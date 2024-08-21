@@ -15,6 +15,7 @@ class ClientPreferredHotelController extends Controller
         $validatedData = $request->validate([
             'client_id' => 'required|exists:clients,id',
             'hotel' => 'required|string|max:255',
+            'snapcode' => 'nullable|string|max:255',
             'contactPerson' => 'nullable|string|max:255',
             'contactNumber' => 'nullable|string|max:255',
             'contactEmail' => 'nullable|email|max:255',
@@ -25,6 +26,7 @@ class ClientPreferredHotelController extends Controller
             $clientPreferredHotel = ClientPreferredHotel::create([
                 'client_id' => $validatedData['client_id'],
                 'hotel_code' => $validatedData['hotel'],
+                'snap_code' => $validatedData['snapcode'],
                 'contact_person' => $validatedData['contactPerson'] ?? '',
                 'contact_number' => $validatedData['contactNumber'] ?? '',
                 'contact_email' => $validatedData['contactEmail'] ?? '',
@@ -58,6 +60,7 @@ class ClientPreferredHotelController extends Controller
         $validatedData = $request->validate([
             'client_id' => 'required|integer|exists:clients,id',
             'edit_hotel' => 'required|string|max:255',
+            'edit_snapcode' => 'nullable|string|max:255',
             'edit_contact_person' => 'nullable|string|max:255',
             'edit_contact_number' => 'nullable|string|max:20',
             'edit_contact_email' => 'nullable|email|max:255',
@@ -71,6 +74,7 @@ class ClientPreferredHotelController extends Controller
             $preferredHotel->update([
                 'client_id' => $validatedData['client_id'],
                 'hotel_code' => $validatedData['edit_hotel'],
+                'snap_code' => $validatedData['edit_snapcode'],
                 'contact_person' => $validatedData['edit_contact_person'] ?? '',
                 'contact_number' => $validatedData['edit_contact_number'] ?? '',
                 'contact_email' => $validatedData['edit_contact_email'] ?? '',

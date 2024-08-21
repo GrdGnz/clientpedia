@@ -13,6 +13,7 @@ class ClientPreferredHotel extends Model
 
     protected $fillable = [
         'client_id',
+        'snap_code',
         'hotel_code',
         'contact_person',
         'contact_number',

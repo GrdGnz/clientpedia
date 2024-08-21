@@ -175,6 +175,7 @@
                             @endif
                         </a>
 
+                        <!--
                         <a class="nav-link collapsed" href="{{ route('accountmanager.clients.hotel_corporate_code', ['clientId' => $client['id']]) }}">
                             @if(isset($page) && $page == 'hotelCorporateCode')
                                 <span class="text-white">Hotel Corporate Code</span>
@@ -182,6 +183,8 @@
                                 <span>Hotel Corporate Code</span>
                             @endif
                         </a>
+                        -->
+
                     </nav>
                 </div>
                 <!-- CAR -->

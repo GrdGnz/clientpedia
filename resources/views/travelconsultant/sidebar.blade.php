@@ -2,7 +2,7 @@
     <div class="sb-sidenav-menu marsman-bg-color-dark">
         <div class="nav">
             <div class="sb-sidenav-menu-heading text-white">{{ Auth::user()->role['name'] }}</div>
-            
+
             @if (isset($client['id']))
 
                 <a class="nav-link" href="{{ route('travelconsultant.dashboard') }}">
@@ -39,11 +39,6 @@
                     Car
                 </a>
 
-                <a class="nav-link marsman-bg-color-semidark" href="{{ route('travelconsultant.car_transfer', ['clientId' => $client['id']]) }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-shuttle-van"></i></div>
-                    Car Transfer
-                </a>
-
                 <a class="nav-link marsman-bg-color-semidark" href="{{ route('travelconsultant.documentation', ['clientId' => $client['id']]) }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-passport"></i></div>
                     Documentation
@@ -53,7 +48,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                     Reporting Elements
                 </a>
-            
+
             @else
 
                 <a class="nav-link" href="{{ route('travelconsultant.dashboard') }}">
