@@ -53,8 +53,8 @@
                                                 @csrf
                                                 @foreach ($travelSecurity as $security)
                                                     <input type="hidden" name="client_id" value="{{ $security->id }}" class="form-control">
-                                                    <trix-editor input="description" class="form-control marsman-border-primary-1 txt-1 text-left"></trix-editor>
-                                                    <input id="description" type="hidden" name="description" value="{{ trim($security->description) }}">
+                                                    <!--<trix-editor input="description" class="form-control marsman-border-primary-1 txt-1 text-left"></trix-editor>-->
+                                                    <textarea id="description" name="description" class="form-control marsman-border-primary-1 txt-1">{{ trim($security->description) }}</textarea>
                                                 @endforeach
                                                     <button type="submit" class="btn marsman-btn-primary txt-2 mt-2">Update</button>
                                             </form>
@@ -71,8 +71,8 @@
 
                             <div class="form-group mb-3">
                                 <label for="description" class="p-2 marsman-bg-color-dark text-white rounded-top">Description</label>
-                                <trix-editor input="description" class="form-control marsman-border-primary-1 txt-1"></trix-editor>
-                                <input id="description" type="hidden" name="description">
+                                <!-- <trix-editor input="description" class="form-control marsman-border-primary-1 txt-1"></trix-editor> -->
+                                <textarea id="description" name="description" class="form-control marsman-border-primary-1 txt-1"></textarea>
                             </div>
 
                             <div class="text-center">
