@@ -148,12 +148,6 @@
                         <a href="{{ asset($upload->file_path) }}" target="_blank">
                             {{ basename($upload->file_path) }}
                         </a>
-                        <!-- Delete Form -->
-                        <form action="{{ route('client.preferred_airlines_upload.destroy', $upload->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger txt-1" onclick="return confirm('Are you sure you want to delete this file?');">Delete</button>
-                        </form>
                     </div>
                 @endforeach
             @endif
