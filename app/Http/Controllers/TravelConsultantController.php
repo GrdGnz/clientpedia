@@ -296,6 +296,12 @@ class TravelConsultantController extends Controller
         // Authorize the user to view the client
         $this->authorize('view', $client);
 
+        // Preferred Airlines
+        $preferredAirlines = ClientPreferredAirline::where('client_id', $clientId)->get();
+
+        // Uploaded file of preffered airlines
+        $uploads = ClientPreferredAirlinesUpload::where('client_id', $clientId)->get();
+
         return view('travelconsultant.air',
             compact('client',
                 'lastLoginDate',
@@ -305,6 +311,9 @@ class TravelConsultantController extends Controller
                 'internationalAirlines',
                 'domesticAirlines',
                 'travelSecurity',
+                'preferredAirlines',
+                'uploads',
+
             )
         );
     }
