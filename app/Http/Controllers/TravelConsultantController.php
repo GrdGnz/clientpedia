@@ -14,6 +14,11 @@ use App\Models\ClientHotelCorporateCode;
 use App\Models\ClientInfo;
 use App\Models\ClientInvoiceAttachment;
 use App\Models\ClientPreferredAirline;
+use App\Models\ClientPreferredAirlinesUpload;
+use App\Models\ClientPreferredCar;
+use App\Models\ClientPreferredCarsUpload;
+use App\Models\ClientPreferredHotel;
+use App\Models\ClientPreferredHotelsUpload;
 use App\Models\ClientPricingModel;
 use App\Models\ClientReportingElement;
 use App\Models\ClientTravelPolicy;
@@ -21,13 +26,14 @@ use App\Models\ClientTravelSecurity;
 use App\Models\ClientVip;
 use App\Models\Route;
 use App\Models\Source;
+use App\Models\SummaryHeader;
+use App\Models\SummaryService;
+use App\Models\SummarySubheader;
 use App\Models\User;
 use App\Models\UserActivity;
 use App\Models\UserClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-
 class TravelConsultantController extends Controller
 {
     public function __construct()
@@ -104,6 +110,11 @@ class TravelConsultantController extends Controller
 
         $clientInvoiceAttachments = $clientInvoiceAttachments ?? [];
 
+        $standardHeaders = SummaryHeader::where('service_type', 'standard')->get();
+        $onlineHeaders = SummaryHeader::where('service_type', 'online')->get();
+        $subheaders = SummarySubheader::all();
+        $services = SummaryService::where('client_id', $clientId)->get();
+
         return view('travelconsultant.pricing',
             compact('client',
                 'lastLoginDate',
@@ -112,6 +123,10 @@ class TravelConsultantController extends Controller
                 'clientAncilliaryFees',
                 'clientFeesWithRouteAndSource',
                 'clientInvoiceAttachments',
+                'standardHeaders',
+                'onlineHeaders',
+                'subheaders',
+                'services',
             )
         );
     }
@@ -323,6 +338,12 @@ class TravelConsultantController extends Controller
 
         $hotelCorporateCode = ClientHotelCorporateCode::where('client_id', $clientId)->get();
 
+        // Preferred Hotels
+        $preferredHotels = ClientPreferredHotel::where('client_id', $clientId)->get();
+
+        // Uploaded file of preffered hotels
+        $uploads = ClientPreferredHotelsUpload::where('client_id', $clientId)->get();
+
         return view('travelconsultant.hotel',
             compact(
                 'client',
@@ -330,6 +351,8 @@ class TravelConsultantController extends Controller
                 'bookingprocessInternational',
                 'bookingprocessDomestic',
                 'hotelCorporateCode',
+                'preferredHotels',
+                'uploads',
             )
         );
     }
@@ -361,12 +384,20 @@ class TravelConsultantController extends Controller
             ->where('category_id', 3)
             ->get();
 
+        // Preferred Cars
+        $preferredCars = ClientPreferredCar::where('client_id', $clientId)->get();
+
+        // Uploaded file of preffered cars
+        $uploads = ClientPreferredCarsUpload::where('client_id', $clientId)->get();
+
         return view('travelconsultant.car',
             compact(
                 'client',
                 'lastLoginDate',
                 'bookingprocessInternational',
                 'bookingprocessDomestic',
+                'preferredCars',
+                'uploads',
             )
         );
     }

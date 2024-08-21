@@ -734,9 +734,10 @@ class AccountManagerController extends Controller
             //Hotels
             $hotels = Hotel::orderBy('name', 'asc')->get();
 
-            // Preferred Airlines
+            // Preferred Hotels
             $preferredHotels = ClientPreferredHotel::where('client_id', $clientId)->get();
 
+            // Uploaded file of preffered hotels
             $uploads = ClientPreferredHotelsUpload::where('client_id', $clientId)->get();
 
             return view('accountmanager.client.hotel.preferredhotels',
@@ -773,9 +774,10 @@ class AccountManagerController extends Controller
             $hotels = Hotel::orderBy('name', 'asc')->get();
             $cars = Car::orderBy('name', 'asc')->get();
 
-            // Preferred Airlines
+            // Preferred Cars
             $preferredCars = ClientPreferredCar::where('client_id', $clientId)->get();
 
+            // Uploaded file of preffered cars
             $uploads = ClientPreferredCarsUpload::where('client_id', $clientId)->get();
 
             return view('accountmanager.client.car.preferredcars',
