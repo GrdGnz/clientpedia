@@ -68,6 +68,7 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Models\\Airlines' => $baseDir . '/app/Models/Airlines.php',
+    'App\\Models\\Car' => $baseDir . '/app/Models/Car.php',
     'App\\Models\\Category' => $baseDir . '/app/Models/Category.php',
     'App\\Models\\Client' => $baseDir . '/app/Models/Client.php',
     'App\\Models\\ClientAncilliaryFee' => $baseDir . '/app/Models/ClientAncilliaryFee.php',

@@ -606,6 +606,7 @@ class ComposerStaticInitdd2e7b6c03897457ab1dfdce020ae3a0
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\Airlines' => __DIR__ . '/../..' . '/app/Models/Airlines.php',
+        'App\\Models\\Car' => __DIR__ . '/../..' . '/app/Models/Car.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
         'App\\Models\\ClientAncilliaryFee' => __DIR__ . '/../..' . '/app/Models/ClientAncilliaryFee.php',
