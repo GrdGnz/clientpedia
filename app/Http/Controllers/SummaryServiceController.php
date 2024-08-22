@@ -44,50 +44,41 @@ class SummaryServiceController extends Controller
         }
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SummaryService  $summaryService
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SummaryService $summaryService)
+    public function update(Request $request)
     {
         try {
+            // Validate the incoming request data
             $validatedData = $request->validate([
-                'clientId' => 'required|integer',
-                'headerId' => 'nullable|required|integer',
-                'subheaderId' => 'nullable|required|integer',
-                'service' => 'required|string|max:255',
-                'measure' => 'nullable|string|max:50',
-                'currency' => 'nullable|string|max:10',
-                'officeHours' => 'nullable|string|max:100',
-                'afterOfficeHours' => 'nullable|string|max:100',
+                'id' => 'required|exists:summary_services,id',
+                'service_name' => 'required|string|max:255',
+                'measure' => 'required|string|max:100',
+                'currency' => 'required|string|max:10',
+                'office_hours' => 'required|string|max:100',
+                'after_office_hours' => 'required|string|max:100',
             ]);
 
-            $summaryService->update([
-                'client_id' => $validatedData['clientId'],
-                'header_id' => $validatedData['headerId'],
-                'subheader_id' => $validatedData['subheaderId'],
-                'service_name' => $validatedData['service'],
+            // Find the service record by ID
+            $service = SummaryService::findOrFail($validatedData['id']);
+
+            // Update the service record with the validated data
+            $service->update([
+                'service_name' => $validatedData['service_name'],
                 'measure' => $validatedData['measure'],
                 'currency' => $validatedData['currency'],
-                'office_hours' => $validatedData['officeHours'],
-                'after_office_hours' => $validatedData['afterOfficeHours'],
+                'office_hours' => $validatedData['office_hours'],
+                'after_office_hours' => $validatedData['after_office_hours'],
             ]);
 
-            return response()->json(['message' => 'Summary Service updated successfully', 'data' => $summaryService], 200);
-        } catch (Exception $e) {
-            Log::error('Failed to update Summary Service: ' . $e->getMessage(), [
-                'summaryService_id' => $summaryService->id,
-                'request' => $request->all(),
-                'error' => $e->getTraceAsString(),
-            ]);
+            // Redirect back with a success message
+            return redirect()->back()->with('success', 'Service updated successfully.');
 
-            return response()->json(['message' => 'Failed to update Summary Service'], 500);
+        } catch (\Exception $e) {
+            // Log the error and redirect back with an error message
+            Log::error('Failed to update Summary Service: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to update service.');
         }
     }
+
 
     public function destroy($id)
     {
