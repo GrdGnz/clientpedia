@@ -104,12 +104,12 @@
             <table class="table table-bordered">
                 <thead class="marsman-bg-color-primary text-white txt-2">
                     <tr>
-                        <th>Services</th>
+                        <th class="col-md-4">Services</th>
                         <th>Measure</th>
                         <th>Currency</th>
                         <th>Standard Office Hours</th>
                         <th>After Office Hours</th>
-                        <th>Action</th> <!-- New column for delete button -->
+                        <th class="col-md-2">Action</th> <!-- Column for update and delete buttons -->
                     </tr>
                 </thead>
                 <tbody>
@@ -125,45 +125,81 @@
                                 @foreach ($services as $service)
                                     @if($service->subheader_id == $subheader->id)
                                         <tr>
-                                            <td>{{ $service->service_name }}</td>
-                                            <td class="text-center">{{ $service->measure }}</td>
-                                            <td class="text-center">{{ $service->currency }}</td>
-                                            <td class="text-center">{{ $service->office_hours }}</td>
-                                            <td class="text-center">{{ $service->after_office_hours }}</td>
-                                            <td class="text-center">
-                                                <!-- Delete form -->
-                                                <form action="{{ route('accountmanager.client.standard_service.destroy', ['id' => $service->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger txt-1">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                            <form action="{{ route('accountmanager.client.standard_service.update') }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="id" value="{{ $service->id }}">
+
+                                                <td>
+                                                    <input type="text" name="service_name" class="form-control txt-1" value="{{ $service->service_name }}">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="text" name="measure" class="form-control txt-1" value="{{ $service->measure }}">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="text" name="currency" class="form-control txt-1" value="{{ $service->currency }}">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="text" name="office_hours" class="form-control txt-1" value="{{ $service->office_hours }}">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="text" name="after_office_hours" class="form-control txt-1" value="{{ $service->after_office_hours }}">
+                                                </td>
+                                                <td class="text-center">
+                                                    <!-- Update button -->
+                                                    <button type="submit" class="btn btn-success txt-1">Update</button>
+                                            </form>
+                                            <!-- Delete form -->
+                                            <form action="{{ route('accountmanager.client.standard_service.destroy', ['id' => $service->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger txt-1">Delete</button>
+                                            </form>
+                                                </td>
+                                            </tr>
                                     @endif
                                 @endforeach
                             @endif
                         @endforeach
 
+                        <!-- Services without a subheader -->
                         @foreach ($services as $service)
-                            @if($service->header_id == $header->id)
+                            @if($service->header_id == $header->id && $service->subheader_id === null)
                                 <tr>
-                                    <td>{{ $service->service_name }}</td>
-                                    <td class="text-center">{{ $service->measure }}</td>
-                                    <td class="text-center">{{ $service->currency }}</td>
-                                    <td class="text-center">{{ $service->office_hours }}</td>
-                                    <td class="text-center">{{ $service->after_office_hours }}</td>
-                                    <td class="text-center">
-                                        <!-- Delete form -->
-                                        <form action="{{ route('accountmanager.client.standard_service.destroy', ['id' => $service->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger txt-1">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                    <form action="{{ route('accountmanager.client.standard_service.update') }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="id" value="{{ $service->id }}">
+
+                                        <td>
+                                            <input type="text" name="service_name" class="form-control txt-1" value="{{ $service->service_name }}">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="text" name="measure" class="form-control txt-1" value="{{ $service->measure }}">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="text" name="currency" class="form-control txt-1" value="{{ $service->currency }}">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="text" name="office_hours" class="form-control txt-1" value="{{ $service->office_hours }}">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="text" name="after_office_hours" class="form-control txt-1" value="{{ $service->after_office_hours }}">
+                                        </td>
+                                        <td class="text-center">
+                                            <!-- Update button -->
+                                            <button type="submit" class="btn btn-success txt-1">Update</button>
+                                    </form>
+                                    <!-- Delete form -->
+                                    <form action="{{ route('accountmanager.client.standard_service.destroy', ['id' => $service->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger txt-1">Delete</button>
+                                    </form>
+                                        </td>
+                                    </tr>
                             @endif
                         @endforeach
-
                     @endforeach
                 </tbody>
             </table>
